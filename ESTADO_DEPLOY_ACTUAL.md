@@ -3,7 +3,7 @@
 ## ✅ COMPLETADO HASTA AHORA:
 
 ### 1. GitHub ✅
-- Repositorio creado: https://github.com/mariobritto/webapp-odontologia
+- Repositorio creado: https://github.com/mariobritto-1422/webapp-odontologia
 - Código subido exitosamente
 - Commit inicial realizado
 
@@ -24,19 +24,25 @@
 ### 3. Resend ✅
 - API Key obtenida: `re_eM5D8G3K_7MxApb2mbgEgKXyRbQgoBZEH`
 
-### 4. Vercel ⏳
-- Proyecto creado: `webapp-odontologia`
-- URL: https://webapp-odontologia.vercel.app
-- ⏳ PENDIENTE: Configurar 7 variables de entorno + Deploy
+### 4. Netlify ⏳
+- ⏳ PENDIENTE: Crear proyecto + Configurar variables + Deploy
+- Archivo de configuración creado: `netlify.toml` ✅
 
 ---
 
 ## 📋 PRÓXIMOS PASOS:
 
-### Paso 1: Configurar Variables en Vercel
-Ir a: https://vercel.com/mariobrittos-projects/webapp-odontologia/settings/environment-variables
+### Paso 1: Deploy en Netlify (Ver GUIA_DEPLOY_NETLIFY.md)
 
-**Agregar estas 7 variables:**
+**Opción recomendada: Deploy desde la Web**
+
+1. Ir a: https://app.netlify.com
+2. "Add new site" → "Import an existing project" → "GitHub"
+3. Seleccionar: `mariobritto-1422/webapp-odontologia`
+4. Configurar 7 variables de entorno (ver abajo)
+5. Deploy
+
+**Variables de entorno para Netlify:**
 
 ```
 1. NEXT_PUBLIC_SUPABASE_URL
@@ -52,32 +58,33 @@ Ir a: https://vercel.com/mariobrittos-projects/webapp-odontologia/settings/envir
    = fetndn3lQHT1NaIeig8JE76LXMrskhKwP59+KipLRVI=
 
 5. NEXTAUTH_URL
-   = https://webapp-odontologia.vercel.app
+   = https://TU-SITIO.netlify.app
+   (Actualizar después del primer deploy)
 
 6. NEXT_PUBLIC_BASE_URL
-   = https://webapp-odontologia.vercel.app
+   = https://TU-SITIO.netlify.app
+   (Actualizar después del primer deploy)
 
 7. RESEND_API_KEY
    = re_eM5D8G3K_7MxApb2mbgEgKXyRbQgoBZEH
 ```
 
-### Paso 2: Deploy
-1. Después de agregar las 7 variables
-2. Click en "Deployments" (menú superior)
-3. Click en "Redeploy" en el último deployment
-4. Esperar 2-4 minutos
-5. ¡App en producción!
+### Paso 2: Actualizar URLs en Supabase
+
+Una vez desplegado en Netlify:
+
+1. Ir a: https://supabase.com/dashboard/project/truczkguokmaztnlrcku
+2. "Authentication" → "URL Configuration"
+3. Agregar tu URL de Netlify en "Site URL" y "Redirect URLs"
 
 ---
 
 ## 🔗 Links Importantes:
 
-- **GitHub:** https://github.com/mariobritto/webapp-odontologia
+- **GitHub:** https://github.com/mariobritto-1422/webapp-odontologia
 - **Supabase:** https://supabase.com/dashboard/project/truczkguokmaztnlrcku
-- **Vercel:** https://vercel.com/mariobrittos-projects/webapp-odontologia
-- **Vercel Settings:** https://vercel.com/mariobrittos-projects/webapp-odontologia/settings/environment-variables
+- **Netlify:** https://app.netlify.com (Crear sitio)
 - **Resend:** https://resend.com/api-keys
-- **App URL:** https://webapp-odontologia.vercel.app
 
 ---
 
@@ -88,10 +95,11 @@ Ir a: https://vercel.com/mariobrittos-projects/webapp-odontologia/settings/envir
 ✅ Base de datos Supabase   100%
 ✅ API Key Resend           100%
 ✅ Proyecto Supabase limpio 100%
-⏳ Configurar Vercel        Pendiente (5 min)
-⏳ Deploy final             Pendiente (3 min)
+✅ Configuración Netlify    100%
+⏳ Deploy en Netlify        Pendiente
+⏳ Configurar URLs finales  Pendiente
 
-Total: 90% completado
+Total: 85% completado
 ```
 
 ---
@@ -99,11 +107,12 @@ Total: 90% completado
 ## 💾 Para Continuar:
 
 Cuando vuelvas, solo di:
-"Continuemos con el deploy"
+"Continuemos con el deploy en Netlify"
 
 Y seguimos desde donde quedamos.
 
 ---
 
-**Guardado:** 24 de Enero 2026 - 22:30 hs
-**Próxima acción:** Configurar 7 variables de entorno en Vercel y hacer deploy final
+**Guardado:** 24 de Enero 2026 - 20:20 hs
+**Próxima acción:** Deploy en Netlify + Configurar URLs finales
+**Plataforma:** Netlify (cambio desde Vercel por problemas de acceso)
