@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "buildCommand": "npm run build",
+  "framework": "nextjs",
+  "regions": ["iad1"],
+  "env": {
+    "NEXT_PUBLIC_SUPABASE_URL": "@supabase_url",
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "@supabase_anon_key",
+    "SUPABASE_SERVICE_ROLE_KEY": "@supabase_service_role_key",
+    "NEXTAUTH_URL": "@nextauth_url",
+    "NEXTAUTH_SECRET": "@nextauth_secret",
+    "NEXT_PUBLIC_BASE_URL": "@base_url",
+    "RESEND_API_KEY": "@resend_api_key"
+  }
+}
