@@ -191,3 +191,4 @@ Todos los servicios tienen plan gratuito generoso:
 **Versión:** 1.1
 **Estado:** ✅ Listo para Producción
 **Última actualización:** 24 de Enero 2026
+# Deploy trigger
