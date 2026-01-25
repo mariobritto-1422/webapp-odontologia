@@ -3,8 +3,8 @@
 ## ✅ Deploy Exitoso - WebApp Odontología
 
 **📅 Fecha del Deploy:** 25 de Enero 2026
-**🌐 URL de Producción:** https://thriving-lolly-96b349.netlify.app
-**✅ Estado:** FUNCIONANDO COMPLETAMENTE
+**🌐 URL de Producción:** https://mi-consultorio-odonto.netlify.app
+**✅ Estado:** FUNCIONANDO 100% - LOGIN VERIFICADO
 
 Esta guía documenta el proceso exacto que se siguió para deployar exitosamente la aplicación en Netlify Pro.
 
@@ -68,11 +68,13 @@ O lista tus sitios existentes:
 netlify sites:list
 ```
 
-En nuestro caso, vinculamos el sitio `thriving-lolly-96b349`:
+En nuestro caso, vinculamos el sitio `mi-consultorio-odonto`:
 
 ```bash
 netlify link --id a2b3e0e2-e600-460e-a6f5-ca21e95634ad
 ```
+
+**Nota:** Este es el Site ID que permanece igual aunque cambies el nombre del sitio.
 
 ---
 
@@ -88,10 +90,10 @@ netlify env:set SUPABASE_SERVICE_ROLE_KEY "sb_secret_vjj3nKBczA9HuAElGWzVlQ_XLd_
 
 # NextAuth
 netlify env:set NEXTAUTH_SECRET "fetndn3lQHT1NaIeig8JE76LXMrskhKwP59+KipLRVI="
-netlify env:set NEXTAUTH_URL "https://thriving-lolly-96b349.netlify.app"
+netlify env:set NEXTAUTH_URL "https://mi-consultorio-odonto.netlify.app"
 
 # Base URL
-netlify env:set NEXT_PUBLIC_BASE_URL "https://thriving-lolly-96b349.netlify.app"
+netlify env:set NEXT_PUBLIC_BASE_URL "https://mi-consultorio-odonto.netlify.app"
 
 # Resend
 netlify env:set RESEND_API_KEY "re_eM5D8G3K_7MxApb2mbgEgKXyRbQgoBZEH"
@@ -168,9 +170,9 @@ En **Redirect URLs**, agrega estas 6 URLs:
 http://localhost:3000/*
 http://localhost:3000/api/auth/callback/credentials
 http://localhost:3000/auth/login
-https://thriving-lolly-96b349.netlify.app/*
-https://thriving-lolly-96b349.netlify.app/api/auth/callback/credentials
-https://thriving-lolly-96b349.netlify.app/auth/login
+https://mi-consultorio-odonto.netlify.app/*
+https://mi-consultorio-odonto.netlify.app/api/auth/callback/credentials
+https://mi-consultorio-odonto.netlify.app/auth/login
 ```
 
 **Nota:** Si ves el mensaje "URL already exists in the allow list", significa que ya están configuradas. ¡Perfecto!
@@ -179,7 +181,7 @@ https://thriving-lolly-96b349.netlify.app/auth/login
 
 Intenta configurar (si te deja):
 ```
-https://thriving-lolly-96b349.netlify.app
+https://mi-consultorio-odonto.netlify.app
 ```
 
 Si no te permite editarlo, no es crítico.
@@ -190,19 +192,21 @@ Si no te permite editarlo, no es crítico.
 
 ### 9.1 Verificar que el sitio carga
 
-Abre: https://thriving-lolly-96b349.netlify.app
+Abre: https://mi-consultorio-odonto.netlify.app
 
 ### 9.2 Probar el registro
 
-Ve a: https://thriving-lolly-96b349.netlify.app/auth/register/professional
+Ve a: https://mi-consultorio-odonto.netlify.app/auth/register/professional
 
 Completa el formulario y regístrate.
 
 ### 9.3 Probar el login
 
-Ve a: https://thriving-lolly-96b349.netlify.app/auth/login
+Ve a: https://mi-consultorio-odonto.netlify.app/auth/login
 
 Ingresa con las credenciales que acabas de crear.
+
+**✅ VERIFICADO:** Login funciona perfectamente.
 
 ### 9.4 Endpoints de debug
 
@@ -286,9 +290,10 @@ O configura **deploys automáticos** desde GitHub:
 
 En Netlify Dashboard:
 - Site settings → Site details → Change site name
-- Ejemplo: cambiar `thriving-lolly-96b349` por `mi-consultorio-odonto`
 
-**IMPORTANTE:** Si cambias el nombre, actualiza:
+**✅ Completado:** El sitio ya se renombró a `mi-consultorio-odonto`
+
+**IMPORTANTE:** Si cambias el nombre nuevamente, actualiza:
 1. Variables de entorno `NEXTAUTH_URL` y `NEXT_PUBLIC_BASE_URL`
 2. Redirect URLs en Supabase
 3. Redeploya con `netlify deploy --prod`
@@ -314,9 +319,9 @@ En Netlify Dashboard:
 
 ## 🔗 Links Útiles
 
-- **Netlify Dashboard:** https://app.netlify.com/sites/thriving-lolly-96b349
-- **Build Logs:** https://app.netlify.com/projects/thriving-lolly-96b349/deploys
-- **Function Logs:** https://app.netlify.com/projects/thriving-lolly-96b349/logs/functions
+- **Netlify Dashboard:** https://app.netlify.com/sites/mi-consultorio-odonto
+- **Build Logs:** https://app.netlify.com/projects/mi-consultorio-odonto/deploys
+- **Function Logs:** https://app.netlify.com/projects/mi-consultorio-odonto/logs/functions
 - **GitHub Repo:** https://github.com/mariobritto-1422/webapp-odontologia
 - **Supabase Dashboard:** https://supabase.com/dashboard/project/fewfewlmbaqgbxzzlrjx
 
@@ -350,7 +355,8 @@ Si prefieres no usar CLI:
 
 **🎉 ¡Deploy Exitoso!**
 
-**Fecha:** 25 de Enero 2026
+**Fecha:** 25 de Enero 2026 - 14:00 hs
 **Plataforma:** Netlify Pro
-**URL:** https://thriving-lolly-96b349.netlify.app
-**Estado:** FUNCIONANDO COMPLETAMENTE
+**URL:** https://mi-consultorio-odonto.netlify.app
+**Estado:** FUNCIONANDO 100% - LOGIN VERIFICADO
+**Deploy por:** Claude Code + Mario Britto

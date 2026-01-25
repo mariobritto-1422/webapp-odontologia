@@ -3,9 +3,9 @@
 Sistema multi-tenant para que odontólogos gestionen turnos con sus pacientes de forma simple y profesional.
 
 **🚀 Estado:** EN PRODUCCIÓN ✅
-**🌐 URL:** https://thriving-lolly-96b349.netlify.app
+**🌐 URL:** https://mi-consultorio-odonto.netlify.app
 **📅 Deploy:** 25 de Enero 2026
-**📅 Última actualización:** 25 de Enero 2026
+**📅 Última actualización:** 25 de Enero 2026 - 14:00 hs
 
 ## 📊 Progreso: 100% Completado ✅
 
@@ -38,11 +38,12 @@ Sistema multi-tenant para que odontólogos gestionen turnos con sus pacientes de
 
 **Deploy** ✅
 - ✅ **En Producción en Netlify Pro**
-  - URL: https://thriving-lolly-96b349.netlify.app
+  - URL: https://mi-consultorio-odonto.netlify.app
   - Build automatizado desde GitHub
   - Variables de entorno configuradas
   - SSL/HTTPS activo
   - Edge Functions y Serverless Functions desplegadas
+  - Login y registro funcionando al 100%
 
 ### ⏳ Pendiente para v2.0 (opcional):
 - ⏳ Confirmar/Rechazar turnos pendientes desde dashboard
@@ -173,9 +174,10 @@ Abrir [http://localhost:3000](http://localhost:3000)
 **✅ Aplicación desplegada en Netlify Pro**
 
 ### 🌐 URLs de Acceso:
-- **Producción:** https://thriving-lolly-96b349.netlify.app
-- **Login:** https://thriving-lolly-96b349.netlify.app/auth/login
-- **Registro:** https://thriving-lolly-96b349.netlify.app/auth/register/professional
+- **Producción:** https://mi-consultorio-odonto.netlify.app
+- **Login:** https://mi-consultorio-odonto.netlify.app/auth/login
+- **Registro Profesional:** https://mi-consultorio-odonto.netlify.app/auth/register/professional
+- **Registro Paciente:** https://mi-consultorio-odonto.netlify.app/auth/register/patient
 
 ### 📚 Guías de Deploy:
 - **`GUIA_DEPLOY_NETLIFY.md`** - Guía completa para Netlify ⭐
@@ -206,10 +208,11 @@ RESEND_API_KEY
 ## 🎯 Información del Proyecto
 
 **Versión:** 1.2
-**Estado:** ✅ EN PRODUCCIÓN
+**Estado:** ✅ EN PRODUCCIÓN - FUNCIONANDO 100%
 **Plataforma:** Netlify Pro
-**URL Producción:** https://thriving-lolly-96b349.netlify.app
+**URL Producción:** https://mi-consultorio-odonto.netlify.app
 **Repositorio:** https://github.com/mariobritto-1422/webapp-odontologia
+**Deploy:** 25 de Enero 2026 - 14:00 hs
 **Última actualización:** 25 de Enero 2026
 
 ---

@@ -2,10 +2,10 @@
 
 ## ✅ APLICACIÓN EN PRODUCCIÓN
 
-**🌐 URL de Producción:** https://thriving-lolly-96b349.netlify.app
+**🌐 URL de Producción:** https://mi-consultorio-odonto.netlify.app
 **📅 Fecha de Deploy:** 25 de Enero 2026
-**⏰ Hora:** 13:30 hs
-**✅ Estado:** FUNCIONANDO COMPLETAMENTE
+**⏰ Hora:** 14:00 hs
+**✅ Estado:** FUNCIONANDO 100% - LOGIN VERIFICADO
 
 ---
 
@@ -35,14 +35,16 @@
 
 - **Configuración de Auth:** ✅
   - Site URL configurada
-  - Redirect URLs configuradas (6 URLs: 3 localhost + 3 producción)
+  - Redirect URLs configuradas (10 URLs: 3 localhost + 3 producción + 4 legacy)
+  - Login funcionando 100%
 
 ### 3. Netlify Pro ✅
-- **Sitio:** `thriving-lolly-96b349`
-- **URL:** https://thriving-lolly-96b349.netlify.app
+- **Sitio:** `mi-consultorio-odonto`
+- **URL:** https://mi-consultorio-odonto.netlify.app
 - **Plan:** Netlify Pro
-- **Estado:** ACTIVO y FUNCIONANDO
+- **Estado:** ACTIVO y FUNCIONANDO 100%
 - **CLI:** Instalado y autenticado
+- **Site ID:** a2b3e0e2-e600-460e-a6f5-ca21e95634ad
 
 ### 4. Resend ✅
 - **API Key:** `re_eM5D8G3K_7MxApb2mbgEgKXyRbQgoBZEH`
@@ -69,10 +71,10 @@ Todas configuradas correctamente en Netlify:
    = fetndn3lQHT1NaIeig8JE76LXMrskhKwP59+KipLRVI=
 
 5. NEXTAUTH_URL
-   = https://thriving-lolly-96b349.netlify.app
+   = https://mi-consultorio-odonto.netlify.app
 
 6. NEXT_PUBLIC_BASE_URL
-   = https://thriving-lolly-96b349.netlify.app
+   = https://mi-consultorio-odonto.netlify.app
 
 7. RESEND_API_KEY
    = re_eM5D8G3K_7MxApb2mbgEgKXyRbQgoBZEH
@@ -163,9 +165,10 @@ Total: 100% COMPLETADO 🎉
 
 ## 🔗 Links Importantes:
 
-- **App en Producción:** https://thriving-lolly-96b349.netlify.app
+- **App en Producción:** https://mi-consultorio-odonto.netlify.app
 - **GitHub Repo:** https://github.com/mariobritto-1422/webapp-odontologia
-- **Netlify Dashboard:** https://app.netlify.com/sites/thriving-lolly-96b349
+- **Netlify Dashboard:** https://app.netlify.com/sites/mi-consultorio-odonto
+- **Netlify Deploys:** https://app.netlify.com/projects/mi-consultorio-odonto/deploys
 - **Supabase Dashboard:** https://supabase.com/dashboard/project/fewfewlmbaqgbxzzlrjx
 - **Supabase Auth Config:** https://supabase.com/dashboard/project/fewfewlmbaqgbxzzlrjx/auth/url-configuration
 
@@ -174,23 +177,25 @@ Total: 100% COMPLETADO 🎉
 ## 📱 ACCESOS DE PRUEBA:
 
 ### Acceso Directo:
-- **Login:** https://thriving-lolly-96b349.netlify.app/auth/login
-- **Registro Profesional:** https://thriving-lolly-96b349.netlify.app/auth/register/professional
-- **Registro Paciente:** https://thriving-lolly-96b349.netlify.app/auth/register/patient
+- **Login:** https://mi-consultorio-odonto.netlify.app/auth/login ✅
+- **Registro Profesional:** https://mi-consultorio-odonto.netlify.app/auth/register/professional ✅
+- **Registro Paciente:** https://mi-consultorio-odonto.netlify.app/auth/register/patient ✅
+- **Dashboard Profesional:** https://mi-consultorio-odonto.netlify.app/dashboard/professional ✅
 
 ### Endpoints de Debug:
-- **Test Supabase:** https://thriving-lolly-96b349.netlify.app/api/test-supabase
-- **Check ENV:** https://thriving-lolly-96b349.netlify.app/api/check-env
-- **Test Login:** https://thriving-lolly-96b349.netlify.app/api/test-login
+- **Test Supabase:** https://mi-consultorio-odonto.netlify.app/api/test-supabase
+- **Check ENV:** https://mi-consultorio-odonto.netlify.app/api/check-env
+- **Test Login:** https://mi-consultorio-odonto.netlify.app/api/test-login
 
 ---
 
 ## 🎯 PRÓXIMOS PASOS (OPCIONAL):
 
-### 1. Personalizar nombre del sitio
-- Ir a: Netlify → Site settings → Site details → Change site name
-- Cambiar `thriving-lolly-96b349` por algo como `mi-consultorio-odonto`
-- **IMPORTANTE:** Actualizar variables de entorno después del cambio
+### 1. ~~Personalizar nombre del sitio~~ ✅ COMPLETADO
+- ✅ Nombre cambiado a `mi-consultorio-odonto`
+- ✅ Variables de entorno actualizadas
+- ✅ Supabase Redirect URLs actualizadas
+- ✅ Login verificado y funcionando
 
 ### 2. Configurar dominio personalizado
 - Ir a: Netlify → Site settings → Domain management
@@ -215,7 +220,9 @@ Total: 100% COMPLETADO 🎉
 
 ---
 
-**✅ ESTADO FINAL:** PRODUCCIÓN EXITOSA
-**📅 Fecha:** 25 de Enero 2026 - 13:30 hs
+**✅ ESTADO FINAL:** PRODUCCIÓN EXITOSA - 100% FUNCIONAL
+**📅 Fecha:** 25 de Enero 2026 - 14:00 hs
 **🎉 Deploy por:** Claude Code + Mario Britto
+**✅ Verificación:** Login y registro funcionando perfectamente
 **📝 Documentación:** Actualizada y completa
+**🌐 URL Final:** https://mi-consultorio-odonto.netlify.app
