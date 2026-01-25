@@ -94,8 +94,12 @@ export async function POST(request: Request) {
 
     if (insertError) {
       console.error('Error al crear profesional:', insertError)
+      console.error('Error details:', JSON.stringify(insertError, null, 2))
       return NextResponse.json(
-        { error: 'Error al crear la cuenta' },
+        {
+          error: 'Error al crear la cuenta',
+          details: insertError.message || 'Error desconocido'
+        },
         { status: 500 }
       )
     }
@@ -115,8 +119,12 @@ export async function POST(request: Request) {
     )
   } catch (error) {
     console.error('Error en registro de profesional:', error)
+    console.error('Error stack:', error instanceof Error ? error.stack : 'No stack')
     return NextResponse.json(
-      { error: 'Error interno del servidor' },
+      {
+        error: 'Error interno del servidor',
+        details: error instanceof Error ? error.message : 'Error desconocido'
+      },
       { status: 500 }
     )
   }
