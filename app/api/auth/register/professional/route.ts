@@ -78,7 +78,7 @@ export async function POST(request: Request) {
     const saltRounds = 10
     const password_hash = await bcrypt.hash(password, saltRounds)
 
-    // Crear el profesional en la base de datos
+    // Crear el profesional en la base de datos con solo los campos requeridos
     const { data: newProfessional, error: insertError } = await supabase
       .from('professionals')
       .insert({
@@ -86,43 +86,8 @@ export async function POST(request: Request) {
         password_hash,
         name,
         specialty,
-        phone: phone || null,
+        phone,
         slug,
-        address: null,
-        work_email: null,
-        work_phone: null,
-        social_media: null,
-        cv_url: null,
-        profile_image_url: null,
-        cover_image_url: null,
-        branding: {
-          primaryColor: '#3B82F6',
-          secondaryColor: '#1E40AF',
-          logoUrl: null,
-          consultorioName: name
-        },
-        terms: 'Términos y condiciones por definir',
-        privacy_policy: 'Política de privacidad por definir',
-        legal_updated_at: new Date().toISOString(),
-        schedule: {
-          monday: { enabled: true, slots: [{ start: '09:00', end: '17:00' }] },
-          tuesday: { enabled: true, slots: [{ start: '09:00', end: '17:00' }] },
-          wednesday: { enabled: true, slots: [{ start: '09:00', end: '17:00' }] },
-          thursday: { enabled: true, slots: [{ start: '09:00', end: '17:00' }] },
-          friday: { enabled: true, slots: [{ start: '09:00', end: '17:00' }] },
-          saturday: { enabled: false, slots: [] },
-          sunday: { enabled: false, slots: [] }
-        },
-        appointment_duration: 30,
-        blocked_dates: [],
-        notifications: {
-          email: true,
-          sms: false,
-          whatsapp: false
-        },
-        is_active: true,
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString()
       })
       .select()
       .single()
