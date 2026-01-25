@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { auth } from '@/lib/auth'
-import { supabase } from '@/lib/supabase'
+import { supabaseAdmin } from '@/lib/supabase'
 
 export async function DELETE(request: NextRequest) {
   try {
@@ -21,7 +21,7 @@ export async function DELETE(request: NextRequest) {
     }
 
     // Verificar que el turno pertenece al profesional
-    const { data: appointment, error: fetchError } = await supabase
+    const { data: appointment, error: fetchError } = await supabaseAdmin
       .from('appointments')
       .select('*')
       .eq('id', appointmentId)
@@ -29,17 +29,19 @@ export async function DELETE(request: NextRequest) {
       .single()
 
     if (fetchError || !appointment) {
+      console.error('Error fetching appointment:', fetchError)
       return NextResponse.json(
-        { error: 'Turno no encontrado' },
+        { error: 'Turno no encontrado o no tienes permisos' },
         { status: 404 }
       )
     }
 
     // Eliminar el turno
-    const { error } = await supabase
+    const { error } = await supabaseAdmin
       .from('appointments')
       .delete()
       .eq('id', appointmentId)
+      .eq('professional_id', session.user.id)
 
     if (error) {
       console.error('Error deleting appointment:', error)
