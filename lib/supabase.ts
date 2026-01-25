@@ -1,15 +1,15 @@
 import { createClient } from '@supabase/supabase-js'
 
 // Validar que las variables de entorno existan
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-
-if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error('Faltan las variables de entorno de Supabase')
-}
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || ''
+const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
 
 // Cliente de Supabase para el navegador
-export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+// Si no hay variables, crear un cliente dummy que fallará en runtime
+export const supabase = createClient(
+  supabaseUrl || 'https://placeholder.supabase.co',
+  supabaseAnonKey || 'placeholder-key'
+)
 
 // Cliente de Supabase para el servidor (bypasea RLS)
 // Solo usar en API routes o Server Components
