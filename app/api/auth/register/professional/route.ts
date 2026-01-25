@@ -93,8 +93,8 @@ export async function POST(request: Request) {
         work_phone: null,
         social_media: null,
         cv_url: null,
-        profile_image: null,
-        cover_image: null,
+        profile_image_url: null,
+        cover_image_url: null,
         branding: {
           primaryColor: '#3B82F6',
           secondaryColor: '#1E40AF',
