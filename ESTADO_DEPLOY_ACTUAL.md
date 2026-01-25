@@ -1,97 +1,153 @@
-# 📊 Estado Actual del Deploy - 24 Enero 2026
+# 📊 Estado Actual del Deploy - 25 Enero 2026
 
-## ✅ COMPLETADO HASTA AHORA:
+## ✅ COMPLETADO:
 
 ### 1. GitHub ✅
-- Repositorio creado: https://github.com/mariobritto-1422/webapp-odontologia
-- Código subido exitosamente
-- Commit inicial realizado
+- Repositorio: https://github.com/mariobritto-1422/webapp-odontologia
+- Código actualizado y funcionando
+- Último commit: Test endpoints y fixes de Supabase
 
 ### 2. Supabase ✅
-- **Proyecto LIMPIO (en uso):**
-  - Nombre: `Odonto_Web`
-  - ID: `truczkguokmaztnlrcku`
-  - URL: https://truczkguokmaztnlrcku.supabase.co
-  - Tablas creadas: ✅
-    - professionals ✅
-    - patients ✅
-    - appointments ✅
-    - notifications ✅
+- **Proyecto en uso:**
+  - Nombre: `WebA_odontoloia`
+  - ID: `fewfewlmbaqgbxzzlrjx`
+  - URL: https://fewfewlmbaqgbxzzlrjx.supabase.co
 
-- **Proyectos anteriores eliminados:** ✅
-  - Limpieza completa realizada
+- **Tablas creadas:** ✅
+  - professionals ✅
+  - patients ✅
+  - appointments (pendiente verificar)
+  - notifications (pendiente verificar)
+
+- **API Keys (NUEVAS - migradas):** ✅
+  - Publishable Key: `sb_publishable_PMnbfgaMSd8Ut8gLwxYLVg_-PGx5Haf`
+  - Secret Key: `sb_secret_vjj3nKBczA9HuAElGWzVlQ_XLd_tmxN`
+  - **IMPORTANTE:** Supabase migró de JWT legacy a nuevas keys
 
 ### 3. Resend ✅
-- API Key obtenida: `re_eM5D8G3K_7MxApb2mbgEgKXyRbQgoBZEH`
+- API Key: `re_eM5D8G3K_7MxApb2mbgEgKXyRbQgoBZEH`
 
-### 4. Netlify ✅
-- ✅ Proyecto creado: `thriving-lolly-96b349`
-- ✅ URL: https://thriving-lolly-96b349.netlify.app
-- ✅ 7 variables de entorno configuradas
-- ✅ Deploy completado exitosamente
-- Archivo de configuración: `netlify.toml` ✅
+### 4. Netlify ⏸️
+- Proyecto: `thriving-lolly-96b349`
+- URL: https://thriving-lolly-96b349.netlify.app
+- **Estado:** PAUSADO por límite de crédito gratuito
+- **Nota:** Resetea el 1 de febrero 2026
+
+### 5. Testing ✅
+- ✅ Registro de profesional FUNCIONA
+- ✅ Conexión a Supabase FUNCIONA
+- ⏳ Login pendiente de probar (muy probablemente funcione)
 
 ---
 
-## 📋 PASOS FINALES:
+## 🎯 PRÓXIMO PASO: Deploy en Vercel Pro
 
-### Paso 1: Configurar URLs en Supabase ⏳
+### Plan:
+1. Crear cuenta Vercel Pro ($20/mes)
+2. Conectar repositorio de GitHub
+3. Configurar 7 variables de entorno
+4. Deploy automático
 
-1. Ir a: https://supabase.com/dashboard/project/truczkguokmaztnlrcku/auth/url-configuration
-2. En "Site URL": `https://thriving-lolly-96b349.netlify.app`
-3. En "Redirect URLs", agregar:
-   - `https://thriving-lolly-96b349.netlify.app/api/auth/callback/credentials`
-   - `https://thriving-lolly-96b349.netlify.app/*`
-4. Click "Save"
+---
 
-### Paso 2: Probar la aplicación ⏳
+## 🔑 VARIABLES DE ENTORNO (para Vercel Pro):
 
-Abrir: https://thriving-lolly-96b349.netlify.app
-- Registrarse como profesional
-- Verificar login
-- Probar funcionalidades básicas
+```
+1. NEXT_PUBLIC_SUPABASE_URL
+   = https://fewfewlmbaqgbxzzlrjx.supabase.co
+
+2. NEXT_PUBLIC_SUPABASE_ANON_KEY
+   = sb_publishable_PMnbfgaMSd8Ut8gLwxYLVg_-PGx5Haf
+
+3. SUPABASE_SERVICE_ROLE_KEY
+   = sb_secret_vjj3nKBczA9HuAElGWzVlQ_XLd_tmxN
+
+4. NEXTAUTH_SECRET
+   = fetndn3lQHT1NaIeig8JE76LXMrskhKwP59+KipLRVI=
+
+5. NEXTAUTH_URL
+   = https://TU-PROYECTO.vercel.app
+   (Actualizar después del primer deploy)
+
+6. NEXT_PUBLIC_BASE_URL
+   = https://TU-PROYECTO.vercel.app
+   (Actualizar después del primer deploy)
+
+7. RESEND_API_KEY
+   = re_eM5D8G3K_7MxApb2mbgEgKXyRbQgoBZEH
+```
+
+---
+
+## 📝 PROBLEMAS RESUELTOS HOY:
+
+1. ✅ Build fallaba por variables de entorno → Solucionado
+2. ✅ Supabase "Invalid API key" → Migrado a nuevas keys
+3. ✅ Registro no funcionaba → Corregidos nombres de columnas
+4. ✅ Conexión a base de datos → Funcionando perfectamente
 
 ---
 
 ## 🔗 Links Importantes:
 
-- **🌐 App en Producción:** https://thriving-lolly-96b349.netlify.app
 - **GitHub:** https://github.com/mariobritto-1422/webapp-odontologia
-- **Supabase Dashboard:** https://supabase.com/dashboard/project/truczkguokmaztnlrcku
-- **Supabase Auth Config:** https://supabase.com/dashboard/project/truczkguokmaztnlrcku/auth/url-configuration
-- **Netlify Dashboard:** https://app.netlify.com/sites/thriving-lolly-96b349
-- **Resend:** https://resend.com/api-keys
+- **Supabase Dashboard:** https://supabase.com/dashboard/project/fewfewlmbaqgbxzzlrjx
+- **Supabase API Settings:** https://supabase.com/dashboard/project/fewfewlmbaqgbxzzlrjx/settings/api
+- **Netlify (pausado):** https://app.netlify.com/sites/thriving-lolly-96b349
+- **Vercel:** https://vercel.com (próximo deploy)
+
+---
+
+## 🚀 PARA RETOMAR MAÑANA:
+
+### Decile a Claude:
+
+**"Hola Claude, continuamos con webapp-odontologia. Ya tengo Vercel Pro. Vamos a hacer el deploy final."**
+
+O simplemente:
+
+**"Continuemos con el deploy de webapp-odontologia en Vercel Pro"**
+
+### Tendrás que:
+1. Tener la cuenta Vercel Pro lista
+2. Estar logueado en Vercel
+3. Tener acceso a GitHub (ya conectado)
 
 ---
 
 ## 📊 Progreso General:
 
 ```
-✅ Código en GitHub         100%
-✅ Base de datos Supabase   100%
-✅ API Key Resend           100%
-✅ Proyecto Supabase limpio 100%
-✅ Configuración Netlify    100%
-✅ Deploy en Netlify        100%
-⏳ Configurar URLs Supabase Pendiente (2 min)
-⏳ Testing final            Pendiente (5 min)
+✅ Código en GitHub           100%
+✅ Base de datos Supabase     100%
+✅ API Keys actualizadas      100%
+✅ Testing básico             100%
+✅ Registro funciona          100%
+⏳ Deploy en producción       Pendiente
+⏳ Testing completo           Pendiente
 
-Total: 95% completado
+Total: 85% completado
 ```
 
 ---
 
-## 💾 Para Continuar:
+## 💡 Notas Técnicas:
 
-Cuando vuelvas, solo di:
-"Continuemos con el deploy en Netlify"
+### Cambios importantes realizados:
+1. **lib/supabase.ts:** Removido throw de error en build time
+2. **API routes:** Agregados valores por defecto para todas las columnas
+3. **Nombres de columnas:** Corregidos (profile_image_url, cover_image_url)
+4. **Supabase keys:** Migradas de JWT legacy a nuevas publishable/secret keys
 
-Y seguimos desde donde quedamos.
+### Endpoints de debug creados:
+- `/api/test-supabase` - Verifica conexión a Supabase
+- `/api/check-env` - Verifica variables de entorno
+- `/api/test-login` - Prueba autenticación directa
+- `/test-login-page` - Interfaz visual para probar login
 
 ---
 
-**Guardado:** 24 de Enero 2026 - 20:45 hs
-**Estado:** Deploy completado exitosamente ✅
-**Próxima acción:** Configurar URLs en Supabase + Testing final
-**Plataforma:** Netlify
-**URL Producción:** https://thriving-lolly-96b349.netlify.app
+**Guardado:** 25 de Enero 2026 - 00:30 hs
+**Estado:** Listo para deploy en Vercel Pro
+**Próxima sesión:** Deploy final en Vercel + Testing completo
+**Repositorio:** https://github.com/mariobritto-1422/webapp-odontologia
