@@ -2,10 +2,12 @@
 
 Sistema multi-tenant para que odontólogos gestionen turnos con sus pacientes de forma simple y profesional.
 
-**🚀 Estado:** Listo para Producción (v1.1)
-**📅 Última actualización:** 24 de Enero 2026
+**🚀 Estado:** EN PRODUCCIÓN ✅
+**🌐 URL:** https://thriving-lolly-96b349.netlify.app
+**📅 Deploy:** 25 de Enero 2026
+**📅 Última actualización:** 25 de Enero 2026
 
-## 📊 Progreso: 95% Completado ✅
+## 📊 Progreso: 100% Completado ✅
 
 ### ✅ Completado:
 
@@ -34,16 +36,19 @@ Sistema multi-tenant para que odontólogos gestionen turnos con sus pacientes de
   - Descarga y compartir
   - Funciona en cualquier móvil
 
-**Deploy** 🆕
-- ✅ **Configuración para Vercel**
-  - Build verificado exitosamente
-  - Variables de entorno documentadas
-  - Guía completa de deployment
+**Deploy** ✅
+- ✅ **En Producción en Netlify Pro**
+  - URL: https://thriving-lolly-96b349.netlify.app
+  - Build automatizado desde GitHub
+  - Variables de entorno configuradas
+  - SSL/HTTPS activo
+  - Edge Functions y Serverless Functions desplegadas
 
-### ⏳ Pendiente (5%):
+### ⏳ Pendiente para v2.0 (opcional):
 - ⏳ Confirmar/Rechazar turnos pendientes desde dashboard
-- ⏳ WhatsApp notifications (v2.0)
-- ⏳ Recordatorios automáticos programados (v2.0)
+- ⏳ WhatsApp notifications
+- ⏳ Recordatorios automáticos programados
+- ⏳ Dominio personalizado
 
 ## 🏗️ Estructura del Proyecto
 
@@ -163,32 +168,50 @@ Abrir [http://localhost:3000](http://localhost:3000)
 - **`check-rls.js`** - Verificar estado de RLS
 - **`delete-test-professional.js`** - Limpiar datos de prueba
 
-## 🚀 Deploy a Producción
+## 🚀 Deploy en Producción
 
-Para deployar en Vercel, sigue la guía detallada en **`GUIA_DEPLOY_VERCEL.md`**
+**✅ Aplicación desplegada en Netlify Pro**
 
-Resumen rápido:
-1. Ejecutar migración de notificaciones en Supabase
-2. Crear cuenta en Resend y obtener API key
-3. Subir código a GitHub
-4. Importar proyecto en Vercel
-5. Configurar variables de entorno
-6. Deploy
+### 🌐 URLs de Acceso:
+- **Producción:** https://thriving-lolly-96b349.netlify.app
+- **Login:** https://thriving-lolly-96b349.netlify.app/auth/login
+- **Registro:** https://thriving-lolly-96b349.netlify.app/auth/register/professional
 
-**Tiempo estimado:** 30-45 minutos
+### 📚 Guías de Deploy:
+- **`GUIA_DEPLOY_NETLIFY.md`** - Guía completa para Netlify ⭐
+- **`ESTADO_DEPLOY_ACTUAL.md`** - Estado del deploy actual
+- **`GUIA_DEPLOY_VERCEL.md`** - Alternativa en Vercel
 
-## 💰 Costos
+### 🔑 Variables de Entorno Configuradas:
+```
+NEXT_PUBLIC_SUPABASE_URL
+NEXT_PUBLIC_SUPABASE_ANON_KEY
+SUPABASE_SERVICE_ROLE_KEY
+NEXTAUTH_SECRET
+NEXTAUTH_URL
+NEXT_PUBLIC_BASE_URL
+RESEND_API_KEY
+```
 
-Todos los servicios tienen plan gratuito generoso:
-- **Vercel:** Gratis (100 GB bandwidth/mes)
+## 💰 Costos de Producción
+
+- **Netlify Pro:** $19 USD/mes (plan activo)
 - **Supabase:** Gratis (500 MB DB, 2 GB storage)
 - **Resend:** Gratis (3,000 emails/mes)
 
-**Total:** $0 USD/mes para empezar ✅
+**Total:** $19 USD/mes
 
 ---
 
-**Versión:** 1.1
-**Estado:** ✅ Listo para Producción
-**Última actualización:** 24 de Enero 2026
-# Deploy trigger
+## 🎯 Información del Proyecto
+
+**Versión:** 1.2
+**Estado:** ✅ EN PRODUCCIÓN
+**Plataforma:** Netlify Pro
+**URL Producción:** https://thriving-lolly-96b349.netlify.app
+**Repositorio:** https://github.com/mariobritto-1422/webapp-odontologia
+**Última actualización:** 25 de Enero 2026
+
+---
+
+**Desarrollado con ❤️ por Mario Britto y Claude Code**

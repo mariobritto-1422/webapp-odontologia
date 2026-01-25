@@ -1,179 +1,356 @@
-# 🚀 Guía de Deploy en Netlify
+# 🚀 Guía Completa de Deploy en Netlify Pro
 
-## 📋 Prerequisitos
+## ✅ Deploy Exitoso - WebApp Odontología
 
-- ✅ Código en GitHub: https://github.com/mariobritto-1422/webapp-odontologia
-- ✅ Cuenta de Netlify (crear en https://netlify.com)
-- ✅ Supabase configurado
+**📅 Fecha del Deploy:** 25 de Enero 2026
+**🌐 URL de Producción:** https://thriving-lolly-96b349.netlify.app
+**✅ Estado:** FUNCIONANDO COMPLETAMENTE
+
+Esta guía documenta el proceso exacto que se siguió para deployar exitosamente la aplicación en Netlify Pro.
+
+---
+
+## 📋 Requisitos Previos
+
+Antes de comenzar, asegúrate de tener:
+
+- ✅ Cuenta de Netlify Pro activa
+- ✅ Código en GitHub (https://github.com/mariobritto-1422/webapp-odontologia)
+- ✅ Proyecto de Supabase configurado
 - ✅ API Key de Resend
+- ✅ Node.js y npm instalados localmente
 
 ---
 
-## 🎯 Opción 1: Deploy desde la Web (Recomendado)
-
-### Paso 1: Crear sitio en Netlify
-
-1. Ve a https://app.netlify.com
-2. Click en "Add new site" → "Import an existing project"
-3. Selecciona "GitHub"
-4. Autoriza a Netlify a acceder a tu GitHub
-5. Busca y selecciona: `mariobritto-1422/webapp-odontologia`
-6. Netlify detectará automáticamente que es un proyecto Next.js
-
-### Paso 2: Configurar el Build
-
-Netlify debería detectar automáticamente:
-- **Build command:** `npm run build`
-- **Publish directory:** `.next`
-
-Si no, configúralo manualmente.
-
-### Paso 3: Configurar Variables de Entorno
-
-Antes de hacer el deploy, click en "Advanced" → "New variable" y agrega estas 7 variables:
-
-```
-1. NEXT_PUBLIC_SUPABASE_URL
-   = https://truczkguokmaztnlrcku.supabase.co
-
-2. NEXT_PUBLIC_SUPABASE_ANON_KEY
-   = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRydWN6a2d1b2ttYXp0bmxyY2t1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjkyNDYzNDcsImV4cCI6MjA4NDgyMjM0N30.C4_heAJr33xISwTHDiw4aakOHrILzIb59lQ0kzmlGbg
-
-3. SUPABASE_SERVICE_ROLE_KEY
-   = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRydWN6a2d1b2ttYXp0bmxyY2t1Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2OTI0NjM0NywiZXhwIjoyMDg0ODIyMzQ3fQ.yT6MnIdmEDC2Cp5nwQYSrvXifvLi4XpyVLg7Egj4Rw8
-
-4. NEXTAUTH_SECRET
-   = fetndn3lQHT1NaIeig8JE76LXMrskhKwP59+KipLRVI=
-
-5. NEXTAUTH_URL
-   = https://TU-SITIO.netlify.app
-   (Nota: Después del primer deploy, actualiza esto con tu URL real)
-
-6. NEXT_PUBLIC_BASE_URL
-   = https://TU-SITIO.netlify.app
-   (Nota: Después del primer deploy, actualiza esto con tu URL real)
-
-7. RESEND_API_KEY
-   = re_eM5D8G3K_7MxApb2mbgEgKXyRbQgoBZEH
-```
-
-### Paso 4: Deploy
-
-1. Click en "Deploy site"
-2. Espera 3-5 minutos mientras Netlify construye la app
-3. Una vez completado, verás tu URL (ejemplo: `https://nombre-aleatorio-123.netlify.app`)
-
-### Paso 5: Actualizar URLs
-
-1. Copia tu URL de Netlify
-2. Ve a "Site settings" → "Environment variables"
-3. Edita `NEXTAUTH_URL` y `NEXT_PUBLIC_BASE_URL` con tu URL real
-4. Click en "Deploys" → "Trigger deploy" → "Clear cache and deploy"
-
----
-
-## 🎯 Opción 2: Deploy con Netlify CLI
-
-### Instalar Netlify CLI
+## 🔧 Paso 1: Instalar Netlify CLI
 
 ```bash
 npm install -g netlify-cli
 ```
 
-### Login en Netlify
+Verifica la instalación:
+```bash
+netlify --version
+```
+
+---
+
+## 🔐 Paso 2: Autenticarse en Netlify
+
+Desde el directorio del proyecto:
 
 ```bash
+cd webapp
 netlify login
 ```
 
-### Deploy
+Esto abrirá tu navegador para autenticarte. Una vez completado, verifica tu cuenta:
 
 ```bash
-# Desde la carpeta webapp
-cd ClaudeProjects/WebApp-Odontologia/webapp
+netlify status
+```
 
-# Build local
-npm run build
+Deberías ver tu nombre y email de Netlify.
 
-# Deploy
-netlify deploy --prod
+---
 
-# Sigue las instrucciones para vincular con tu sitio
+## 🔗 Paso 3: Vincular el Proyecto
+
+Si ya tienes un sitio de Netlify creado:
+
+```bash
+netlify link --id TU-SITE-ID
+```
+
+O lista tus sitios existentes:
+
+```bash
+netlify sites:list
+```
+
+En nuestro caso, vinculamos el sitio `thriving-lolly-96b349`:
+
+```bash
+netlify link --id a2b3e0e2-e600-460e-a6f5-ca21e95634ad
 ```
 
 ---
 
-## 🔧 Configuración de Dominio Personalizado (Opcional)
+## 🔑 Paso 4: Configurar Variables de Entorno
 
-Si tienes un dominio propio:
+Configura las 7 variables de entorno necesarias:
 
-1. Ve a "Site settings" → "Domain management"
-2. Click en "Add custom domain"
-3. Sigue las instrucciones para configurar los DNS
-4. Actualiza `NEXTAUTH_URL` y `NEXT_PUBLIC_BASE_URL` con tu dominio
+```bash
+# Supabase
+netlify env:set NEXT_PUBLIC_SUPABASE_URL "https://fewfewlmbaqgbxzzlrjx.supabase.co"
+netlify env:set NEXT_PUBLIC_SUPABASE_ANON_KEY "sb_publishable_PMnbfgaMSd8Ut8gLwxYLVg_-PGx5Haf"
+netlify env:set SUPABASE_SERVICE_ROLE_KEY "sb_secret_vjj3nKBczA9HuAElGWzVlQ_XLd_tmxN"
 
----
+# NextAuth
+netlify env:set NEXTAUTH_SECRET "fetndn3lQHT1NaIeig8JE76LXMrskhKwP59+KipLRVI="
+netlify env:set NEXTAUTH_URL "https://thriving-lolly-96b349.netlify.app"
 
-## ⚙️ Configurar en Supabase
+# Base URL
+netlify env:set NEXT_PUBLIC_BASE_URL "https://thriving-lolly-96b349.netlify.app"
 
-Una vez que tengas tu URL de Netlify, configura las URLs permitidas:
+# Resend
+netlify env:set RESEND_API_KEY "re_eM5D8G3K_7MxApb2mbgEgKXyRbQgoBZEH"
+```
 
-1. Ve a https://supabase.com/dashboard/project/truczkguokmaztnlrcku
-2. Navega a "Authentication" → "URL Configuration"
-3. En "Site URL", agrega: `https://tu-sitio.netlify.app`
-4. En "Redirect URLs", agrega:
-   - `https://tu-sitio.netlify.app/api/auth/callback/credentials`
-   - `https://tu-sitio.netlify.app/*`
-
----
-
-## 📊 Verificar el Deploy
-
-1. Abre tu URL de Netlify
-2. Deberías ver la pantalla de login
-3. Prueba crear un usuario profesional
-4. Verifica que todo funcione correctamente
+**Importante:** Reemplaza las URLs con tu URL específica de Netlify.
 
 ---
 
-## 🐛 Troubleshooting
+## 📝 Paso 5: Configurar netlify.toml
 
-### Error: "NEXTAUTH_URL is not set"
-- Verifica que hayas configurado `NEXTAUTH_URL` en las variables de entorno
-- Asegúrate de haber hecho un redeploy después de agregar las variables
+Crea o verifica el archivo `netlify.toml` en la raíz del proyecto:
 
-### Error: "Supabase connection failed"
-- Verifica que las URLs y Keys de Supabase sean correctas
-- Asegúrate de que las URLs permitidas estén configuradas en Supabase
+```toml
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
 
-### Error: "Build failed"
-- Revisa los logs del build en Netlify
-- Verifica que todas las dependencias estén en `package.json`
+[build]
+  command = "npm run build"
+```
+
+**Nota Importante:** NO agregues `publish = ".next"` ni `NEXT_PRIVATE_TARGET`. Estas configuraciones causan errores con Next.js 16.
+
+---
+
+## 🔧 Paso 6: Configurar NextAuth para Producción
+
+**CRÍTICO:** NextAuth v5 requiere `trustHost: true` en plataformas como Netlify.
+
+En `lib/auth.ts`, asegúrate de tener:
+
+```typescript
+export const { auth, signIn, signOut, handlers } = NextAuth({
+  ...authConfig,
+  trustHost: true, // ← CRÍTICO para Netlify/Vercel
+  providers: [
+    // ... tus providers
+  ],
+  // ... resto de configuración
+})
+```
+
+---
+
+## 🚀 Paso 7: Deploy a Producción
+
+Ejecuta el deploy:
+
+```bash
+netlify deploy --prod
+```
+
+Este comando:
+1. Ejecuta `npm run build`
+2. Genera las páginas estáticas y dinámicas
+3. Empaqueta las funciones serverless
+4. Empaqueta las edge functions
+5. Sube todo a Netlify
+6. Publica en producción
+
+**Tiempo aproximado:** 1-2 minutos
+
+---
+
+## 🔧 Paso 8: Configurar Supabase
+
+### 8.1 Redirect URLs
+
+Ve a: Supabase Dashboard → Authentication → URL Configuration
+
+En **Redirect URLs**, agrega estas 6 URLs:
+
+```
+http://localhost:3000/*
+http://localhost:3000/api/auth/callback/credentials
+http://localhost:3000/auth/login
+https://thriving-lolly-96b349.netlify.app/*
+https://thriving-lolly-96b349.netlify.app/api/auth/callback/credentials
+https://thriving-lolly-96b349.netlify.app/auth/login
+```
+
+**Nota:** Si ves el mensaje "URL already exists in the allow list", significa que ya están configuradas. ¡Perfecto!
+
+### 8.2 Site URL
+
+Intenta configurar (si te deja):
+```
+https://thriving-lolly-96b349.netlify.app
+```
+
+Si no te permite editarlo, no es crítico.
+
+---
+
+## ✅ Paso 9: Verificar el Deploy
+
+### 9.1 Verificar que el sitio carga
+
+Abre: https://thriving-lolly-96b349.netlify.app
+
+### 9.2 Probar el registro
+
+Ve a: https://thriving-lolly-96b349.netlify.app/auth/register/professional
+
+Completa el formulario y regístrate.
+
+### 9.3 Probar el login
+
+Ve a: https://thriving-lolly-96b349.netlify.app/auth/login
+
+Ingresa con las credenciales que acabas de crear.
+
+### 9.4 Endpoints de debug
+
+- **Test Supabase:** `/api/test-supabase` - Debe mostrar `{"success":true}`
+- **Check ENV:** `/api/check-env` - Debe mostrar las variables configuradas
+- **Test Login:** `/api/test-login` - Endpoint de debug de autenticación
+
+---
+
+## 🐛 Problemas Comunes y Soluciones
+
+### Problema 1: "Server error" en las páginas
+
+**Causa:** Configuración incorrecta de `netlify.toml`
+**Solución:** Remover `publish = ".next"` y `NEXT_PRIVATE_TARGET`
+
+### Problema 2: Login no funciona
+
+**Causa:** Falta `trustHost: true` en NextAuth
+**Solución:** Agregar `trustHost: true` en `lib/auth.ts`
+
+### Problema 3: "URL already exists" en Supabase
+
+**Causa:** URLs ya configuradas previamente
+**Solución:** No duplicarlas, mantener las existentes
+
+### Problema 4: Variables de entorno no se cargan
+
+**Causa:** Variables no configuradas o mal escritas
+**Solución:** Verificar con `netlify env:list` y reconfigurar si es necesario
+
+---
+
+## 📊 Estructura del Deploy
+
+El deploy genera:
+
+- **38 páginas** (estáticas y dinámicas)
+- **21 API endpoints**
+- **1 Middleware** (Edge Function para autenticación)
+- **1 Server Handler** (Función serverless para Next.js)
+
+### Build Output:
+
+```
+Route (app)
+├── ○ / (static)
+├── ○ /auth/login (static)
+├── ○ /auth/register/professional (static)
+├── ƒ /api/auth/[...nextauth] (dynamic)
+├── ƒ /dashboard/professional (dynamic)
+└── ... 33 rutas más
+```
+
+---
+
+## 🔄 Deployar Cambios Futuros
+
+Cada vez que hagas cambios:
+
+```bash
+# 1. Commit y push a GitHub
+git add .
+git commit -m "Descripción del cambio"
+git push
+
+# 2. Deploy a producción
+netlify deploy --prod
+```
+
+O configura **deploys automáticos** desde GitHub:
+- En Netlify Dashboard → Site settings → Build & deploy
+- Conecta tu repositorio de GitHub
+- Cada push a `main` deployará automáticamente
+
+---
+
+## 📱 Personalización (Opcional)
+
+### Cambiar nombre del sitio
+
+En Netlify Dashboard:
+- Site settings → Site details → Change site name
+- Ejemplo: cambiar `thriving-lolly-96b349` por `mi-consultorio-odonto`
+
+**IMPORTANTE:** Si cambias el nombre, actualiza:
+1. Variables de entorno `NEXTAUTH_URL` y `NEXT_PUBLIC_BASE_URL`
+2. Redirect URLs en Supabase
+3. Redeploya con `netlify deploy --prod`
+
+### Agregar dominio personalizado
+
+En Netlify Dashboard:
+- Site settings → Domain management
+- Add custom domain
+- Sigue las instrucciones de DNS
+
+---
+
+## 📈 Métricas del Deploy
+
+- **Tiempo de build:** ~1 minuto
+- **Tiempo de deploy:** ~1-2 minutos
+- **Tiempo total:** ~2-3 minutos
+- **Tamaño del bundle:** Optimizado por Next.js
+- **Edge locations:** Global CDN de Netlify
 
 ---
 
 ## 🔗 Links Útiles
 
-- **Netlify Dashboard:** https://app.netlify.com
-- **Netlify Docs:** https://docs.netlify.com
-- **Next.js on Netlify:** https://docs.netlify.com/frameworks/next-js/
+- **Netlify Dashboard:** https://app.netlify.com/sites/thriving-lolly-96b349
+- **Build Logs:** https://app.netlify.com/projects/thriving-lolly-96b349/deploys
+- **Function Logs:** https://app.netlify.com/projects/thriving-lolly-96b349/logs/functions
+- **GitHub Repo:** https://github.com/mariobritto-1422/webapp-odontologia
+- **Supabase Dashboard:** https://supabase.com/dashboard/project/fewfewlmbaqgbxzzlrjx
 
 ---
 
 ## ✅ Checklist de Deploy
 
-- [ ] Sitio creado en Netlify
-- [ ] Repositorio GitHub vinculado
-- [ ] 7 variables de entorno configuradas
-- [ ] Primer deploy completado
-- [ ] URLs actualizadas (NEXTAUTH_URL y NEXT_PUBLIC_BASE_URL)
-- [ ] Segundo deploy (con URLs correctas)
-- [ ] URLs configuradas en Supabase
-- [ ] Prueba de login exitosa
-- [ ] App funcionando en producción
+Antes de cada deploy, verifica:
+
+- [ ] Código commiteado y pusheado a GitHub
+- [ ] Variables de entorno configuradas
+- [ ] `netlify.toml` correcto (sin `publish` ni `NEXT_PRIVATE_TARGET`)
+- [ ] `trustHost: true` en `lib/auth.ts`
+- [ ] Redirect URLs configuradas en Supabase
+- [ ] Build local exitoso (`npm run build`)
 
 ---
 
-**Fecha:** 24 de Enero 2026
-**Plataforma:** Netlify
-**Tipo:** Deploy de producción
+## 🎯 Deploy Alternativo: Desde la Web (Sin CLI)
+
+Si prefieres no usar CLI:
+
+1. Ve a https://app.netlify.com
+2. Click en "Add new site" → "Import an existing project"
+3. Selecciona GitHub y autoriza
+4. Busca `mariobritto-1422/webapp-odontologia`
+5. Configura variables de entorno antes del deploy
+6. Click en "Deploy site"
+
+---
+
+**🎉 ¡Deploy Exitoso!**
+
+**Fecha:** 25 de Enero 2026
+**Plataforma:** Netlify Pro
+**URL:** https://thriving-lolly-96b349.netlify.app
+**Estado:** FUNCIONANDO COMPLETAMENTE
