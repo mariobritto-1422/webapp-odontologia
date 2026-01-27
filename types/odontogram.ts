@@ -46,21 +46,28 @@ export const FDI_TEMPORARY = {
 
 // Herramientas disponibles para marcar el odontograma
 export const TOOTH_TOOLS = [
-  { id: 'healthy', label: 'Sano', color: '#FFFFFF', icon: 'CheckCircleIcon' },
-  { id: 'caries', label: 'Caries', color: '#EF4444', icon: 'ExclamationTriangleIcon' },
-  { id: 'restoration', label: 'Restauración', color: '#3B82F6', icon: 'WrenchScrewdriverIcon' },
-  { id: 'crown', label: 'Corona', color: '#F59E0B', icon: 'SparklesIcon' },
-  { id: 'fracture', label: 'Fractura', color: '#DC2626', icon: 'BoltIcon' },
-  { id: 'missing', label: 'Ausente', color: '#6B7280', icon: 'XCircleIcon' },
-  { id: 'implant', label: 'Implante', color: '#10B981', icon: 'CubeIcon' },
+  { id: 'healthy', label: 'Sano', color: '#FFFFFF', icon: 'CheckCircleIcon', wholeTooth: false },
+  { id: 'caries', label: 'Caries', color: '#EF4444', icon: 'ExclamationTriangleIcon', wholeTooth: false },
+  { id: 'restoration', label: 'Restauración', color: '#3B82F6', icon: 'WrenchScrewdriverIcon', wholeTooth: false },
+  { id: 'crown', label: 'Corona', color: '#F59E0B', icon: 'SparklesIcon', wholeTooth: true },
+  { id: 'fracture', label: 'Fractura', color: '#7C2D12', icon: 'BoltIcon', wholeTooth: true },
+  { id: 'missing', label: 'Ausente', color: '#6B7280', icon: 'XCircleIcon', wholeTooth: true },
+  { id: 'implant', label: 'Implante', color: '#10B981', icon: 'CubeIcon', wholeTooth: true },
 ] as const
 
 export type ToolType = typeof TOOTH_TOOLS[number]
 
+// Función para verificar si una herramienta pinta el diente completo
+export function isWholeToothTool(toolId: string): boolean {
+  const tool = TOOTH_TOOLS.find(t => t.id === toolId)
+  return tool?.wholeTooth || false
+}
+
 // Mapeo de superficies para espejo anatómico
 export function getMappedSurfaceName(surface: string, quadrant: number): SurfaceName {
-  // En cuadrantes 2 y 4, invertir mesial/distal para correcta anatomía
-  if (quadrant === 2 || quadrant === 4) {
+  // En cuadrantes del lado izquierdo del paciente (2, 3, 6, 7), invertir mesial/distal
+  // para correcta representación anatómica desde la perspectiva del profesional
+  if (quadrant === 2 || quadrant === 3 || quadrant === 6 || quadrant === 7) {
     if (surface === 'mesial') return 'distal'
     if (surface === 'distal') return 'mesial'
   }

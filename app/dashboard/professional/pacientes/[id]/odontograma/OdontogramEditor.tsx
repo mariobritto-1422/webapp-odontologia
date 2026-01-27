@@ -53,6 +53,49 @@ export default function OdontogramEditor({
         const toothKey = toothNumber.toString()
         const currentTooth = prev.teeth[toothKey] || { surfaces: {} }
 
+        // Si la herramienta seleccionada es de "diente completo" (corona, fractura, ausente, implante)
+        // pintar todas las superficies con un solo clic
+        if (selectedTool.wholeTooth) {
+          return {
+            ...prev,
+            teeth: {
+              ...prev.teeth,
+              [toothKey]: {
+                ...currentTooth,
+                surfaces: {
+                  vestibular: {
+                    status: selectedTool.id as any,
+                    color: selectedTool.color,
+                    notes: '',
+                  },
+                  lingual: {
+                    status: selectedTool.id as any,
+                    color: selectedTool.color,
+                    notes: '',
+                  },
+                  mesial: {
+                    status: selectedTool.id as any,
+                    color: selectedTool.color,
+                    notes: '',
+                  },
+                  distal: {
+                    status: selectedTool.id as any,
+                    color: selectedTool.color,
+                    notes: '',
+                  },
+                  oclusal: {
+                    status: selectedTool.id as any,
+                    color: selectedTool.color,
+                    notes: '',
+                  },
+                },
+              },
+            },
+            lastUpdated: new Date().toISOString(),
+          }
+        }
+
+        // Para herramientas de superficie individual (sano, caries, restauración)
         return {
           ...prev,
           teeth: {
