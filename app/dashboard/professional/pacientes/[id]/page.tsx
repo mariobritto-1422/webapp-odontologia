@@ -97,12 +97,20 @@ export default async function PatientDetailPage({
             </div>
           </div>
 
-          <Link
-            href={`/dashboard/professional/turnos/nuevo?patientId=${patient.id}`}
-            className="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"
-          >
-            + Nuevo Turno
-          </Link>
+          <div className="flex gap-3">
+            <Link
+              href={`/dashboard/professional/pacientes/${patient.id}/odontograma`}
+              className="px-6 py-3 bg-gradient-to-r from-green-600 to-emerald-600 text-white font-semibold rounded-lg hover:from-green-700 hover:to-emerald-700 transition-all shadow-md"
+            >
+              Odontograma
+            </Link>
+            <Link
+              href={`/dashboard/professional/turnos/nuevo?patientId=${patient.id}`}
+              className="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              + Nuevo Turno
+            </Link>
+          </div>
         </div>
 
         {/* Estadísticas */}

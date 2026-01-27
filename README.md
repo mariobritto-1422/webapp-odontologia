@@ -5,7 +5,7 @@ Sistema multi-tenant para que odontólogos gestionen turnos con sus pacientes de
 **🚀 Estado:** EN PRODUCCIÓN ✅
 **🌐 URL:** https://mi-consultorio-odonto.netlify.app
 **📅 Deploy:** 25 de Enero 2026
-**📅 Última actualización:** 25 de Enero 2026 - 14:00 hs
+**📅 Última actualización:** 27 de Enero 2026 - Odontograma Implementado
 
 ## 📊 Progreso: 100% Completado ✅
 
@@ -25,7 +25,7 @@ Sistema multi-tenant para que odontólogos gestionen turnos con sus pacientes de
 - ✅ Branding (colores, logo, nombre consultorio)
 - ✅ Duración de turnos configurable
 
-**Comunicación y Marketing** 🆕
+**Comunicación y Marketing**
 - ✅ **Sistema de notificaciones por email**
   - Envío individual y masivo de recordatorios
   - Plantillas personalizables
@@ -35,6 +35,17 @@ Sistema multi-tenant para que odontólogos gestionen turnos con sus pacientes de
   - Generación automática
   - Descarga y compartir
   - Funciona en cualquier móvil
+
+**Odontograma Interactivo** 🆕 ⭐
+- ✅ **Sistema profesional de registro dental**
+  - Interfaz visual interactiva con SVG
+  - Sistema FDI internacional (permanente y temporaria)
+  - 7 estados: Sano, Caries, Restauración, Corona, Fractura, Ausente, Implante
+  - 5 superficies por diente: Vestibular, Lingual, Mesial, Distal, Oclusal
+  - Persistencia en Supabase (JSONB optimizado)
+  - Exportación a PDF profesional
+  - Responsive en todos los dispositivos
+  - Validación de permisos por profesional
 
 **Deploy** ✅
 - ✅ **En Producción en Netlify Pro**
@@ -59,6 +70,7 @@ webapp/
 │   ├── api/               # API Routes
 │   │   ├── appointments/  # CRUD de turnos
 │   │   ├── auth/          # Autenticación
+│   │   ├── odontogram/    # Odontograma (GET/PUT/Export PDF) 🆕
 │   │   └── professional/  # Configuración profesional
 │   ├── auth/              # Páginas de autenticación
 │   │   ├── login/
@@ -67,14 +79,22 @@ webapp/
 │       └── professional/  # Dashboard del profesional
 │           ├── turnos/
 │           ├── pacientes/
+│           │   └── [id]/
+│           │       └── odontograma/  # Odontograma interactivo 🆕
 │           ├── configuracion/
+│           ├── notificaciones/
 │           └── qr/
 ├── database/              # Schemas y migraciones SQL
+│   ├── migration-add-odontogram.sql  # Migración odontograma 🆕
+│   └── README.md         # Instrucciones de migraciones 🆕
 ├── lib/                   # Utilidades y configuración
 │   ├── auth.ts           # NextAuth config
 │   ├── supabase.ts       # Cliente Supabase
+│   ├── pdf-generator.tsx # Generador de PDF 🆕
 │   └── constants.ts
 ├── types/                 # Type definitions
+│   └── odontogram.ts     # Tipos del odontograma 🆕
+├── docs/                  # Documentación 🆕
 └── public/               # Assets estáticos
 ```
 
@@ -110,8 +130,11 @@ Ejecutar en Supabase SQL Editor (en orden):
 ```bash
 1. database/schema.sql
 2. database/migration-add-password.sql
-3. database/migration-notifications.sql  # NUEVO: Para sistema de notificaciones
+3. database/migration-notifications.sql
+4. database/migration-add-odontogram.sql  # 🆕 Para odontograma interactivo
 ```
+
+Ver instrucciones detalladas en: `database/README.md`
 
 ### 4. Iniciar servidor de desarrollo
 ```bash
@@ -138,7 +161,9 @@ Abrir [http://localhost:3000](http://localhost:3000)
 - **Estilos:** TailwindCSS 4
 - **Base de Datos:** Supabase (PostgreSQL)
 - **Auth:** NextAuth v5
-- **Emails:** Resend 🆕
+- **Emails:** Resend
+- **PDF:** @react-pdf/renderer 🆕
+- **Canvas:** html2canvas 🆕
 - **Gráficos:** Recharts
 - **Iconos:** Heroicons
 - **Fechas:** date-fns
@@ -155,19 +180,14 @@ Abrir [http://localhost:3000](http://localhost:3000)
 
 ### Documentos Principales
 
-- **`RESUMEN_ACTUALIZACION.md`** - Resumen completo de las últimas actualizaciones ⭐
-- **`ESTADO_PROYECTO.md`** - Estado detallado del proyecto y progreso
-- **`GUIA_DEPLOY_VERCEL.md`** - Guía paso a paso para deploy en Vercel 🚀
-- **`CONFIGURACION_NOTIFICACIONES.md`** - Setup del sistema de notificaciones 📧
-- **`GUIA_QR_MOVIL.md`** - Guía completa del sistema de QR 📱
-- **`TESTING_COMPLETO_V1.md`** - Checklist de testing
-- **`GUIA_PRODUCCION.md`** - Preparación para producción
+- **`ODONTOGRAMA.md`** ⭐ - Guía completa del Odontograma Interactivo 🆕
+- **`IMPLEMENTACION_COMPLETADA.md`** - Resumen técnico del odontograma 🆕
+- **`database/README.md`** - Instrucciones de migraciones SQL 🆕
+- **`docs/README.md`** - Índice de documentación completa
 
-### Scripts Útiles
+### Documentación Histórica
 
-- **`debug-appointments.js`** - Ver turnos en la base de datos
-- **`check-rls.js`** - Verificar estado de RLS
-- **`delete-test-professional.js`** - Limpiar datos de prueba
+La carpeta `docs/archive/` contiene documentación de versiones anteriores que se mantiene como referencia.
 
 ## 🚀 Deploy en Producción
 
@@ -207,13 +227,13 @@ RESEND_API_KEY
 
 ## 🎯 Información del Proyecto
 
-**Versión:** 1.2
+**Versión:** 1.3 (Odontograma Implementado) 🆕
 **Estado:** ✅ EN PRODUCCIÓN - FUNCIONANDO 100%
 **Plataforma:** Netlify Pro
 **URL Producción:** https://mi-consultorio-odonto.netlify.app
 **Repositorio:** https://github.com/mariobritto-1422/webapp-odontologia
 **Deploy:** 25 de Enero 2026 - 14:00 hs
-**Última actualización:** 25 de Enero 2026
+**Última actualización:** 27 de Enero 2026 - Odontograma Interactivo Implementado
 
 ---
 
