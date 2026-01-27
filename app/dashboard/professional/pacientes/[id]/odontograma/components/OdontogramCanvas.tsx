@@ -64,20 +64,20 @@ export default function OdontogramCanvas({
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Cuadrante 3: Inferior Izquierdo */}
-          <QuadrantSection
-            quadrantNumber={quadrants.q3}
-            toothNumbers={fdiSystem[quadrants.q3 as keyof typeof fdiSystem]}
-            quadrantLabel="Inferior Izquierdo"
-            teeth={teeth}
-            onSurfaceClick={onSurfaceClick}
-          />
-
-          {/* Cuadrante 4: Inferior Derecho */}
+          {/* Cuadrante 4: Inferior Derecho (desde perspectiva del profesional = izquierda) */}
           <QuadrantSection
             quadrantNumber={quadrants.q4}
             toothNumbers={fdiSystem[quadrants.q4 as keyof typeof fdiSystem]}
             quadrantLabel="Inferior Derecho"
+            teeth={teeth}
+            onSurfaceClick={onSurfaceClick}
+          />
+
+          {/* Cuadrante 3: Inferior Izquierdo (desde perspectiva del profesional = derecha) */}
+          <QuadrantSection
+            quadrantNumber={quadrants.q3}
+            toothNumbers={fdiSystem[quadrants.q3 as keyof typeof fdiSystem]}
+            quadrantLabel="Inferior Izquierdo"
             teeth={teeth}
             onSurfaceClick={onSurfaceClick}
           />

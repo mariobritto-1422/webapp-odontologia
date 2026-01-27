@@ -63,6 +63,13 @@ export default function Toolbar({ selectedTool, onToolSelect }: ToolbarProps) {
                 {tool.label}
               </span>
 
+              {/* Indicador de diente completo */}
+              {tool.wholeTooth && (
+                <span className="text-[10px] text-purple-600 font-semibold mt-1">
+                  1 clic
+                </span>
+              )}
+
               {/* Color indicator */}
               <div
                 className="absolute top-2 right-2 w-4 h-4 rounded-full border border-gray-400"
