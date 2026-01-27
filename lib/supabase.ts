@@ -53,6 +53,7 @@ export type Patient = {
   acceptedTerms: boolean
   acceptedPrivacy: boolean
   acceptedAt: string
+  odontogram?: any // JSONB field for odontogram data
   createdAt: string
   updatedAt: string
 }
@@ -71,3 +72,13 @@ export type Appointment = {
   createdAt: string
   updatedAt: string
 }
+
+// Exportar tipos del odontograma
+export type {
+  Odontogram,
+  Tooth,
+  ToothSurface,
+  ToothStatus,
+  SurfaceName,
+  ToolType
+} from '@/types/odontogram'

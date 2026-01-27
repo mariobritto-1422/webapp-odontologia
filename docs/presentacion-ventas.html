@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gestión Odontológica - Presentación Comercial</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            overflow: hidden;
+        }
+
+        .presentation {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .slide {
+            width: 90vw;
+            max-width: 1200px;
+            height: 85vh;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 60px;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            animation: slideIn 0.5s ease-in-out;
+            position: relative;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .slide h1 {
+            font-size: 3.5em;
+            color: #2d3748;
+            margin-bottom: 30px;
+            line-height: 1.2;
+        }
+
+        .slide h2 {
+            font-size: 2.5em;
+            color: #4a5568;
+            margin-bottom: 30px;
+        }
+
+        .slide h3 {
+            font-size: 1.8em;
+            color: #2c5282;
+            margin-bottom: 20px;
+            margin-top: 30px;
+        }
+
+        .slide p, .slide li {
+            font-size: 1.3em;
+            color: #4a5568;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .slide ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .slide li {
+            padding-left: 40px;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .slide li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #48bb78;
+            font-weight: bold;
+            font-size: 1.5em;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
+            padding: 3px 10px;
+            border-radius: 5px;
+            font-weight: 600;
+        }
+
+        .emoji {
+            font-size: 1.5em;
+            margin-right: 10px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 30px;
+            border-radius: 15px;
+            color: white;
+        }
+
+        .feature-card h4 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .feature-card p {
+            color: #f7fafc;
+            font-size: 1.1em;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 40px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 4em;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .stat-label {
+            font-size: 1.2em;
+            color: #718096;
+            margin-top: 10px;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 1000;
+        }
+
+        .nav-button {
+            background: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.2em;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .slide-number {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            color: #a0aec0;
+            font-size: 1.1em;
+        }
+
+        .logo {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            font-size: 2em;
+        }
+
+        .price-box {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .price-box h3 {
+            color: white;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .price {
+            font-size: 4em;
+            font-weight: bold;
+        }
+
+        .problem-box {
+            background: #fff5f5;
+            border-left: 5px solid #f56565;
+            padding: 30px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        .solution-box {
+            background: #f0fff4;
+            border-left: 5px solid #48bb78;
+            padding: 30px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        .tech-badge {
+            display: inline-block;
+            background: #edf2f7;
+            padding: 10px 20px;
+            border-radius: 20px;
+            margin: 5px;
+            font-size: 1em;
+            color: #2d3748;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px 50px;
+            border-radius: 50px;
+            font-size: 1.5em;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+            margin-top: 30px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
+        }
+
+        .benefit-item {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+            padding: 20px;
+            background: #f7fafc;
+            border-radius: 10px;
+        }
+
+        .benefit-icon {
+            font-size: 3em;
+            margin-right: 20px;
+        }
+
+        .odontogram-feature {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 40px;
+            border-radius: 20px;
+            color: white;
+            margin-top: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .odontogram-feature:before {
+            content: "⭐";
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            font-size: 10em;
+            opacity: 0.1;
+        }
+
+        .comparison-table {
+            width: 100%;
+            margin-top: 30px;
+            border-collapse: collapse;
+        }
+
+        .comparison-table th {
+            background: #667eea;
+            color: white;
+            padding: 20px;
+            font-size: 1.2em;
+        }
+
+        .comparison-table td {
+            padding: 15px;
+            border-bottom: 1px solid #e2e8f0;
+            text-align: center;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: #f7fafc;
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation">
+        <!-- Slide 1: Portada -->
+        <div class="slide active">
+            <div class="logo">🦷</div>
+            <h1>Sistema de Gestión<br/>Odontológica Profesional</h1>
+            <p style="font-size: 1.8em; color: #718096; margin-top: 20px;">
+                La solución digital completa para tu consultorio
+            </p>
+            <div class="stats" style="margin-top: 60px;">
+                <div class="stat">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Digital</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Disponible</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">∞</div>
+                    <div class="stat-label">Pacientes</div>
+                </div>
+            </div>
+            <div class="slide-number">1 / 15</div>
+        </div>
+
+        <!-- Slide 2: El Problema -->
+        <div class="slide">
+            <div class="logo">🦷</div>
+            <h2>😓 El Problema Actual</h2>
+            <div class="problem-box">
+                <h3 style="color: #c53030; margin-bottom: 20px;">Los odontólogos pierden tiempo valioso cada día:</h3>
+                <ul>
+                    <li>📞 Llamadas telefónicas constantes para agendar turnos</li>
+                    <li>📒 Agendas en papel difíciles de gestionar</li>
+                    <li>❌ Pacientes que olvidan sus turnos</li>
+                    <li>📄 Historiales médicos en papel desorganizados</li>
+                    <li>🦷 Sin registro digital del estado dental</li>
+                    <li>⏰ Horas administrativas que no generan ingresos</li>
+                </ul>
+            </div>
+            <p style="font-size: 1.5em; text-align: center; margin-top: 30px; color: #c53030; font-weight: 600;">
+                Todo esto reduce la productividad y aumenta el estrés
+            </p>
+            <div class="slide-number">2 / 15</div>
+        </div>
+
+        <!-- Slide 3: La Solución -->
+        <div class="slide">
+            <div class="logo">🦷</div>
+            <h2>✨ Nuestra Solución</h2>
+            <div class="solution-box">
+                <h3 style="color: #2f855a; margin-bottom: 20px;">Sistema integral que automatiza y digitaliza:</h3>
+                <ul>
+                    <li>📱 Agenda digital inteligente y automática</li>
+                    <li>👥 Base de datos completa de pacientes</li>
+                    <li>🦷 Odontograma interactivo profesional (Sistema FDI)</li>
+                    <li>📧 Notificaciones automáticas por email</li>
+                    <li>📊 Estadísticas y reportes en tiempo real</li>
+                    <li>📄 Exportación a PDF profesional</li>
+                    <li>📱 Registro de pacientes con código QR</li>
+                </ul>
+            </div>
+            <p style="font-size: 1.5em; text-align: center; margin-top: 30px; color: #2f855a; font-weight: 600;">
+                ¡Más tiempo para lo que realmente importa: tus pacientes!
+            </p>
+            <div class="slide-number">3 / 15</div>
+        </div>
+
+        <!-- Slide 4: Gestión de Turnos -->
+        <div class="slide">
+            <div class="logo">🦷</div>
+            <h2>📅 Gestión Inteligente de Turnos</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4>🎯 Vista Profesional</h4>
+                    <p>Dashboard completo con todos tus turnos organizados por fecha, estado y paciente</p>
+                </div>
+                <div class="feature-card">
+                    <h4>👤 Portal del Paciente</h4>
+                    <p>Tus pacientes pueden solicitar turnos online 24/7 sin llamadas</p>
+                </div>
+                <div class="feature-card">
+                    <h4>⚡ Confirmación Rápida</h4>
+                    <p>Aprueba o rechaza solicitudes con un solo click desde tu dashboard</p>
+                </div>
+                <div class="feature-card">
+                    <h4>📊 Estados Visuales</h4>
+                    <p>Pendiente • Confirmado • Completado • Cancelado</p>
+                </div>
+            </div>
+            <div class="benefit-item" style="margin-top: 40px;">
+                <div class="benefit-icon">⏱️</div>
+                <div>
+                    <strong>Ahorra hasta 10 horas semanales</strong> que antes perdías en llamadas y coordinación de turnos
+                </div>
+            </div>
+            <div class="slide-number">4 / 15</div>
+        </div>
+
+        <!-- Slide 5: Base de Datos de Pacientes -->
+        <div class="slide">
+            <div class="logo">🦷</div>
+            <h2>👥 Base de Datos Profesional</h2>
+            <h3>Todo organizado en un solo lugar</h3>
+            <ul>
+                <li><span class="emoji">📋</span> Ficha completa de cada paciente con todos sus datos</li>
+                <li><span class="emoji">📅</span> Historial completo de turnos (pasados y futuros)</li>
+                <li><span class="emoji">📊</span> Estadísticas por paciente: turnos totales, completados, cancelados</li>
+                <li><span class="emoji">🔍</span> Búsqueda instantánea por nombre, email o teléfono</li>
+                <li><span class="emoji">📱</span> Acceso desde cualquier dispositivo</li>
+                <li><span class="emoji">🔒</span> 100% seguro y privado</li>
+            </ul>
+            <div class="benefit-item" style="margin-top: 40px;">
+                <div class="benefit-icon">💡</div>
+                <div>
+                    <strong>Fin de los papeles perdidos:</strong> Toda la información de tus pacientes siempre disponible y organizada
+                </div>
+            </div>
+            <div class="slide-number">5 / 15</div>
+        </div>
+
+        <!-- Slide 6: Odontograma - Feature Star -->
+        <div class="slide">
+            <div class="logo">🦷</div>
+            <h2>⭐ Odontograma Interactivo Profesional</h2>
+            <div class="odontogram-feature">
+                <h3 style="color: white;">¡La joya del sistema!</h3>
+                <p style="color: white; font-size: 1.4em; margin-top: 20px;">
+                    Registra el estado dental de tus pacientes de forma visual, profesional y digital
+                </p>
+            </div>
+            <div class="feature-grid" style="margin-top: 30px;">
+                <div class="feature-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                    <h4>🌍 Sistema FDI Internacional</h4>
+                    <p>Estándar mundial para numeración dental</p>
+                </div>
+                <div class="feature-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                    <h4>🎨 Interfaz Visual</h4>
+                    <p>Click en cada superficie del diente para marcar estado</p>
+                </div>
+                <div class="feature-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                    <h4>👶 Dentición Completa</h4>
+                    <p>Permanente (32 dientes) y Temporaria (20 dientes)</p>
+                </div>
+                <div class="feature-card" style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);">
+                    <h4>📄 Exporta a PDF</h4>
+                    <p>Genera reportes profesionales con un click</p>
+                </div>
+            </div>
+            <div class="slide-number">6 / 15</div>
+        </div>
+
+        <!-- Slide 7: Odontograma - Detalles Técnicos -->
+        <div class="slide">
+            <div class="logo">🦷</div>
+            <h2>🦷 Odontograma: Detalles Profesionales</h2>
+            <h3>7 Estados Clínicos</h3>
+            <div class="feature-grid">
+                <div style="background: #f7fafc; padding: 20px; border-radius: 10px; border-left: 5px solid #48bb78;">
+                    <strong>✓ Sano</strong> - Diente sin patologías
+                </div>
+                <div style="background: #f7fafc; padding: 20px; border-radius: 10px; border-left: 5px solid #ef4444;">
+                    <strong>🦠 Caries</strong> - Lesión cariosa detectada
+                </div>
+                <div style="background: #f7fafc; padding: 20px; border-radius: 10px; border-left: 5px solid #3b82f6;">
+                    <strong>🔧 Restauración</strong> - Obturación realizada
+                </div>
+                <div style="background: #f7fafc; padding: 20px; border-radius: 10px; border-left: 5px solid #f59e0b;">
+                    <strong>👑 Corona</strong> - Corona protésica
+                </div>
+                <div style="background: #f7fafc; padding: 20px; border-radius: 10px; border-left: 5px solid #dc2626;">
+                    <strong>⚡ Fractura</strong> - Diente fracturado
+                </div>
+                <div style="background: #f7fafc; padding: 20px; border-radius: 10px; border-left: 5px solid #6b7280;">
+                    <strong>❌ Ausente</strong> - Diente faltante
+                </div>
+                <div style="background: #f7fafc; padding: 20px; border-radius: 10px; border-left: 5px solid #10b981;">
+                    <strong>🔩 Implante</strong> - Implante dental
+                </div>
+            </div>
+            <h3>5 Superficies por Diente</h3>
+            <p style="margin-top: 15px;">Vestibular • Lingual • Mesial • Distal • Oclusal</p>
+            <div class="slide-number">7 / 15</div>
+        </div>
+
+        <!-- Slide 8: Notificaciones -->
+        <div class="slide">
+            <div class="logo">🦷</div>
+            <h2>📧 Sistema de Notificaciones Inteligente</h2>
+            <h3>Mantén a tus pacientes informados</h3>
+            <ul>
+                <li><span class="emoji">✉️</span> <strong>Emails automáticos</strong> por cada evento importante</li>
+                <li><span class="emoji">🔔</span> <strong>Recordatorios</strong> de turnos próximos</li>
+                <li><span class="emoji">📤</span> <strong>Envío masivo</strong> de notificaciones a todos los pacientes</li>
+                <li><span class="emoji">✏️</span> <strong>Plantillas personalizables</strong> con tu marca</li>
+                <li><span class="emoji">📊</span> <strong>Historial completo</strong> de todas las notificaciones enviadas</li>
+                <li><span class="emoji">⚡</span> Integración con <strong>Resend</strong> (3,000 emails gratis/mes)</li>
+            </ul>
+            <div class="benefit-item" style="margin-top: 40px;">
+                <div class="benefit-icon">📉</div>
+                <div>
+                    <strong>Reduce ausencias hasta un 40%:</strong> Los recordatorios automáticos disminuyen drásticamente los turnos perdidos
+                </div>
+            </div>
+            <div class="slide-number">8 / 15</div>
+        </div>
+
+        <!-- Slide 9: Código QR -->
+        <div class="slide">
+            <div class="logo">🦷</div>
+            <h2>📱 Registro con Código QR</h2>
+            <h3>Moderniza la captación de pacientes</h3>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h4>🎯 Generación Automática</h4>
+                    <p>Cada profesional tiene su QR único personalizado</p>
+                </div>
+                <div class="feature-card">
+                    <h4>📥 Descarga y Comparte</h4>
+                    <p>Descarga el QR para posters, redes sociales, tarjetas</p>
+                </div>
+                <div class="feature-card">
+                    <h4>📱 Escanea y Listo</h4>
+                    <p>Pacientes se registran en segundos desde su móvil</p>
+                </div>
+                <div class="feature-card">
+                    <h4>🎨 Personalizable</h4>
+                    <p>Con tus colores y marca del consultorio</p>
+                </div>
+            </div>
+            <div class="benefit-item" style="margin-top: 40px;">
+                <div class="benefit-icon">🚀</div>
+                <div>
+                    <strong>Marketing digital facilitado:</strong> Comparte tu QR en Instagram, Facebook, WhatsApp y capta nuevos pacientes automáticamente
+                </div>
+            </div>
+            <div class="slide-number">9 / 15</div>
+        </div>
+
+        <!-- Slide 10: Dashboard Profesional -->
+        <div class="slide">
+            <div class="logo">🦷</div>
+            <h2>📊 Dashboard Profesional Completo</h2>
+            <h3>Toda tu práctica en un vistazo</h3>
+            <ul style="columns: 2;">
+                <li>📈 <strong>Estadísticas en tiempo real</strong></li>
+                <li>📅 <strong>Turnos de hoy</strong> destacados</li>
+                <li>👥 <strong>Total de pacientes</strong> activos</li>
+                <li>📊 <strong>Gráficos visuales</strong> de tendencias</li>
+                <li>🎯 <strong>Turnos completados</strong> vs cancelados</li>
+                <li>🔔 <strong>Notificaciones pendientes</strong></li>
+                <li>⚡ <strong>Acceso rápido</strong> a todas las funciones</li>
+                <li>🎨 <strong>Personalizable</strong> con tu branding</li>
+            </ul>
+            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; border-radius: 15px; color: white; margin-top: 40px;">
+                <p style="font-size: 1.4em; color: white; text-align: center;">
+                    <strong>Todo lo que necesitas para gestionar tu consultorio, en una sola pantalla</strong>
+                </p>
+            </div>
+            <div class="slide-number">10 / 15</div>
+        </div>
+
+        <!-- Slide 11: Configuración Personalizable -->
+        <div class="slide">
+            <div class="logo">🦷</div>
+            <h2>⚙️ 100% Personalizable</h2>
+            <h3>Adapta el sistema a tu forma de trabajar</h3>
+            <div class="feature-grid">
+                <div class="feature-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                    <h4>🎨 Branding Completo</h4>
+                    <p>Logo, colores, nombre del consultorio visible en todo el sistema</p>
+                </div>
+                <div class="feature-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                    <h4>🕐 Horarios Flexibles</h4>
+                    <p>Define tus horarios de atención por día de la semana</p>
+                </div>
+                <div class="feature-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                    <h4>⏱️ Duración de Turnos</h4>
+                    <p>Configura 30, 45, 60 minutos o lo que necesites</p>
+                </div>
+                <div class="feature-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                    <h4>👤 Perfil Profesional</h4>
+                    <p>Especialidad, contacto, información pública</p>
+                </div>
+            </div>
+            <p style="text-align: center; font-size: 1.3em; margin-top: 40px;">
+                <span class="highlight">Tu sistema, tus reglas</span> - Adaptable a cualquier especialidad odontológica
+            </p>
+            <div class="slide-number">11 / 15</div>
+        </div>
+
+        <!-- Slide 12: Tecnología y Seguridad -->
+        <div class="slide">
+            <div class="logo">🦷</div>
+            <h2>🔒 Tecnología de Punta y Seguridad</h2>
+            <h3>Stack tecnológico profesional</h3>
+            <div style="margin: 30px 0;">
+                <span class="tech-badge">⚡ Next.js 16</span>
+                <span class="tech-badge">🔷 TypeScript</span>
+                <span class="tech-badge">🎨 Tailwind CSS</span>
+                <span class="tech-badge">💾 Supabase</span>
+                <span class="tech-badge">🔐 NextAuth</span>
+                <span class="tech-badge">📧 Resend</span>
+                <span class="tech-badge">📄 React-PDF</span>
+            </div>
+            <h3>Seguridad Garantizada</h3>
+            <ul>
+                <li>🔐 <strong>Contraseñas encriptadas</strong> con bcrypt (irreversibles)</li>
+                <li>🛡️ <strong>Row Level Security (RLS)</strong> en base de datos</li>
+                <li>🔒 <strong>HTTPS/SSL</strong> en todas las conexiones</li>
+                <li>👤 <strong>Sesiones seguras</strong> con tokens JWT</li>
+                <li>🚫 <strong>Validación completa</strong> en cliente y servidor</li>
+                <li>💾 <strong>Backup automático</strong> en Supabase</li>
+            </ul>
+            <div class="benefit-item" style="margin-top: 30px;">
+                <div class="benefit-icon">🏆</div>
+                <div>
+                    <strong>Cumplimiento normativo:</strong> Sistema diseñado con estándares de seguridad para datos médicos
+                </div>
+            </div>
+            <div class="slide-number">12 / 15</div>
+        </div>
+
+        <!-- Slide 13: Comparación -->
+        <div class="slide">
+            <div class="logo">🦷</div>
+            <h2>📊 Método Tradicional vs Nuestro Sistema</h2>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Aspecto</th>
+                        <th style="background: #e53e3e;">❌ Método Tradicional</th>
+                        <th style="background: #48bb78;">✅ Nuestro Sistema</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Agenda</strong></td>
+                        <td>Papel, desorganizada</td>
+                        <td>Digital, automática, 24/7</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Turnos</strong></td>
+                        <td>Solo por llamada</td>
+                        <td>Online, pacientes auto-gestionan</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Recordatorios</strong></td>
+                        <td>Llamadas manuales</td>
+                        <td>Emails automáticos</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Odontograma</strong></td>
+                        <td>Papel, difícil de leer</td>
+                        <td>Digital, visual, exportable</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Historiales</strong></td>
+                        <td>Archivos físicos</td>
+                        <td>Base de datos searchable</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Reportes</strong></td>
+                        <td>Manual, tedioso</td>
+                        <td>Automático, PDF en 1 click</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Acceso</strong></td>
+                        <td>Solo en consultorio</td>
+                        <td>Desde cualquier lugar</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="slide-number">13 / 15</div>
+        </div>
+
+        <!-- Slide 14: Beneficios Cuantificables -->
+        <div class="slide">
+            <div class="logo">🦷</div>
+            <h2>💰 Retorno de Inversión Inmediato</h2>
+            <h3>Beneficios medibles para tu consultorio</h3>
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-number" style="color: #48bb78;">10h</div>
+                    <div class="stat-label">Ahorradas por semana en gestión</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number" style="color: #3182ce;">40%</div>
+                    <div class="stat-label">Menos ausencias a turnos</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number" style="color: #d69e2e;">+30%</div>
+                    <div class="stat-label">Más pacientes por día</div>
+                </div>
+            </div>
+            <div style="margin-top: 50px;">
+                <div class="benefit-item">
+                    <div class="benefit-icon">⏰</div>
+                    <div><strong>Más tiempo clínico:</strong> Menos tareas administrativas = más tiempo para atender pacientes</div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">💵</div>
+                    <div><strong>Más ingresos:</strong> Menos huecos en la agenda = más productividad</div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">😊</div>
+                    <div><strong>Pacientes satisfechos:</strong> Experiencia moderna y profesional</div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">📈</div>
+                    <div><strong>Crecimiento sostenible:</strong> Sistema escalable sin límites</div>
+                </div>
+            </div>
+            <div class="slide-number">14 / 15</div>
+        </div>
+
+        <!-- Slide 15: Planes y Precios -->
+        <div class="slide">
+            <div class="logo">🦷</div>
+            <h2>💎 Planes Disponibles</h2>
+            <div class="feature-grid" style="gap: 20px;">
+                <div style="background: #f7fafc; padding: 40px; border-radius: 20px; border: 3px solid #cbd5e0;">
+                    <h3 style="color: #2d3748; text-align: center;">Básico</h3>
+                    <div style="text-align: center; font-size: 3em; font-weight: bold; color: #4a5568; margin: 20px 0;">
+                        $30<span style="font-size: 0.4em;">/mes</span>
+                    </div>
+                    <ul style="font-size: 1em;">
+                        <li>Gestión de turnos</li>
+                        <li>Base de datos pacientes</li>
+                        <li>Hasta 100 pacientes</li>
+                        <li>Notificaciones básicas</li>
+                    </ul>
+                </div>
+                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 40px; border-radius: 20px; box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4); transform: scale(1.05);">
+                    <div style="background: #fbbf24; color: #78350f; padding: 5px 15px; border-radius: 20px; display: inline-block; font-weight: bold; margin-bottom: 10px;">⭐ MÁS POPULAR</div>
+                    <h3 style="color: white; text-align: center;">Profesional</h3>
+                    <div style="text-align: center; font-size: 3em; font-weight: bold; color: white; margin: 20px 0;">
+                        $70<span style="font-size: 0.4em;">/mes</span>
+                    </div>
+                    <ul style="font-size: 1em;">
+                        <li style="color: white;">✨ Todo del plan Básico</li>
+                        <li style="color: white;">🦷 Odontograma Interactivo</li>
+                        <li style="color: white;">📄 Exportación a PDF</li>
+                        <li style="color: white;">♾️ Pacientes ilimitados</li>
+                        <li style="color: white;">📧 Notificaciones masivas</li>
+                        <li style="color: white;">📱 Código QR personalizado</li>
+                        <li style="color: white;">🎨 Branding completo</li>
+                    </ul>
+                </div>
+            </div>
+            <p style="text-align: center; font-size: 1.3em; margin-top: 30px; color: #48bb78; font-weight: 600;">
+                ✅ Sin costos de instalación • ✅ Soporte incluido • ✅ 30 días de garantía
+            </p>
+            <div class="slide-number">15 / 15</div>
+        </div>
+
+        <!-- Slide 16: Call to Action -->
+        <div class="slide">
+            <div class="logo">🦷</div>
+            <h1 style="text-align: center;">¿Listo para Transformar<br/>tu Consultorio?</h1>
+            <div style="text-align: center; margin: 50px 0;">
+                <button class="cta-button">📞 Solicita una Demo Gratuita</button>
+            </div>
+            <div style="text-align: center; margin-top: 40px;">
+                <h3 style="color: #4a5568;">Contacto</h3>
+                <p style="font-size: 1.4em; margin: 20px 0;">
+                    📧 info@consultorio-odonto.com<br/>
+                    📱 WhatsApp: +54 9 XXX XXX XXXX<br/>
+                    🌐 www.mi-consultorio-odonto.com
+                </p>
+            </div>
+            <div style="background: #f7fafc; padding: 30px; border-radius: 15px; margin-top: 40px;">
+                <p style="text-align: center; font-size: 1.2em; color: #718096;">
+                    <strong>✨ Oferta de lanzamiento:</strong> 50% de descuento los primeros 3 meses
+                </p>
+            </div>
+            <div class="slide-number">16 / 15</div>
+        </div>
+    </div>
+
+    <div class="navigation">
+        <button class="nav-button" onclick="prevSlide()">← Anterior</button>
+        <button class="nav-button" onclick="nextSlide()">Siguiente →</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+        }
+
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+
+        function prevSlide() {
+            showSlide(currentSlide - 1);
+        }
+
+        // Navegación con teclado
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                prevSlide();
+            }
+        });
+
+        // Swipe en móvil
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) nextSlide();
+            if (touchEndX > touchStartX + 50) prevSlide();
+        }
+    </script>
+</body>
+</html>
