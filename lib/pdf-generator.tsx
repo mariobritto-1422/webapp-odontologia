@@ -236,7 +236,7 @@ export async function generateOdontogramPDF({
 
         {/* Footer */}
         <Text style={styles.footer}>
-          Documento generado el {currentDate} - Sistema de Gestión Odontológica
+          Documento generado el {currentDate} - Sonrisapp
         </Text>
       </Page>
     </Document>

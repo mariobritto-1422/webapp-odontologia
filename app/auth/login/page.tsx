@@ -52,9 +52,12 @@ function LoginForm() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 flex items-center justify-center p-4">
       <div className="card max-w-md w-full">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            🦷 WebApp Odontología
-          </h1>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/sonrisapp-logo.svg"
+            alt="Sonrisapp"
+            style={{ height: '60px', marginBottom: '24px', display: 'inline-block' }}
+          />
           <p className="text-gray-600">Inicia sesión en tu cuenta</p>
         </div>
 

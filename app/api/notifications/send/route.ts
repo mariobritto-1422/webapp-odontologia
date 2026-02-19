@@ -170,7 +170,7 @@ export async function POST(request: NextRequest) {
             </div>
             <div class="footer">
               <p>Este es un correo automático, por favor no responder.</p>
-              <p>Sistema de Gestión de Turnos - WebApp Odontología</p>
+              <p>Sistema de Gestión de Turnos - Sonrisapp</p>
             </div>
           </body>
           </html>

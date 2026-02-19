@@ -157,7 +157,7 @@ export default function HomePage() {
 
         {/* Footer */}
         <div className="mt-20 text-center text-white/80">
-          <p className="text-lg mb-4">WebApp Odontología - Sistema de Gestión Profesional</p>
+          <p className="text-lg mb-4">Sonrisapp - Sistema de Gestión Profesional</p>
           <div className="flex justify-center gap-6 text-sm">
             <Link href="/auth/login" className="hover:text-white transition-colors">
               Iniciar Sesión

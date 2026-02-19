@@ -1,4 +1,4 @@
-# 🦷 WebApp Odontología - Sistema de Gestión de Turnos
+# Sonrisapp - Sistema de Gestión de Turnos
 
 Sistema multi-tenant para que odontólogos gestionen turnos con sus pacientes de forma simple y profesional.
 
@@ -6,6 +6,7 @@ Sistema multi-tenant para que odontólogos gestionen turnos con sus pacientes de
 **🌐 URL:** https://mi-consultorio-odonto.netlify.app
 **📅 Deploy:** 25 de Enero 2026
 **📅 Última actualización:** 27 de Enero 2026 - Odontograma Implementado
+**🖼 Logo:** `public/sonrisapp-logo.svg` | Favicon: `public/sonrisapp-favicon.svg`
 
 ## 📊 Progreso: 100% Completado ✅
 
