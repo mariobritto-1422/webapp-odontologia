@@ -23,7 +23,8 @@ export default async function ProfessionalLayout({
       {/* Sidebar */}
       <aside className="w-64 bg-white shadow-lg fixed h-full">
         <div className="p-6 border-b border-gray-200">
-          <h1 className="text-2xl font-bold text-blue-600">Odonto App</h1>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/sonrisapp-logo.svg" alt="Sonrisapp" height={40} className="h-10 mb-1" />
           <p className="text-sm text-gray-600 mt-1">Panel Profesional</p>
         </div>
 

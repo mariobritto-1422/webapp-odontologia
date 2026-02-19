@@ -1,5 +1,5 @@
 {
-  "name": "webapp-odontologia",
+  "name": "sonrisapp",
   "version": "1.0.0",
   "description": "Sistema de gestión de turnos odontológicos multi-tenant",
   "private": true,

@@ -2,8 +2,11 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'WebApp Odontología',
-  description: 'Sistema de gestión de turnos odontológicos multi-tenant',
+  title: 'Sonrisapp',
+  description: 'Sistema de gestión de turnos dental',
+  icons: {
+    icon: '/sonrisapp-favicon.svg',
+  },
 }
 
 export default function RootLayout({
