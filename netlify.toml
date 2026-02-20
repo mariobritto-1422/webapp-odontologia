@@ -3,3 +3,9 @@
 
 [build]
   command = "npm run build"
+
+[[redirects]]
+  from = "https://mi-consultorio-odonto.netlify.app"
+  to = "https://mi-consultorio-odonto.netlify.app/auth/login"
+  status = 301
+  force = true
