@@ -65,7 +65,7 @@ Hola [Nombre],
 
 Gracias por tu tiempo hoy. Como hablamos, te dejo el acceso a la demo para que puedas probarlo vos mismo:
 
-🌐 **Demo:** https://mi-consultorio-odonto.netlify.app
+🌐 **Demo:** https://www.sonrisapp.com
 
 👤 **Usuario de prueba:**
 - Email: juan@garcia.com
