@@ -91,6 +91,15 @@ html { scroll-behavior: smooth; }
 }
 #landing-root .nav-cta:hover { opacity: 0.88; transform: translateY(-1px); }
 
+#landing-root .nav-ingresar {
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-weight: 400;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+#landing-root .nav-ingresar:hover { color: var(--white); }
+
 /* ─── HERO ─── */
 #landing-root .hero {
   min-height: 100vh;
@@ -668,6 +677,7 @@ export default function HomePage() {
           <div className="nav-right">
             <a href="#funciones" className="nav-link">Funciones</a>
             <a href="#contacto" className="nav-link">Contacto</a>
+            <a href="https://mi-consultorio-odonto.netlify.app" className="nav-ingresar" target="_blank" rel="noopener noreferrer">Ingresar →</a>
             <a href="#prueba" className="nav-cta">Prueba gratis</a>
           </div>
         </nav>
@@ -683,6 +693,10 @@ export default function HomePage() {
             <a href="#prueba" className="btn-primary">Empezar prueba gratuita →</a>
             <a href="#funciones" className="btn-ghost">Ver todas las funciones</a>
           </div>
+          <p className="hero-sub2" style={{ marginBottom: 0 }}>
+            ¿Ya tenés cuenta?{' '}
+            <a href="https://mi-consultorio-odonto.netlify.app" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--cyan)', textDecoration: 'none' }}>Ingresá acá →</a>
+          </p>
           <div className="hero-scroll">
             <div className="scroll-line"></div>
             <span>Explorá</span>
