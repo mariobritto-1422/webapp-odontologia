@@ -188,7 +188,7 @@ Busca en el slide 16:
 <p style="font-size: 1.4em; margin: 20px 0;">
     📧 info@consultorio-odonto.com<br/>
     📱 WhatsApp: +54 9 XXX XXX XXXX<br/>
-    🌐 www.mi-consultorio-odonto.com
+    🌐 www.sonrisapp.com
 </p>
 ```
 
@@ -197,7 +197,7 @@ Reemplaza con tus datos reales.
 ### Cambiar URL de Producción
 
 Busca en toda la presentación menciones a:
-- `https://mi-consultorio-odonto.netlify.app`
+- `https://www.sonrisapp.com`
 
 Y reemplaza con tu URL final si cambia.
 
@@ -228,7 +228,7 @@ Si necesitas un archivo .pptx tradicional:
 
 ### Para Enviar Después de la Presentación
 
-1. **Link a la demo**: https://mi-consultorio-odonto.netlify.app
+1. **Link a la demo**: https://www.sonrisapp.com
 2. **Credenciales de prueba**:
    - Email: juan@garcia.com
    - Contraseña: 123456

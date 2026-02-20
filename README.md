@@ -3,7 +3,7 @@
 Sistema multi-tenant para que odontólogos gestionen turnos con sus pacientes de forma simple y profesional.
 
 **🚀 Estado:** EN PRODUCCIÓN ✅
-**🌐 URL:** https://mi-consultorio-odonto.netlify.app
+**🌐 URL:** https://www.sonrisapp.com
 **📅 Deploy:** 25 de Enero 2026
 **📅 Última actualización:** 27 de Enero 2026 - Odontograma Implementado
 **🖼 Logo:** `public/sonrisapp-logo.svg` | Favicon: `public/sonrisapp-favicon.svg`
@@ -50,7 +50,7 @@ Sistema multi-tenant para que odontólogos gestionen turnos con sus pacientes de
 
 **Deploy** ✅
 - ✅ **En Producción en Netlify Pro**
-  - URL: https://mi-consultorio-odonto.netlify.app
+  - URL: https://www.sonrisapp.com
   - Build automatizado desde GitHub
   - Variables de entorno configuradas
   - SSL/HTTPS activo
@@ -195,10 +195,10 @@ La carpeta `docs/archive/` contiene documentación de versiones anteriores que s
 **✅ Aplicación desplegada en Netlify Pro**
 
 ### 🌐 URLs de Acceso:
-- **Producción:** https://mi-consultorio-odonto.netlify.app
-- **Login:** https://mi-consultorio-odonto.netlify.app/auth/login
-- **Registro Profesional:** https://mi-consultorio-odonto.netlify.app/auth/register/professional
-- **Registro Paciente:** https://mi-consultorio-odonto.netlify.app/auth/register/patient
+- **Producción:** https://www.sonrisapp.com
+- **Login:** https://www.sonrisapp.com/auth/login
+- **Registro Profesional:** https://www.sonrisapp.com/auth/register/professional
+- **Registro Paciente:** https://www.sonrisapp.com/auth/register/patient
 
 ### 📚 Guías de Deploy:
 - **`GUIA_DEPLOY_NETLIFY.md`** - Guía completa para Netlify ⭐
@@ -231,8 +231,8 @@ RESEND_API_KEY
 **Versión:** 1.3 (Odontograma Implementado) 🆕
 **Estado:** ✅ EN PRODUCCIÓN - FUNCIONANDO 100%
 **Plataforma:** Netlify Pro
-**URL Producción:** https://mi-consultorio-odonto.netlify.app
-**Repositorio:** https://github.com/mariobritto-1422/webapp-odontologia
+**URL Producción:** https://www.sonrisapp.com
+**Repositorio:** https://github.com/mariobritto-1422/sonrisapp
 **Deploy:** 25 de Enero 2026 - 14:00 hs
 **Última actualización:** 27 de Enero 2026 - Odontograma Interactivo Implementado
 
