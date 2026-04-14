@@ -2,7 +2,6 @@ import { auth } from '@/lib/auth'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { signOut } from '@/lib/auth'
-import NavCounter from '@/components/NavCounter'
 
 export default async function ProfessionalLayout({
   children,
@@ -33,12 +32,11 @@ export default async function ProfessionalLayout({
           <NavLink href="/dashboard/professional" label="Panel Principal" />
           <NavLink href="/dashboard/professional/turnos" label="Turnos" />
           <NavLink href="/dashboard/professional/pacientes" label="Pacientes" />
-          <NavLink href="/dashboard/professional/recetas" label="Prescripciones" highlight />
+          <NavLink href="/dashboard/professional/recetas" label="Recetas" />
           <NavLink href="/dashboard/professional/notificaciones" label="Notificaciones" />
           <NavLink href="/dashboard/professional/configuracion" label="Configuración" />
           <NavLink href="/dashboard/professional/qr" label="Código QR" />
-          <NavLink href="/dashboard/professional/planes" label="Mi Plan" highlight />
-          <NavCounter />
+          <NavLink href="/dashboard/professional/planes" label="Planes y suscripción" />
         </nav>
 
         <div className="absolute bottom-0 w-64 p-4 border-t border-gray-200">
@@ -74,7 +72,7 @@ export default async function ProfessionalLayout({
   )
 }
 
-function NavLink({ href, label, highlight }: { href: string; label: string; highlight?: boolean }) {
+function NavLink({ href, label }: { href: string; label: string }) {
   return (
     <Link
       href={href}
