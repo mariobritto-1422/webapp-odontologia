@@ -677,7 +677,7 @@ export default function HomePage() {
           <div className="nav-right">
             <a href="#funciones" className="nav-link">Funciones</a>
             <a href="#contacto" className="nav-link">Contacto</a>
-            <a href="https://mi-consultorio-odonto.netlify.app" className="nav-ingresar" target="_blank" rel="noopener noreferrer">Ingresar →</a>
+            <a href="/auth/login" className="nav-ingresar">Ingresar →</a>
             <a href="#prueba" className="nav-cta">Prueba gratis</a>
           </div>
         </nav>
@@ -695,7 +695,7 @@ export default function HomePage() {
           </div>
           <p className="hero-sub2" style={{ marginBottom: 0 }}>
             ¿Ya tenés cuenta?{' '}
-            <a href="https://mi-consultorio-odonto.netlify.app" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--cyan)', textDecoration: 'none' }}>Ingresá acá →</a>
+            <a href="/auth/login" style={{ color: 'var(--cyan)', textDecoration: 'none' }}>Ingresá acá →</a>
           </p>
           <div className="hero-scroll">
             <div className="scroll-line"></div>

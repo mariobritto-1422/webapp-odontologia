@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Cormorant_Garamond, DM_Sans } from 'next/font/google'
 import './globals.css'
+import UnregisterSW from '@/components/UnregisterSW'
 
 const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
@@ -32,7 +33,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" className={`${cormorant.variable} ${dmSans.variable}`}>
-      <body className="antialiased">{children}</body>
+      <body className="antialiased"><UnregisterSW />{children}</body>
     </html>
   )
 }
