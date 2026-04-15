@@ -15,6 +15,10 @@ export default async function PatientLayout({
     redirect('/auth/login')
   }
 
+  if (!session.user?.role) {
+    redirect('/auth/login')
+  }
+
   if (session.user.role !== 'patient') {
     redirect('/dashboard/professional')
   }

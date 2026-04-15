@@ -8,6 +8,10 @@ export default async function DashboardPage() {
     redirect('/auth/login')
   }
 
+  if (!session.user?.role) {
+    redirect('/auth/login')
+  }
+
   // Redirigir según el rol del usuario
   if (session.user.role === 'professional') {
     redirect('/dashboard/professional')

@@ -1,23 +1,26 @@
 import type { NextAuthConfig } from 'next-auth'
-import Credentials from 'next-auth/providers/credentials'
 
 export const authConfig = {
   pages: {
     signIn: '/auth/login',
   },
   callbacks: {
-    authorized({ auth, request: { nextUrl } }) {
-      const isLoggedIn = !!auth?.user
-      const isOnDashboard = nextUrl.pathname.startsWith('/dashboard')
-
-      if (isOnDashboard) {
-        if (isLoggedIn) return true
-        return false // Redirigir a login
-      } else if (isLoggedIn) {
-        return Response.redirect(new URL('/dashboard', nextUrl))
+    // ── Callbacks JWT/Session — funciones puras, Edge-compatibles ──────────
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id
+        token.role = user.role
+        token.professionalId = user.professionalId
       }
-
-      return true
+      return token
+    },
+    async session({ session, token }) {
+      if (session.user) {
+        session.user.id = token.id as string
+        session.user.role = token.role as string
+        session.user.professionalId = token.professionalId as string
+      }
+      return session
     },
   },
   providers: [], // Se agregan en auth.ts
