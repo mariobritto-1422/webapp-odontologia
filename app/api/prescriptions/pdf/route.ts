@@ -46,19 +46,20 @@ export async function GET(request: NextRequest) {
 
     const patient = prescription.patients as { name: string; dni: string | null }
 
-    const buffer = await renderToBuffer(
-      createElement(PrescriptionDocument, {
-        prescription: {
-          id: prescription.id,
-          medications: prescription.medications,
-          diagnosis: prescription.diagnosis,
-          notes: prescription.notes,
-          created_at: prescription.created_at,
-        },
-        professional,
-        patient,
-      })
-    )
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const element = createElement(PrescriptionDocument, {
+      prescription: {
+        id: prescription.id,
+        medications: prescription.medications,
+        diagnosis: prescription.diagnosis,
+        notes: prescription.notes,
+        created_at: prescription.created_at,
+      },
+      professional,
+      patient,
+    }) as any
+
+    const buffer = await renderToBuffer(element)
 
     return new NextResponse(buffer, {
       headers: {
