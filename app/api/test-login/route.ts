@@ -1,18 +1,26 @@
 import { NextResponse } from 'next/server'
-import { supabase } from '@/lib/supabase'
+import { hasSupabaseServiceRoleKey, supabaseAdmin } from '@/lib/supabase'
 import bcrypt from 'bcryptjs'
 
 export async function POST(request: Request) {
   try {
-    const { email, password } = await request.json()
+    if (!hasSupabaseServiceRoleKey) {
+      return NextResponse.json({
+        success: false,
+        error: 'SUPABASE_SERVICE_ROLE_KEY missing'
+      }, { status: 500 })
+    }
 
-    console.log('Testing login for:', email)
+    const { email, password } = await request.json()
+    const normalizedEmail = String(email || '').trim().toLowerCase()
+
+    console.log('Testing login for:', normalizedEmail)
 
     // Buscar usuario en professionals
-    const { data: professional, error: profError } = await supabase
+    const { data: professional, error: profError } = await supabaseAdmin
       .from('professionals')
       .select('*')
-      .eq('email', email)
+      .ilike('email', normalizedEmail)
       .maybeSingle()
 
     console.log('Professional query result:', { professional, profError })

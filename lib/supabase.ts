@@ -3,6 +3,7 @@ import { createClient } from '@supabase/supabase-js'
 // Validar que las variables de entorno existan
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || ''
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
 
 // Cliente de Supabase para el navegador
 // Si no hay variables, crear un cliente dummy que fallará en runtime
@@ -13,7 +14,7 @@ export const supabase = createClient(
 
 // Cliente de Supabase para el servidor (bypasea RLS)
 // Solo usar en API routes o Server Components
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+export const hasSupabaseServiceRoleKey = Boolean(supabaseServiceKey && supabaseUrl)
 
 export const supabaseAdmin = supabaseServiceKey
   ? createClient(supabaseUrl, supabaseServiceKey, {

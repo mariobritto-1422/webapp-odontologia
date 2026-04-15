@@ -1,7 +1,7 @@
 import NextAuth from 'next-auth'
 import Credentials from 'next-auth/providers/credentials'
 import { authConfig } from './auth.config'
-import { supabase } from './supabase'
+import { hasSupabaseServiceRoleKey, supabaseAdmin } from './supabase'
 import bcrypt from 'bcryptjs'
 
 export const { auth, signIn, signOut, handlers } = NextAuth({
@@ -20,20 +20,29 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
           return null
         }
 
-        const email = credentials.email as string
+        const email = (credentials.email as string).trim().toLowerCase()
         const password = credentials.password as string
 
         console.log('Attempting login for:', email)
 
         try {
+          if (!hasSupabaseServiceRoleKey) {
+            console.error('SUPABASE_SERVICE_ROLE_KEY is missing; credentials auth cannot bypass RLS in production')
+            throw new Error('AUTH_SERVER_MISCONFIGURED')
+          }
+
           // Buscar usuario en professionals
-          const { data: professional, error: profError } = await supabase
+          const { data: professional, error: profError } = await supabaseAdmin
             .from('professionals')
             .select('*')
-            .eq('email', email)
+            .ilike('email', email)
             .maybeSingle()
 
           console.log('Professional query:', { professional, profError })
+
+          if (profError) {
+            throw new Error(`AUTH_PROFESSIONAL_QUERY_FAILED:${profError.message}`)
+          }
 
           if (professional) {
             // Verificar contraseña con bcrypt
@@ -62,13 +71,17 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
           }
 
           // Si no es profesional, buscar en patients
-          const { data: patient, error: patError } = await supabase
+          const { data: patient, error: patError } = await supabaseAdmin
             .from('patients')
             .select('*')
-            .eq('email', email)
+            .ilike('email', email)
             .maybeSingle()
 
           console.log('Patient query:', { patient, patError })
+
+          if (patError) {
+            throw new Error(`AUTH_PATIENT_QUERY_FAILED:${patError.message}`)
+          }
 
           if (patient) {
             // Verificar contraseña con bcrypt
@@ -101,29 +114,11 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
           return null
         } catch (error) {
           console.error('Auth error:', error)
-          return null
+          throw error
         }
       },
     }),
   ],
-  callbacks: {
-    async jwt({ token, user }) {
-      if (user) {
-        token.id = user.id
-        token.role = user.role
-        token.professionalId = user.professionalId
-      }
-      return token
-    },
-    async session({ session, token }) {
-      if (session.user) {
-        session.user.id = token.id as string
-        session.user.role = token.role as string
-        session.user.professionalId = token.professionalId as string
-      }
-      return session
-    },
-  },
   session: {
     strategy: 'jwt',
   },

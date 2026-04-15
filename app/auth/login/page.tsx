@@ -30,13 +30,24 @@ function LoginForm() {
 
     try {
       const result = await signIn('credentials', {
-        email,
+        email: email.trim().toLowerCase(),
         password,
         redirect: false,
       })
 
       if (result?.error) {
-        setError('Email o contraseña incorrectos')
+        const authError = String(result.error)
+
+        if (
+          authError.includes('AUTH_SERVER_MISCONFIGURED') ||
+          authError.includes('AUTH_PROFESSIONAL_QUERY_FAILED') ||
+          authError.includes('AUTH_PATIENT_QUERY_FAILED') ||
+          authError.includes('CallbackRouteError')
+        ) {
+          setError('Error del servidor al validar el acceso. Si estás en producción, revisá Netlify y las variables de Supabase.')
+        } else {
+          setError('Email o contraseña incorrectos')
+        }
       } else {
         router.push('/dashboard')
         router.refresh()

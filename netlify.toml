@@ -5,7 +5,7 @@
   command = "npm run build"
 
 [[redirects]]
-  from = "https://mi-consultorio-odonto.netlify.app"
-  to = "https://mi-consultorio-odonto.netlify.app/auth/login"
-  status = 301
+  from = "/"
+  to = "/auth/login"
+  status = 302
   force = true

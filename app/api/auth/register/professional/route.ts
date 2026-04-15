@@ -1,14 +1,25 @@
 import { NextResponse } from 'next/server'
-import { supabase } from '@/lib/supabase'
+import { hasSupabaseServiceRoleKey, supabaseAdmin } from '@/lib/supabase'
 import bcrypt from 'bcryptjs'
 
 export async function POST(request: Request) {
   try {
+    if (!hasSupabaseServiceRoleKey) {
+      return NextResponse.json(
+        { error: 'Configuración incompleta del servidor' },
+        { status: 500 }
+      )
+    }
+
     const body = await request.json()
-    const { email, password, name, specialty, phone } = body
+    const normalizedEmail = String(body.email || '').trim().toLowerCase()
+    const password = String(body.password || '')
+    const name = String(body.name || '').trim()
+    const specialty = String(body.specialty || '').trim()
+    const phone = body.phone ? String(body.phone).trim() : null
 
     // Validaciones básicas
-    if (!email || !password || !name || !specialty) {
+    if (!normalizedEmail || !password || !name || !specialty) {
       return NextResponse.json(
         { error: 'Todos los campos obligatorios deben ser completados' },
         { status: 400 }
@@ -17,7 +28,7 @@ export async function POST(request: Request) {
 
     // Validar formato de email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    if (!emailRegex.test(email)) {
+    if (!emailRegex.test(normalizedEmail)) {
       return NextResponse.json(
         { error: 'Email inválido' },
         { status: 400 }
@@ -33,10 +44,10 @@ export async function POST(request: Request) {
     }
 
     // Verificar si el email ya existe
-    const { data: existingProfessional } = await supabase
+    const { data: existingProfessional } = await supabaseAdmin
       .from('professionals')
       .select('id')
-      .eq('email', email)
+      .ilike('email', normalizedEmail)
       .maybeSingle()
 
     if (existingProfessional) {
@@ -60,7 +71,7 @@ export async function POST(request: Request) {
     let slugExists = true
 
     while (slugExists) {
-      const { data } = await supabase
+      const { data } = await supabaseAdmin
         .from('professionals')
         .select('id')
         .eq('slug', slug)
@@ -79,15 +90,18 @@ export async function POST(request: Request) {
     const password_hash = await bcrypt.hash(password, saltRounds)
 
     // Crear el profesional en la base de datos con solo los campos requeridos
-    const { data: newProfessional, error: insertError } = await supabase
+    const { data: newProfessional, error: insertError } = await supabaseAdmin
       .from('professionals')
       .insert({
-        email,
+        email: normalizedEmail,
         password_hash,
         name,
         specialty,
         phone,
         slug,
+        subscription_plan: 'pro',
+        subscription_status: 'trialing',
+        trial_ends_at: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString(),
       })
       .select()
       .single()

@@ -1,22 +1,27 @@
 import { NextResponse } from 'next/server'
-import { supabase } from '@/lib/supabase'
+import { hasSupabaseServiceRoleKey, supabaseAdmin } from '@/lib/supabase'
 import bcrypt from 'bcryptjs'
 
 export async function POST(request: Request) {
   try {
+    if (!hasSupabaseServiceRoleKey) {
+      return NextResponse.json(
+        { error: 'Configuración incompleta del servidor' },
+        { status: 500 }
+      )
+    }
+
     const body = await request.json()
-    const {
-      email,
-      password,
-      name,
-      phone,
-      professionalSlug,
-      acceptedTerms,
-      acceptedPrivacy,
-    } = body
+    const normalizedEmail = String(body.email || '').trim().toLowerCase()
+    const password = String(body.password || '')
+    const name = String(body.name || '').trim()
+    const phone = body.phone ? String(body.phone).trim() : null
+    const professionalSlug = String(body.professionalSlug || '').trim()
+    const acceptedTerms = Boolean(body.acceptedTerms)
+    const acceptedPrivacy = Boolean(body.acceptedPrivacy)
 
     // Validaciones básicas
-    if (!email || !password || !name || !professionalSlug) {
+    if (!normalizedEmail || !password || !name || !professionalSlug) {
       return NextResponse.json(
         { error: 'Todos los campos obligatorios deben ser completados' },
         { status: 400 }
@@ -33,7 +38,7 @@ export async function POST(request: Request) {
 
     // Validar formato de email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    if (!emailRegex.test(email)) {
+    if (!emailRegex.test(normalizedEmail)) {
       return NextResponse.json(
         { error: 'Email inválido' },
         { status: 400 }
@@ -49,7 +54,7 @@ export async function POST(request: Request) {
     }
 
     // Buscar el profesional por slug
-    const { data: professional, error: profError } = await supabase
+    const { data: professional, error: profError } = await supabaseAdmin
       .from('professionals')
       .select('id, is_active')
       .eq('slug', professionalSlug)
@@ -70,10 +75,10 @@ export async function POST(request: Request) {
     }
 
     // Verificar si el paciente ya existe para este profesional
-    const { data: existingPatient } = await supabase
+    const { data: existingPatient } = await supabaseAdmin
       .from('patients')
       .select('id')
-      .eq('email', email)
+      .ilike('email', normalizedEmail)
       .eq('professional_id', professional.id)
       .maybeSingle()
 
@@ -89,13 +94,13 @@ export async function POST(request: Request) {
     const password_hash = await bcrypt.hash(password, saltRounds)
 
     // Crear el paciente en la base de datos
-    const { data: newPatient, error: insertError } = await supabase
+    const { data: newPatient, error: insertError } = await supabaseAdmin
       .from('patients')
       .insert({
-        email,
+        email: normalizedEmail,
         password_hash,
         name,
-        phone: phone || null,
+        phone,
         professional_id: professional.id,
         accepted_terms: true,
         accepted_privacy: true,
