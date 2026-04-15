@@ -13,7 +13,7 @@ export async function GET() {
     // Obtener estado activo del profesional
     const { data: professional, error } = await supabaseAdmin
       .from('professionals')
-      .select('is_active')
+      .select('is_active, subscription_status, trial_ends_at, subscription_ends_at, grace_period_ends_at')
       .eq('id', session.user.id)
       .single()
 
@@ -22,7 +22,11 @@ export async function GET() {
     }
 
     return NextResponse.json({
-      isActive: professional.is_active
+      isActive:             professional.is_active,
+      subscription_status:  professional.subscription_status,
+      trial_ends_at:        professional.trial_ends_at,
+      subscription_ends_at: professional.subscription_ends_at,
+      grace_period_ends_at: professional.grace_period_ends_at,
     })
   } catch (error) {
     console.error('Error checking active status:', error)

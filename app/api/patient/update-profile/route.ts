@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { auth } from '@/lib/auth'
-import { supabase } from '@/lib/supabase'
+import { supabaseAdmin as supabase } from '@/lib/supabase'
 
 export async function POST(request: NextRequest) {
   try {
@@ -11,7 +11,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json()
-    const { patientId, name, phone } = body
+    const { patientId, name, phone, dni } = body
 
     // Validaciones básicas
     if (!patientId || !name) {
@@ -32,6 +32,7 @@ export async function POST(request: NextRequest) {
       .update({
         name,
         phone: phone || null,
+        dni: dni || null,
         updated_at: new Date().toISOString(),
       })
       .eq('id', patientId)

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { auth } from '@/lib/auth'
-import { supabase } from '@/lib/supabase'
+import { supabaseAdmin as supabase } from '@/lib/supabase'
 
 export async function PUT(request: NextRequest) {
   try {
@@ -11,7 +11,7 @@ export async function PUT(request: NextRequest) {
     }
 
     const body = await request.json()
-    const { professionalId, name, specialty, phone, address, work_email, work_phone } = body
+    const { professionalId, name, specialty, phone, address, work_email, work_phone, matricula } = body
 
     // Verificar que el profesional es el usuario actual
     if (professionalId !== session.user.id) {
@@ -28,6 +28,7 @@ export async function PUT(request: NextRequest) {
         address,
         work_email,
         work_phone,
+        matricula: matricula || null,
         updated_at: new Date().toISOString(),
       })
       .eq('id', professionalId)

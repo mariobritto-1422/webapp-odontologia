@@ -9,6 +9,7 @@ type Patient = {
   name: string
   email: string
   phone: string | null
+  dni: string | null
   professional: {
     id: string
     name: string
@@ -32,6 +33,7 @@ export default function ProfileForm({ patient }: ProfileFormProps) {
   // Formulario de información personal
   const [name, setName] = useState(patient.name)
   const [phone, setPhone] = useState(patient.phone || '')
+  const [dni, setDni] = useState(patient.dni || '')
 
   // Formulario de contraseña
   const [currentPassword, setCurrentPassword] = useState('')
@@ -55,6 +57,7 @@ export default function ProfileForm({ patient }: ProfileFormProps) {
           patientId: patient.id,
           name,
           phone: phone || null,
+          dni: dni || null,
         }),
       })
 
@@ -194,6 +197,19 @@ export default function ProfileForm({ patient }: ProfileFormProps) {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
+                DNI
+              </label>
+              <input
+                type="text"
+                value={dni}
+                onChange={(e) => setDni(e.target.value)}
+                placeholder="Ej: 30.123.456"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
                 Email
               </label>
               <input
@@ -214,6 +230,7 @@ export default function ProfileForm({ patient }: ProfileFormProps) {
                   setIsEditingInfo(false)
                   setName(patient.name)
                   setPhone(patient.phone || '')
+                  setDni(patient.dni || '')
                   setError('')
                 }}
                 disabled={isSaving}
@@ -251,6 +268,13 @@ export default function ProfileForm({ patient }: ProfileFormProps) {
                 Teléfono
               </p>
               <p className="text-gray-900">{patient.phone || 'No especificado'}</p>
+            </div>
+
+            <div>
+              <p className="text-xs text-gray-500 uppercase font-semibold mb-1">
+                DNI
+              </p>
+              <p className="text-gray-900">{patient.dni || 'No especificado'}</p>
             </div>
           </div>
         )}

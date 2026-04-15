@@ -20,6 +20,7 @@ export default function ProfileForm({ professional }: ProfileFormProps) {
     address: professional.address || '',
     work_email: professional.work_email || '',
     work_phone: professional.work_phone || '',
+    matricula: professional.matricula || '',
   })
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -176,6 +177,28 @@ export default function ProfileForm({ professional }: ProfileFormProps) {
           />
           <p className="text-xs text-gray-500 mt-1">
             Email de login: {professional.email} (no se puede cambiar)
+          </p>
+        </div>
+
+        {/* Matrícula */}
+        <div>
+          <label
+            htmlFor="matricula"
+            className="block text-sm font-medium text-gray-700 mb-2"
+          >
+            Matrícula Profesional
+          </label>
+          <input
+            type="text"
+            id="matricula"
+            name="matricula"
+            value={formData.matricula}
+            onChange={handleChange}
+            placeholder="Ej: 12345"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          />
+          <p className="text-xs text-gray-500 mt-1">
+            Aparece en las recetas generadas en PDF
           </p>
         </div>
 

@@ -1,6 +1,6 @@
 import { auth } from '@/lib/auth'
 import { redirect } from 'next/navigation'
-import { supabase } from '@/lib/supabase'
+import { supabaseAdmin } from '@/lib/supabase'
 import ConfigurationTabs from './ConfigurationTabs'
 
 export default async function ConfigurationPage() {
@@ -13,7 +13,7 @@ export default async function ConfigurationPage() {
   const professionalId = session.user.id
 
   // Obtener información completa del profesional
-  const { data: professional, error } = await supabase
+  const { data: professional, error } = await supabaseAdmin
     .from('professionals')
     .select('*')
     .eq('id', professionalId)
