@@ -1,1016 +1,415 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
+import { PLANS, formatPriceARS } from '@/lib/mercadopago'
+import type { PlanId } from '@/lib/mercadopago'
 
 export const metadata: Metadata = {
-  title: 'Sonrisapp — Agenda Inteligente para Odontólogos',
-  description: 'Sonrisapp: Sistema de gestión odontológica profesional. Agenda digital, odontograma interactivo, notificaciones automáticas. Probá 1 mes gratis.',
-}
-
-const landingCSS = `
-html { scroll-behavior: smooth; }
-
-#landing-root {
-  --ink: #080d18;
-  --deep: #0d1526;
-  --surface: #0f1a2a;
-  --card: #13202f;
-  --card-hover: #172435;
-  --border: rgba(255,255,255,0.06);
-  --border-accent: rgba(34,211,238,0.18);
-  --cyan: #22d3ee;
-  --cyan-soft: rgba(34,211,238,0.1);
-  --cyan-glow: rgba(34,211,238,0.22);
-  --white: #eef2f7;
-  --muted: rgba(238,242,247,0.42);
-  --muted2: rgba(238,242,247,0.25);
-  --gold: #c9a84c;
-  --red: #f87171;
-  --green: #34d399;
-  font-family: var(--font-dm-sans, 'DM Sans'), sans-serif;
-  background: var(--ink);
-  color: var(--white);
-  overflow-x: hidden;
-  line-height: 1.6;
-  position: relative;
-  min-height: 100vh;
-}
-
-#landing-root::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 0;
-}
-
-/* ─── NAV ─── */
-#landing-root nav {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 100;
-  padding: 1.2rem 3rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: rgba(8,13,24,0.8);
-  backdrop-filter: blur(24px);
-  border-bottom: 1px solid var(--border);
-}
-
-#landing-root .nav-logo {
-  font-family: var(--font-dm-sans, 'DM Sans'), sans-serif;
-  font-size: 1.35rem;
-  font-weight: 500;
-  letter-spacing: -0.02em;
-  color: var(--white);
-  text-decoration: none;
-}
-#landing-root .nav-logo span { color: var(--cyan); font-weight: 300; font-style: italic; }
-
-#landing-root .nav-right { display: flex; align-items: center; gap: 2rem; }
-
-#landing-root .nav-link {
-  color: var(--muted);
-  font-size: 0.85rem;
-  text-decoration: none;
-  transition: color 0.2s;
-}
-#landing-root .nav-link:hover { color: var(--white); }
-
-#landing-root .nav-cta {
-  background: var(--cyan);
-  color: var(--ink);
-  font-size: 0.8rem;
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  padding: 0.6rem 1.5rem;
-  border-radius: 100px;
-  text-decoration: none;
-  transition: opacity 0.2s, transform 0.2s;
-}
-#landing-root .nav-cta:hover { opacity: 0.88; transform: translateY(-1px); }
-
-#landing-root .nav-ingresar {
-  color: var(--muted);
-  font-size: 0.85rem;
-  font-weight: 400;
-  text-decoration: none;
-  transition: color 0.2s;
-}
-#landing-root .nav-ingresar:hover { color: var(--white); }
-
-/* ─── HERO ─── */
-#landing-root .hero {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 9rem 2rem 6rem;
-  position: relative;
-  overflow: hidden;
-}
-
-#landing-root .hero-glow {
-  position: absolute;
-  top: 40%; left: 50%;
-  transform: translate(-50%, -50%);
-  width: 800px; height: 800px;
-  background: radial-gradient(circle, rgba(34,211,238,0.07) 0%, transparent 65%);
-  pointer-events: none;
-}
-
-#landing-root .hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  border: 1px solid var(--border-accent);
-  background: var(--cyan-soft);
-  color: var(--cyan);
-  font-size: 0.72rem;
-  font-weight: 500;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  padding: 0.45rem 1.1rem;
-  border-radius: 100px;
-  margin-bottom: 2.5rem;
-  animation: fadeUp 0.8s ease both;
-}
-
-#landing-root .hero-title {
-  font-family: var(--font-cormorant, 'Cormorant Garamond'), serif;
-  font-size: clamp(3.8rem, 9vw, 7.5rem);
-  font-weight: 300;
-  line-height: 1.04;
-  letter-spacing: -0.02em;
-  margin-bottom: 1.8rem;
-  animation: fadeUp 0.8s 0.1s ease both;
-}
-#landing-root .hero-title em { font-style: italic; color: var(--cyan); }
-
-#landing-root .hero-sub {
-  font-size: 1.05rem;
-  font-weight: 300;
-  color: var(--muted);
-  max-width: 500px;
-  line-height: 1.75;
-  margin-bottom: 1rem;
-  animation: fadeUp 0.8s 0.2s ease both;
-}
-
-#landing-root .hero-sub2 {
-  font-size: 0.88rem;
-  color: var(--muted2);
-  margin-bottom: 3rem;
-  font-style: italic;
-  animation: fadeUp 0.8s 0.28s ease both;
-}
-
-#landing-root .hero-actions {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-  flex-wrap: wrap;
-  justify-content: center;
-  animation: fadeUp 0.8s 0.38s ease both;
-}
-
-#landing-root .btn-primary {
-  background: var(--cyan);
-  color: var(--ink);
-  font-family: var(--font-dm-sans, 'DM Sans'), sans-serif;
-  font-size: 0.9rem;
-  font-weight: 500;
-  letter-spacing: 0.04em;
-  padding: 1rem 2.5rem;
-  border-radius: 100px;
-  text-decoration: none;
-  border: none;
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-  box-shadow: 0 0 35px var(--cyan-glow);
-  display: inline-block;
-}
-#landing-root .btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 55px var(--cyan-glow);
-}
-
-#landing-root .btn-ghost {
-  color: var(--muted);
-  font-size: 0.9rem;
-  font-weight: 300;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  transition: color 0.2s;
-}
-#landing-root .btn-ghost:hover { color: var(--white); }
-
-#landing-root .hero-scroll {
-  position: absolute;
-  bottom: 2.5rem; left: 50%;
-  transform: translateX(-50%);
-  display: flex; flex-direction: column;
-  align-items: center; gap: 0.5rem;
-  color: var(--muted2);
-  font-size: 0.68rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  animation: fadeUp 1s 0.9s ease both;
-}
-#landing-root .scroll-line {
-  width: 1px; height: 40px;
-  background: linear-gradient(to bottom, var(--cyan), transparent);
-  animation: scrollPulse 2s infinite;
-}
-
-/* ─── STATS ─── */
-#landing-root .stats-bar {
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  background: var(--surface);
-  padding: 3rem;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  text-align: center;
-  position: relative; z-index: 1;
-}
-#landing-root .stat-item { padding: 0.5rem 1rem; }
-#landing-root .stat-item + .stat-item { border-left: 1px solid var(--border); }
-#landing-root .stat-num {
-  font-family: var(--font-cormorant, 'Cormorant Garamond'), serif;
-  font-size: 4rem; font-weight: 300;
-  color: var(--cyan); line-height: 1;
-  margin-bottom: 0.4rem;
-}
-#landing-root .stat-label {
-  font-size: 0.75rem; color: var(--muted);
-  letter-spacing: 0.1em; text-transform: uppercase;
-}
-
-/* ─── SECTIONS ─── */
-#landing-root .section-wrap {
-  position: relative; z-index: 1;
-  padding: 7rem 3rem;
-  max-width: 1100px;
-  margin: 0 auto;
-}
-
-#landing-root .section-label {
-  font-size: 0.7rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--cyan);
-  margin-bottom: 1rem;
-  display: block;
-}
-
-#landing-root .section-title {
-  font-family: var(--font-cormorant, 'Cormorant Garamond'), serif;
-  font-size: clamp(2.2rem, 4vw, 3.6rem);
-  font-weight: 300;
-  line-height: 1.12;
-  letter-spacing: -0.01em;
-  margin-bottom: 1.5rem;
-}
-#landing-root .section-title em { font-style: italic; color: var(--cyan); }
-
-#landing-root .section-body {
-  font-size: 1rem; color: var(--muted);
-  line-height: 1.8; max-width: 560px;
-  margin-bottom: 1rem;
-}
-
-#landing-root .divider { width: 100%; height: 1px; background: var(--border); position: relative; z-index: 1; }
-
-#landing-root .surface-bg { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-
-/* ─── PROBLEMA ─── */
-#landing-root .problem-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 3rem;
-  margin-top: 4rem;
-  align-items: start;
-}
-
-#landing-root .problem-list,
-#landing-root .solution-list {
-  list-style: none;
-  display: flex; flex-direction: column; gap: 1rem;
-}
-
-#landing-root .problem-list li,
-#landing-root .solution-list li {
-  display: flex; align-items: flex-start;
-  gap: 0.85rem;
-  padding: 1rem 1.2rem;
-  border-radius: 10px;
-  font-size: 0.92rem;
-  line-height: 1.5;
-}
-
-#landing-root .problem-list li {
-  background: rgba(248,113,113,0.06);
-  border: 1px solid rgba(248,113,113,0.12);
-  color: var(--muted);
-}
-
-#landing-root .problem-mark { color: var(--red); font-weight: 600; flex-shrink: 0; }
-
-#landing-root .solution-list li {
-  background: rgba(52,211,153,0.05);
-  border: 1px solid rgba(52,211,153,0.12);
-  color: var(--muted);
-}
-#landing-root .solution-mark { color: var(--green); font-weight: 600; flex-shrink: 0; }
-
-#landing-root .problem-conclusion {
-  margin-top: 1.5rem;
-  padding: 1rem 1.2rem;
-  border-left: 3px solid var(--red);
-  background: rgba(248,113,113,0.05);
-  border-radius: 0 8px 8px 0;
-  font-size: 0.88rem;
-  color: var(--red);
-  font-style: italic;
-}
-
-#landing-root .solution-conclusion {
-  margin-top: 1.5rem;
-  padding: 1rem 1.2rem;
-  border-left: 3px solid var(--green);
-  background: rgba(52,211,153,0.05);
-  border-radius: 0 8px 8px 0;
-  font-size: 0.88rem;
-  color: var(--green);
-  font-style: italic;
-}
-
-#landing-root .col-label {
-  font-family: var(--font-cormorant, 'Cormorant Garamond'), serif;
-  font-size: 1.6rem; font-weight: 400;
-  margin-bottom: 1.5rem;
-}
-
-/* ─── FEATURES GRID ─── */
-#landing-root .features-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1.5rem;
-  margin-top: 4rem;
-}
-
-#landing-root .feature-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 2rem;
-  transition: border-color 0.3s, transform 0.3s, background 0.3s;
-}
-#landing-root .feature-card:hover {
-  border-color: var(--border-accent);
-  transform: translateY(-4px);
-  background: var(--card-hover);
-}
-#landing-root .feature-icon { font-size: 1.8rem; margin-bottom: 1rem; display: block; }
-#landing-root .feature-title {
-  font-family: var(--font-cormorant, 'Cormorant Garamond'), serif;
-  font-size: 1.45rem; font-weight: 400;
-  margin-bottom: 0.75rem; color: var(--white);
-}
-#landing-root .feature-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.7; }
-
-#landing-root .feature-tags {
-  display: flex; flex-wrap: wrap; gap: 0.4rem;
-  margin-top: 1rem;
-}
-#landing-root .tag {
-  font-size: 0.7rem;
-  letter-spacing: 0.08em;
-  padding: 0.25rem 0.65rem;
-  border-radius: 100px;
-  border: 1px solid var(--border-accent);
-  color: var(--cyan);
-  background: var(--cyan-soft);
-}
-
-/* ─── ODONTOGRAMA ─── */
-#landing-root .estados-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.75rem;
-  margin-top: 2rem;
-}
-
-#landing-root .estado-item {
-  display: flex; align-items: center; gap: 0.75rem;
-  padding: 0.85rem 1rem;
-  background: var(--card);
-  border-radius: 10px;
-  border: 1px solid var(--border);
-  font-size: 0.88rem;
-}
-
-#landing-root .estado-dot {
-  width: 10px; height: 10px;
-  border-radius: 50%; flex-shrink: 0;
-}
-
-#landing-root .estado-name { font-weight: 500; color: var(--white); }
-#landing-root .estado-desc { color: var(--muted); font-size: 0.8rem; }
-
-#landing-root .superficies-bar {
-  margin-top: 1.5rem;
-  padding: 1rem 1.25rem;
-  background: var(--card);
-  border: 1px solid var(--border-accent);
-  border-radius: 10px;
-  font-size: 0.88rem;
-  color: var(--muted);
-}
-#landing-root .superficies-bar strong { color: var(--cyan); }
-
-/* ─── COMPARATIVA ─── */
-#landing-root .compare-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 3rem;
-  border-radius: 14px;
-  overflow: hidden;
-}
-
-#landing-root .compare-table th {
-  padding: 1rem 1.5rem;
-  font-size: 0.82rem;
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-#landing-root .compare-table th:first-child { background: #1a2a3d; text-align: left; }
-#landing-root .compare-table th:nth-child(2) { background: rgba(248,113,113,0.15); color: var(--red); }
-#landing-root .compare-table th:nth-child(3) { background: rgba(52,211,153,0.15); color: var(--green); }
-
-#landing-root .compare-table td {
-  padding: 1rem 1.5rem;
-  font-size: 0.9rem;
-  border-bottom: 1px solid var(--border);
-}
-
-#landing-root .compare-table td:first-child {
-  background: var(--card);
-  font-weight: 500;
-  color: var(--white);
-}
-
-#landing-root .compare-table td:nth-child(2) {
-  background: rgba(248,113,113,0.04);
-  color: var(--muted);
-  text-align: center;
-}
-
-#landing-root .compare-table td:nth-child(3) {
-  background: rgba(52,211,153,0.04);
-  color: var(--muted);
-  text-align: center;
-}
-
-#landing-root .compare-table tr:last-child td:nth-child(3) {
-  color: var(--green);
-  font-weight: 600;
-}
-
-/* ─── ROI ─── */
-#landing-root .roi-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-  margin-top: 3rem;
-}
-
-#landing-root .roi-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 2rem;
-  text-align: center;
-  transition: border-color 0.3s;
-}
-#landing-root .roi-card:hover { border-color: var(--border-accent); }
-
-#landing-root .roi-num {
-  font-family: var(--font-cormorant, 'Cormorant Garamond'), serif;
-  font-size: 3.5rem; font-weight: 300;
-  line-height: 1; margin-bottom: 0.5rem;
-}
-
-#landing-root .roi-label { font-size: 0.8rem; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
-
-#landing-root .roi-details {
-  display: flex; flex-direction: column; gap: 1rem;
-  margin-top: 3rem;
-}
-
-#landing-root .roi-detail-item {
-  display: flex; align-items: flex-start; gap: 1rem;
-  padding: 1.2rem 1.5rem;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-}
-
-#landing-root .roi-detail-icon { font-size: 1.5rem; flex-shrink: 0; }
-#landing-root .roi-detail-title { font-weight: 500; color: var(--white); margin-bottom: 0.2rem; font-size: 0.92rem; }
-#landing-root .roi-detail-desc { color: var(--muted); font-size: 0.85rem; line-height: 1.5; }
-
-/* ─── PRUEBA GRATIS ─── */
-#landing-root .trial-inner {
-  max-width: 1100px; margin: 0 auto;
-  padding: 7rem 3rem;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 5rem; align-items: center;
-}
-
-#landing-root .trial-list {
-  list-style: none;
-  margin-top: 2.5rem;
-  display: flex; flex-direction: column; gap: 1rem;
-}
-#landing-root .trial-list li {
-  display: flex; align-items: flex-start;
-  gap: 0.75rem;
-  font-size: 0.93rem; color: var(--muted); line-height: 1.5;
-}
-#landing-root .trial-list li::before { content: '—'; color: var(--cyan); flex-shrink: 0; margin-top: 0.1em; }
-
-#landing-root .trial-cta-box {
-  background: linear-gradient(135deg, rgba(34,211,238,0.09), rgba(34,211,238,0.03));
-  border: 1px solid rgba(34,211,238,0.22);
-  border-radius: 20px;
-  padding: 3rem;
-  text-align: center;
-}
-
-#landing-root .trial-badge {
-  display: inline-block;
-  font-size: 0.7rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--cyan);
-  border: 1px solid var(--border-accent);
-  background: var(--cyan-soft);
-  padding: 0.35rem 0.9rem;
-  border-radius: 100px;
-  margin-bottom: 1.5rem;
-}
-
-#landing-root .trial-headline {
-  font-family: var(--font-cormorant, 'Cormorant Garamond'), serif;
-  font-size: 3.2rem; font-weight: 300;
-  line-height: 1.1; margin-bottom: 0.75rem;
-}
-
-#landing-root .trial-headline em { font-style: italic; color: var(--cyan); }
-
-#landing-root .trial-sub {
-  font-size: 0.88rem; color: var(--muted);
-  margin-bottom: 2rem; line-height: 1.65;
-}
-
-#landing-root .trial-economic {
-  margin-top: 1.25rem;
-  font-size: 0.78rem; color: var(--muted2);
-  font-style: italic;
-}
-
-/* ─── CONTACTO ─── */
-#landing-root .contact-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1.25rem;
-  margin-top: 3.5rem;
-}
-
-#landing-root .contact-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 1.75rem;
-  display: flex; flex-direction: column; gap: 0.5rem;
-  transition: border-color 0.3s, transform 0.2s;
-}
-#landing-root .contact-card:hover {
-  border-color: var(--border-accent);
-  transform: translateY(-3px);
-}
-
-#landing-root .contact-type {
-  font-size: 0.68rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--cyan);
-}
-
-#landing-root .contact-value {
-  font-size: 0.93rem; color: var(--white);
-  text-decoration: none; font-weight: 400;
-  word-break: break-all;
-  transition: color 0.2s;
-}
-#landing-root .contact-value:hover { color: var(--cyan); }
-
-/* ─── FOOTER ─── */
-#landing-root footer {
-  border-top: 1px solid var(--border);
-  padding: 2.5rem 3rem;
-  text-align: center;
-  color: var(--muted2);
-  font-size: 0.78rem;
-  letter-spacing: 0.05em;
-  position: relative; z-index: 1;
-}
-#landing-root footer a { color: var(--cyan); text-decoration: none; }
-
-/* ─── ANIMATIONS ─── */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(22px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-@keyframes scrollPulse {
-  0%, 100% { opacity: 0.25; }
-  50% { opacity: 1; }
-}
-
-/* ─── RESPONSIVE ─── */
-@media (max-width: 768px) {
-  #landing-root nav { padding: 1rem 1.5rem; }
-  #landing-root .nav-right .nav-link { display: none; }
-  #landing-root .section-wrap { padding: 5rem 1.5rem; }
-  #landing-root .stats-bar { grid-template-columns: 1fr; padding: 2rem 1.5rem; }
-  #landing-root .stat-item + .stat-item { border-left: none; border-top: 1px solid var(--border); }
-  #landing-root .problem-grid { grid-template-columns: 1fr; gap: 2rem; }
-  #landing-root .estados-grid { grid-template-columns: 1fr; }
-  #landing-root .roi-grid { grid-template-columns: 1fr; }
-  #landing-root .compare-table { font-size: 0.8rem; }
-  #landing-root .compare-table th,
-  #landing-root .compare-table td { padding: 0.75rem 0.8rem; }
-  #landing-root .trial-inner { grid-template-columns: 1fr; gap: 3rem; padding: 5rem 1.5rem; }
-  #landing-root footer { padding: 2rem 1.5rem; }
-}
-`
+  title: 'SonrisApp — Gestión odontológica inteligente',
+  description: 'Turnos online, odontogramas digitales y recetas electrónicas para tu consultorio. 14 días gratis, sin tarjeta de crédito.',
+}
+
+// ─── Features ────────────────────────────────────────────────
+
+const FEATURES = [
+  {
+    icon: (
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+      </svg>
+    ),
+    title: 'Turnos online 24/7',
+    desc: 'Los pacientes reservan con tu código QR personalizado, sin llamadas.',
+  },
+  {
+    icon: (
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+      </svg>
+    ),
+    title: 'Odontograma digital',
+    desc: 'Registrá el estado de cada pieza y exportá el historial clínico en PDF.',
+  },
+  {
+    icon: (
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+      </svg>
+    ),
+    title: 'Gestión de pacientes',
+    desc: 'Historial completo, datos de contacto y seguimiento de tratamientos.',
+  },
+  {
+    icon: (
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+      </svg>
+    ),
+    title: 'Recordatorios automáticos',
+    desc: 'WhatsApp y email automáticos para reducir ausencias.',
+  },
+  {
+    icon: (
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75} d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8H3m2 4H1m11-8V3M9 4V3m0 18v-1M5 20H3m12-4v2m0 0h2m-2 0h-2" />
+      </svg>
+    ),
+    title: 'Código QR propio',
+    desc: 'Tu página de turnos personalizada para redes, tarjetas o consultorio.',
+  },
+  {
+    icon: (
+      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+      </svg>
+    ),
+    title: 'Recetas electrónicas',
+    desc: 'Generá y enviá recetas digitales firmadas directamente desde la plataforma.',
+  },
+]
+
+// ─── Pricing ──────────────────────────────────────────────────
+
+const planOrder: PlanId[] = ['starter', 'pro', 'clinica']
+
+const PLAN_STYLES: Record<PlanId, {
+  wrapper: string
+  badge?: string
+  nameColor: string
+  btnClass: string
+}> = {
+  starter: {
+    wrapper: 'bg-white border border-slate-200 rounded-xl p-6 flex flex-col gap-5',
+    nameColor: 'text-slate-500',
+    btnClass: 'w-full py-2.5 px-4 rounded-lg text-sm font-semibold border border-slate-200 text-slate-700 hover:bg-slate-50 transition-colors text-center',
+  },
+  pro: {
+    wrapper: 'relative bg-white border-2 border-blue-600 rounded-xl p-6 flex flex-col gap-5 shadow-md',
+    badge: 'Más popular',
+    nameColor: 'text-blue-600',
+    btnClass: 'w-full py-2.5 px-4 rounded-lg text-sm font-semibold bg-blue-600 text-white hover:bg-blue-700 transition-colors text-center',
+  },
+  clinica: {
+    wrapper: 'bg-white border border-slate-200 rounded-xl p-6 flex flex-col gap-5',
+    nameColor: 'text-slate-500',
+    btnClass: 'w-full py-2.5 px-4 rounded-lg text-sm font-semibold bg-slate-900 text-white hover:bg-slate-800 transition-colors text-center',
+  },
+}
+
+const PLAN_FEATURES: Record<PlanId, string[]> = {
+  starter: [
+    'Hasta 50 pacientes',
+    '50 emails/mes',
+    'Turnos online 24/7',
+    'Código QR personalizado',
+    'Odontograma digital',
+  ],
+  pro: [
+    'Pacientes ilimitados',
+    'Emails ilimitados',
+    'Turnos online 24/7',
+    'Código QR personalizado',
+    'Odontograma + PDF',
+    'Recetas electrónicas',
+    'Dashboard avanzado',
+  ],
+  clinica: [
+    'Pacientes ilimitados',
+    'Emails ilimitados',
+    'Turnos online 24/7',
+    'Código QR personalizado',
+    'Odontograma + PDF',
+    'Recetas electrónicas',
+    'Hasta 5 profesionales',
+    'Soporte prioritario',
+  ],
+}
+
+// ─── Page ─────────────────────────────────────────────────────
 
 export default function HomePage() {
   return (
-    <>
-      <style dangerouslySetInnerHTML={{ __html: landingCSS }} />
-      <div id="landing-root">
+    <div className="min-h-screen bg-white text-slate-900">
 
-        {/* NAV */}
-        <nav>
-          <a href="#" className="nav-logo">Sonris<span>app</span></a>
-          <div className="nav-right">
-            <a href="#funciones" className="nav-link">Funciones</a>
-            <a href="#contacto" className="nav-link">Contacto</a>
-            <a href="/auth/login" className="nav-ingresar">Ingresar →</a>
-            <a href="#prueba" className="nav-cta">Prueba gratis</a>
-          </div>
-        </nav>
+      {/* ── NAVBAR ── */}
+      <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-slate-100 h-14">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 h-full flex items-center justify-between">
+          {/* Logo */}
+          <Link href="/" className="flex items-center gap-2">
+            <svg viewBox="0 0 32 32" className="w-7 h-7" fill="none">
+              <rect width="32" height="32" rx="8" fill="#1A56DB" />
+              <text x="16" y="22" textAnchor="middle" fill="white" fontSize="18" fontWeight="bold" fontFamily="system-ui">S</text>
+              <path d="M10 26 Q16 22 22 26" stroke="white" strokeWidth="2" strokeLinecap="round" fill="none" />
+            </svg>
+            <span className="font-bold text-blue-600 text-lg">SonrisApp</span>
+          </Link>
 
-        {/* HERO */}
-        <div className="hero">
-          <div className="hero-glow"></div>
-          <span className="hero-badge">🦷 Sistema de Gestión Odontológica Profesional</span>
-          <h1 className="hero-title">Tu consultorio,<br /><em>sin el caos</em></h1>
-          <p className="hero-sub">Agenda digital inteligente con odontograma interactivo, gestión de pacientes y notificaciones automáticas. 100% digital, disponible 24/7.</p>
-          <p className="hero-sub2">Accesible desde cualquier dispositivo · Sin instalaciones · Listo en minutos</p>
-          <div className="hero-actions">
-            <a href="#prueba" className="btn-primary">Empezar prueba gratuita →</a>
-            <a href="#funciones" className="btn-ghost">Ver todas las funciones</a>
+          {/* Nav links — desktop */}
+          <nav className="hidden md:flex items-center gap-6">
+            <a href="#funciones" className="text-sm text-slate-600 hover:text-slate-900 transition-colors">Funciones</a>
+            <a href="#precios" className="text-sm text-slate-600 hover:text-slate-900 transition-colors">Precios</a>
+            <a href="#contacto" className="text-sm text-slate-600 hover:text-slate-900 transition-colors">Contacto</a>
+          </nav>
+
+          {/* CTAs */}
+          <div className="flex items-center gap-2">
+            <Link
+              href="/auth/login"
+              className="border border-slate-200 rounded-lg px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors"
+            >
+              Iniciar sesión
+            </Link>
+            <Link
+              href="/auth/register/professional"
+              className="bg-blue-600 text-white rounded-lg px-4 py-2 text-sm font-semibold hover:bg-blue-700 transition-colors"
+            >
+              Empezar gratis
+            </Link>
           </div>
-          <p className="hero-sub2" style={{ marginBottom: 0 }}>
-            ¿Ya tenés cuenta?{' '}
-            <a href="/auth/login" style={{ color: 'var(--cyan)', textDecoration: 'none' }}>Ingresá acá →</a>
+        </div>
+      </header>
+
+      {/* ── HERO ── */}
+      <section className="bg-white py-20 px-4">
+        <div className="max-w-4xl mx-auto text-center">
+          {/* Badge */}
+          <span className="inline-flex items-center gap-1.5 bg-blue-50 border border-blue-100 text-blue-700 text-xs font-semibold px-4 py-1.5 rounded-full mb-8">
+            Nuevo: Recetas Electrónicas →
+          </span>
+
+          {/* H1 */}
+          <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight max-w-3xl mx-auto leading-tight">
+            Un consultorio moderno empieza con una agenda digital.
+          </h1>
+
+          {/* Subtítulo */}
+          <p className="text-lg text-slate-500 max-w-xl mx-auto mt-4">
+            Turnos online, odontogramas inteligentes, recetas electrónicas, todo en uno.
           </p>
-          <div className="hero-scroll">
-            <div className="scroll-line"></div>
-            <span>Explorá</span>
+
+          {/* CTAs */}
+          <div className="flex flex-wrap items-center justify-center gap-4 mt-8">
+            <Link
+              href="/auth/register/professional"
+              className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold text-base transition-colors"
+            >
+              Empezar prueba gratis
+            </Link>
+            <a
+              href="#funciones"
+              className="text-blue-600 hover:underline font-medium text-base"
+            >
+              Ver demo
+            </a>
+          </div>
+
+          {/* Trust */}
+          <p className="text-sm text-slate-400 mt-4">
+            Sin tarjeta de crédito · 14 días gratis · Cancelá cuando quieras
+          </p>
+        </div>
+      </section>
+
+      {/* ── MÉTRICAS ── */}
+      <section className="bg-slate-50 border-y border-slate-200 py-10">
+        <div className="max-w-4xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
+          <div>
+            <p className="text-3xl font-extrabold text-slate-900">2 min</p>
+            <p className="text-sm text-slate-500 mt-1">para agendar un turno online</p>
+          </div>
+          <div>
+            <p className="text-3xl font-extrabold text-slate-900">24/7</p>
+            <p className="text-sm text-slate-500 mt-1">los pacientes reservan solos</p>
+          </div>
+          <div>
+            <p className="text-3xl font-extrabold text-slate-900">100% cloud</p>
+            <p className="text-sm text-slate-500 mt-1">sin instalación, desde cualquier dispositivo</p>
           </div>
         </div>
+      </section>
 
-        {/* STATS */}
-        <div className="stats-bar">
-          <div className="stat-item">
-            <div className="stat-num">10h</div>
-            <div className="stat-label">Ahorradas por semana</div>
-          </div>
-          <div className="stat-item">
-            <div className="stat-num">40%</div>
-            <div className="stat-label">Menos ausencias</div>
-          </div>
-          <div className="stat-item">
-            <div className="stat-num">∞</div>
-            <div className="stat-label">Pacientes sin límite</div>
-          </div>
-        </div>
+      {/* ── FEATURES ── */}
+      <section className="bg-white py-16 px-4" id="funciones">
+        <div className="max-w-5xl mx-auto">
+          <h2 className="text-3xl font-bold text-slate-900 text-center tracking-tight">
+            Todo lo que necesita tu consultorio
+          </h2>
 
-        {/* PROBLEMA / SOLUCIÓN */}
-        <div className="surface-bg">
-          <div className="section-wrap">
-            <span className="section-label">El panorama actual</span>
-            <h2 className="section-title">Los odontólogos pierden tiempo<br /><em>valioso cada día</em></h2>
-            <div className="problem-grid">
-              <div>
-                <div className="col-label" style={{ color: 'var(--red)' }}>Sin Sonrisapp</div>
-                <ul className="problem-list">
-                  <li><span className="problem-mark">✗</span> <span>Llamadas telefónicas constantes para agendar turnos</span></li>
-                  <li><span className="problem-mark">✗</span> <span>Agendas en papel difíciles de gestionar</span></li>
-                  <li><span className="problem-mark">✗</span> <span>Pacientes que olvidan sus turnos</span></li>
-                  <li><span className="problem-mark">✗</span> <span>Historiales médicos en papel desorganizados</span></li>
-                  <li><span className="problem-mark">✗</span> <span>Sin registro digital del estado dental</span></li>
-                  <li><span className="problem-mark">✗</span> <span>Horas administrativas que no generan ingresos</span></li>
-                </ul>
-                <div className="problem-conclusion">Todo esto reduce la productividad y aumenta el estrés</div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+            {FEATURES.map((f) => (
+              <div
+                key={f.title}
+                className="bg-white border border-slate-200 rounded-xl p-6 hover:shadow-md transition-shadow"
+              >
+                <div className="bg-blue-50 text-blue-600 rounded-lg w-10 h-10 flex items-center justify-center mb-4">
+                  {f.icon}
+                </div>
+                <h3 className="text-base font-semibold text-slate-900 mb-2">{f.title}</h3>
+                <p className="text-sm text-slate-500 leading-relaxed">{f.desc}</p>
               </div>
-              <div>
-                <div className="col-label" style={{ color: 'var(--green)' }}>Con Sonrisapp</div>
-                <ul className="solution-list">
-                  <li><span className="solution-mark">✓</span> <span>Agenda digital inteligente y automática</span></li>
-                  <li><span className="solution-mark">✓</span> <span>Base de datos completa de pacientes</span></li>
-                  <li><span className="solution-mark">✓</span> <span>Odontograma interactivo profesional (Sistema FDI)</span></li>
-                  <li><span className="solution-mark">✓</span> <span>Notificaciones automáticas por email</span></li>
-                  <li><span className="solution-mark">✓</span> <span>Estadísticas y reportes en tiempo real</span></li>
-                  <li><span className="solution-mark">✓</span> <span>Exportación a PDF profesional</span></li>
-                </ul>
-                <div className="solution-conclusion">¡Más tiempo para lo que realmente importa: tus pacientes!</div>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
+      </section>
 
-        {/* FUNCIONES */}
-        <div className="section-wrap" id="funciones">
-          <span className="section-label">Funcionalidades</span>
-          <h2 className="section-title">Todo lo que necesitás,<br /><em>nada que no uses</em></h2>
-          <p className="section-body">Diseñada específicamente para consultorios odontológicos que quieren modernizarse sin complicaciones.</p>
+      {/* ── PRECIOS ── */}
+      <section className="bg-slate-50 py-16 px-4" id="precios">
+        <div className="max-w-5xl mx-auto">
+          <h2 className="text-3xl font-bold text-slate-900 text-center tracking-tight">
+            Precio simple y transparente
+          </h2>
+          <p className="text-slate-500 text-center mt-2">
+            14 días gratis en cualquier plan. Sin tarjeta de crédito.
+          </p>
 
-          <div className="features-grid">
-            <div className="feature-card">
-              <span className="feature-icon">📅</span>
-              <div className="feature-title">Gestión Inteligente de Turnos</div>
-              <p className="feature-desc">Dashboard completo con todos tus turnos organizados por fecha, estado y paciente. Aprobá o rechazá solicitudes con un solo click. Estados visuales: Pendiente, Confirmado, Completado, Cancelado.</p>
-              <div className="feature-tags">
-                <span className="tag">Vista profesional</span>
-                <span className="tag">Portal del paciente</span>
-                <span className="tag">24/7</span>
-              </div>
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10">
+            {planOrder.map((planId) => {
+              const plan = PLANS[planId]
+              const styles = PLAN_STYLES[planId]
+              const features = PLAN_FEATURES[planId]
 
-            <div className="feature-card">
-              <span className="feature-icon">👥</span>
-              <div className="feature-title">Base de Datos Profesional</div>
-              <p className="feature-desc">Ficha completa de cada paciente con todos sus datos. Historial completo de turnos pasados y futuros. Estadísticas por paciente: turnos totales, completados, cancelados. Búsqueda instantánea por nombre, email o teléfono.</p>
-              <div className="feature-tags">
-                <span className="tag">100% seguro</span>
-                <span className="tag">Búsqueda instantánea</span>
-                <span className="tag">Multi-dispositivo</span>
-              </div>
-            </div>
+              return (
+                <div key={planId} className={styles.wrapper}>
+                  {/* Badge "Más popular" */}
+                  {styles.badge && (
+                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full whitespace-nowrap">
+                      {styles.badge}
+                    </span>
+                  )}
 
-            <div className="feature-card">
-              <span className="feature-icon">🦷</span>
-              <div className="feature-title">Odontograma Interactivo</div>
-              <p className="feature-desc">Sistema FDI Internacional. Click en cada superficie del diente para marcar estado. Dentición completa: permanente (32 dientes) y temporaria (20 dientes). Exportación a PDF profesional con un click.</p>
-              <div className="feature-tags">
-                <span className="tag">Sistema FDI</span>
-                <span className="tag">Interfaz visual</span>
-                <span className="tag">Export PDF</span>
-              </div>
-            </div>
+                  {/* Nombre y precio */}
+                  <div>
+                    <p className={`text-sm font-bold uppercase tracking-wide ${styles.nameColor}`}>
+                      {plan.name}
+                    </p>
+                    <div className="mt-2 flex items-baseline gap-1">
+                      <span className="text-4xl font-bold text-slate-900">
+                        {formatPriceARS(plan.price)}
+                      </span>
+                      <span className="text-sm text-slate-400">/mes</span>
+                    </div>
+                    <p className="text-sm text-slate-500 mt-2">{plan.description}</p>
+                  </div>
 
-            <div className="feature-card">
-              <span className="feature-icon">📧</span>
-              <div className="feature-title">Notificaciones Automáticas</div>
-              <p className="feature-desc">Emails automáticos por cada evento importante. Recordatorios de turnos próximos. Envío masivo de notificaciones a todos los pacientes. Plantillas personalizables con tu marca. Integración con Resend (3.000 emails gratis/mes).</p>
-              <div className="feature-tags">
-                <span className="tag">Recordatorios</span>
-                <span className="tag">Envío masivo</span>
-                <span className="tag">Personalizable</span>
-              </div>
-            </div>
+                  {/* Features */}
+                  <ul className="space-y-2 flex-1">
+                    {features.map((feat) => (
+                      <li key={feat} className="flex items-center gap-2 text-sm text-slate-700">
+                        <svg className="w-4 h-4 text-emerald-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                        </svg>
+                        {feat}
+                      </li>
+                    ))}
+                  </ul>
 
-            <div className="feature-card">
-              <span className="feature-icon">📱</span>
-              <div className="feature-title">Registro con Código QR</div>
-              <p className="feature-desc">Tu QR único personalizado. Pacientes se registran en segundos. Descargá y compartí para posters, redes sociales y tarjetas. Modernizá la captación de pacientes automáticamente.</p>
-              <div className="feature-tags">
-                <span className="tag">Generación automática</span>
-                <span className="tag">Personalizable</span>
-                <span className="tag">Marketing digital</span>
-              </div>
-            </div>
-
-            <div className="feature-card">
-              <span className="feature-icon">📊</span>
-              <div className="feature-title">Dashboard Profesional</div>
-              <p className="feature-desc">Estadísticas en tiempo real. Turnos de hoy destacados. Total de pacientes activos. Gráficos visuales de tendencias. Turnos completados vs cancelados. Notificaciones pendientes y acceso rápido a todas las funciones.</p>
-              <div className="feature-tags">
-                <span className="tag">Tiempo real</span>
-                <span className="tag">Gráficos</span>
-                <span className="tag">Branding propio</span>
-              </div>
-            </div>
+                  {/* CTA */}
+                  <Link href="/auth/register/professional" className={styles.btnClass}>
+                    Empezar con {plan.name}
+                  </Link>
+                </div>
+              )
+            })}
           </div>
+
+          <p className="text-xs text-center text-slate-400 mt-8">
+            Podés cambiar o cancelar tu plan en cualquier momento. Los pagos son procesados por MercadoPago.
+          </p>
         </div>
+      </section>
 
-        <div className="divider"></div>
-
-        {/* ODONTOGRAMA DETALLE */}
-        <div className="surface-bg">
-          <div className="section-wrap">
-            <span className="section-label">⭐ Incluido en tu suscripción</span>
-            <h2 className="section-title">Odontograma<br /><em>Interactivo Profesional</em></h2>
-            <p className="section-body">El estándar mundial para el registro clínico dental, digitalizado y fácil de usar.</p>
-
-            <div style={{ marginTop: '3rem' }}>
-              <h3 style={{ fontFamily: "var(--font-cormorant, 'Cormorant Garamond'), serif", fontSize: '1.8rem', fontWeight: 400, marginBottom: '1.5rem', color: 'var(--white)' }}>7 Estados Clínicos</h3>
-              <div className="estados-grid">
-                <div className="estado-item">
-                  <div className="estado-dot" style={{ background: '#34d399' }}></div>
-                  <div><div className="estado-name">Sano</div><div className="estado-desc">Diente sin patologías</div></div>
-                </div>
-                <div className="estado-item">
-                  <div className="estado-dot" style={{ background: '#f87171' }}></div>
-                  <div><div className="estado-name">Caries</div><div className="estado-desc">Lesión cariosa detectada</div></div>
-                </div>
-                <div className="estado-item">
-                  <div className="estado-dot" style={{ background: '#60a5fa' }}></div>
-                  <div><div className="estado-name">Restauración</div><div className="estado-desc">Obturación realizada</div></div>
-                </div>
-                <div className="estado-item">
-                  <div className="estado-dot" style={{ background: '#fbbf24' }}></div>
-                  <div><div className="estado-name">Corona</div><div className="estado-desc">Corona protésica</div></div>
-                </div>
-                <div className="estado-item">
-                  <div className="estado-dot" style={{ background: '#f87171' }}></div>
-                  <div><div className="estado-name">Fractura</div><div className="estado-desc">Diente fracturado</div></div>
-                </div>
-                <div className="estado-item">
-                  <div className="estado-dot" style={{ background: '#9ca3af' }}></div>
-                  <div><div className="estado-name">Ausente</div><div className="estado-desc">Diente faltante</div></div>
-                </div>
-                <div className="estado-item">
-                  <div className="estado-dot" style={{ background: '#34d399' }}></div>
-                  <div><div className="estado-name">Implante</div><div className="estado-desc">Implante dental</div></div>
-                </div>
-              </div>
-              <div className="superficies-bar">
-                <strong>5 Superficies por Diente:</strong> Vestibular · Lingual · Mesial · Distal · Oclusal
-              </div>
-            </div>
+      {/* ── CTA FINAL ── */}
+      <section className="bg-blue-600 py-16 px-4 text-center text-white">
+        <div className="max-w-2xl mx-auto">
+          <h2 className="text-3xl font-bold tracking-tight">
+            Modernizá tu consultorio hoy
+          </h2>
+          <p className="text-blue-100 mt-3 text-base">
+            Más de 14 días para probar todo sin costo. Sin compromisos.
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-4 mt-8">
+            <Link
+              href="/auth/register/professional"
+              className="bg-white text-blue-600 hover:bg-blue-50 px-8 py-3 rounded-lg font-semibold text-base transition-colors"
+            >
+              Crear cuenta gratis
+            </Link>
+            <Link
+              href="/auth/login"
+              className="border border-white/40 text-white hover:bg-white/10 px-6 py-3 rounded-lg font-medium text-base transition-colors"
+            >
+              Iniciar sesión
+            </Link>
           </div>
+          <p className="text-blue-200 text-sm mt-4">
+            Sin tarjeta de crédito · 14 días gratis · Cancelá cuando quieras
+          </p>
         </div>
+      </section>
 
-        <div className="divider"></div>
-
-        {/* COMPARATIVA */}
-        <div className="section-wrap">
-          <span className="section-label">Comparativa</span>
-          <h2 className="section-title">Método tradicional<br /><em>vs Sonrisapp</em></h2>
-          <table className="compare-table">
-            <thead>
-              <tr>
-                <th>Aspecto</th>
-                <th>✗ Método Tradicional</th>
-                <th>✓ Sonrisapp</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><td>Agenda</td><td>Papel, desorganizada</td><td>Digital, automática, 24/7</td></tr>
-              <tr><td>Turnos</td><td>Solo por llamada</td><td>Online, auto-gestionados</td></tr>
-              <tr><td>Recordatorios</td><td>Llamadas manuales</td><td>Emails automáticos</td></tr>
-              <tr><td>Odontograma</td><td>Papel, difícil de leer</td><td>Digital, visual, exportable</td></tr>
-              <tr><td>Historiales</td><td>Archivos físicos</td><td>Base de datos digital</td></tr>
-              <tr><td>Reportes</td><td>Manual, tedioso</td><td>Automático, PDF en 1 click</td></tr>
-              <tr><td>Costo mensual</td><td>Papelería + tiempo perdido</td><td>Accesible. 1 mes gratis para empezar</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div className="divider"></div>
-
-        {/* ROI */}
-        <div className="surface-bg">
-          <div className="section-wrap">
-            <span className="section-label">Retorno de inversión</span>
-            <h2 className="section-title">Beneficios medibles<br /><em>desde el primer mes</em></h2>
-            <div className="roi-grid">
-              <div className="roi-card">
-                <div className="roi-num" style={{ color: 'var(--green)' }}>10h</div>
-                <div className="roi-label">Ahorradas por semana</div>
-              </div>
-              <div className="roi-card">
-                <div className="roi-num" style={{ color: 'var(--cyan)' }}>40%</div>
-                <div className="roi-label">Menos ausencias</div>
-              </div>
-              <div className="roi-card">
-                <div className="roi-num" style={{ color: 'var(--gold)' }}>+30%</div>
-                <div className="roi-label">Más productividad</div>
-              </div>
-            </div>
-            <div className="roi-details">
-              <div className="roi-detail-item">
-                <div className="roi-detail-icon">⏰</div>
-                <div>
-                  <div className="roi-detail-title">Más tiempo clínico</div>
-                  <div className="roi-detail-desc">Menos tareas administrativas = más tiempo para atender pacientes y hacer lo que te apasiona.</div>
-                </div>
-              </div>
-              <div className="roi-detail-item">
-                <div className="roi-detail-icon">💰</div>
-                <div>
-                  <div className="roi-detail-title">Más ingresos</div>
-                  <div className="roi-detail-desc">Menos huecos en la agenda = más turnos completados = más productividad para tu consultorio.</div>
-                </div>
-              </div>
-              <div className="roi-detail-item">
-                <div className="roi-detail-icon">😊</div>
-                <div>
-                  <div className="roi-detail-title">Pacientes más satisfechos</div>
-                  <div className="roi-detail-desc">Una experiencia moderna y profesional genera confianza y fidelidad en tus pacientes.</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* PRUEBA GRATIS */}
-        <div id="prueba">
-          <div className="trial-inner">
+      {/* ── FOOTER ── */}
+      <footer className="bg-slate-900 text-white py-10 px-4" id="contacto">
+        <div className="max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Marca */}
             <div>
-              <span className="section-label">Sin compromiso</span>
-              <h2 className="section-title">Probá Sonrisapp<br /><em>un mes gratis</em></h2>
-              <ul className="trial-list">
-                <li>Acceso completo a todas las funciones desde el día uno</li>
-                <li>Sin tarjeta de crédito requerida para comenzar</li>
-                <li>Configuración en menos de 10 minutos</li>
-                <li>Soporte personal incluido durante la prueba</li>
-                <li>Sin costos de instalación ni permanencia</li>
-                <li>Cancelás cuando querés, sin preguntas</li>
-                <li>Precio accesible pensado para el consultorio local</li>
-                <li>Actualizaciones automáticas incluidas siempre</li>
-              </ul>
+              <p className="font-bold text-lg">SonrisApp</p>
+              <p className="text-slate-400 text-sm mt-1">Gestión odontológica inteligente</p>
+              <p className="text-slate-400 text-xs mt-3">
+                Desarrollado por{' '}
+                <a href="https://cosasanta.com" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">
+                  Cosa Santa
+                </a>
+              </p>
             </div>
-            <div className="trial-cta-box">
-              <span className="trial-badge">Oferta de bienvenida</span>
-              <div className="trial-headline">1 mes<br /><em>sin costo</em></div>
-              <p className="trial-sub">Comenzá hoy y experimentá la diferencia en tu consultorio. Sin riesgos, sin letra chica, sin sorpresas.</p>
-              <a href="mailto:colaboradormariobritto@gmail.com?subject=Quiero probar Sonrisapp 1 mes gratis" className="btn-primary">
-                Quiero probarlo gratis →
+
+            {/* Links */}
+            <div>
+              <p className="text-sm font-semibold text-slate-300 mb-3">Legal</p>
+              <div className="flex flex-col gap-2">
+                <a href="#" className="text-sm text-slate-400 hover:text-white transition-colors">Términos de uso</a>
+                <a href="#" className="text-sm text-slate-400 hover:text-white transition-colors">Privacidad</a>
+                <a href={`mailto:colaboradormariobritto@gmail.com`} className="text-sm text-slate-400 hover:text-white transition-colors">
+                  Contacto
+                </a>
+              </div>
+            </div>
+
+            {/* Soporte */}
+            <div>
+              <p className="text-sm font-semibold text-slate-300 mb-3">Soporte</p>
+              <div className="flex flex-col gap-2">
+                <a
+                  href="https://wa.me/542945415186"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-slate-400 hover:text-white transition-colors flex items-center gap-2"
+                >
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+                  </svg>
+                  +54 294 541 5186
+                </a>
+                <a
+                  href="mailto:colaboradormariobritto@gmail.com"
+                  className="text-sm text-slate-400 hover:text-white transition-colors"
+                >
+                  colaboradormariobritto@gmail.com
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div className="border-t border-slate-800 mt-8 pt-6 text-center">
+            <p className="text-slate-500 text-sm">
+              © 2026 SonrisApp · Desarrollado por Cosa Santa ·{' '}
+              <a href="https://cosasanta.com" target="_blank" rel="noopener noreferrer" className="hover:text-slate-300 transition-colors">
+                cosasanta.com
               </a>
-              <p className="trial-economic">Económico para cualquier consultorio. Menor costo que una sola consulta.</p>
-            </div>
+            </p>
           </div>
         </div>
+      </footer>
 
-        <div className="divider"></div>
-
-        {/* CONTACTO */}
-        <div className="section-wrap" id="contacto">
-          <span className="section-label">Contacto</span>
-          <h2 className="section-title">¿Tenés dudas?<br /><em>Estamos acá para vos</em></h2>
-          <p className="section-body">Contactanos por el canal que prefieras. Respondemos rápido y con gusto te ayudamos a dar el primer paso.</p>
-          <div className="contact-grid">
-            <div className="contact-card">
-              <span className="contact-type">WhatsApp</span>
-              <a href="https://wa.me/542945415186" className="contact-value" target="_blank" rel="noopener noreferrer">+54 294 541 5186</a>
-            </div>
-            <div className="contact-card">
-              <span className="contact-type">Email</span>
-              <a href="mailto:colaboradormariobritto@gmail.com" className="contact-value">colaboradormariobritto@gmail.com</a>
-            </div>
-            <div className="contact-card">
-              <span className="contact-type">Producto</span>
-              <a href="https://www.sonrisapp.com" className="contact-value" target="_blank" rel="noopener noreferrer">www.sonrisapp.com</a>
-            </div>
-            <div className="contact-card">
-              <span className="contact-type">Empresa</span>
-              <a href="https://www.cosasanta.com" className="contact-value" target="_blank" rel="noopener noreferrer">www.cosasanta.com</a>
-            </div>
-          </div>
-        </div>
-
-        {/* FOOTER */}
-        <footer>
-          <p>© 2026 SonrisApp · Desarrollado por <a href="https://www.cosasanta.com" target="_blank" rel="noopener noreferrer">Cosa Santa</a> · <a href="https://www.cosasanta.com" target="_blank" rel="noopener noreferrer">cosasanta.com</a></p>
-        </footer>
-
-      </div>
-    </>
+    </div>
   )
 }
