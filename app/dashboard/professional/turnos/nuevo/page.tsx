@@ -20,6 +20,13 @@ export default async function NewAppointmentPage() {
     .eq('professional_id', professionalId)
     .order('name', { ascending: true })
 
+  console.error('DEBUG TURNOS/NUEVO pacientes:', {
+    professionalId,
+    count: patients?.length,
+    error: error?.message,
+    hasServiceKey: Boolean(process.env.SUPABASE_SERVICE_ROLE_KEY),
+  })
+
   if (error) {
     console.error('Error fetching patients:', error)
   }

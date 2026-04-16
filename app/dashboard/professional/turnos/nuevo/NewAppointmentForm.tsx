@@ -116,7 +116,7 @@ export default function NewAppointmentForm({
           <option value="">Seleccionar paciente...</option>
           {patients.map((patient) => (
             <option key={patient.id} value={patient.id}>
-              {patient.name} ({patient.email})
+              {patient.name}{patient.email ? ` (${patient.email})` : ''}
             </option>
           ))}
         </select>
