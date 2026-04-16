@@ -20,6 +20,14 @@ export default async function PatientsPage() {
     .eq('professional_id', professionalId)
     .order('name', { ascending: true })
 
+  console.error('DEBUG PACIENTES:', {
+    count: patients?.length,
+    error: error?.message,
+    professionalId,
+    hasServiceKey: Boolean(process.env.SUPABASE_SERVICE_ROLE_KEY),
+    hasUrl: Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL)
+  })
+
   if (error) {
     console.error('Error fetching patients:', error)
   }
