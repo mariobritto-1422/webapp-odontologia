@@ -20,14 +20,6 @@ export default async function PatientsPage() {
     .eq('professional_id', professionalId)
     .order('name', { ascending: true })
 
-  console.error('DEBUG PACIENTES:', {
-    count: patients?.length,
-    error: error?.message,
-    professionalId,
-    hasServiceKey: Boolean(process.env.SUPABASE_SERVICE_ROLE_KEY),
-    hasUrl: Boolean(process.env.NEXT_PUBLIC_SUPABASE_URL)
-  })
-
   if (error) {
     console.error('Error fetching patients:', error)
   }
@@ -61,7 +53,7 @@ export default async function PatientsPage() {
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Pacientes</h1>
         <Link
-          href="/dashboard/professional/qr"
+          href="/dashboard/professional/pacientes/nuevo"
           className="bg-blue-600 hover:bg-blue-700 text-white rounded-lg px-4 py-2 text-sm font-semibold transition-colors"
         >
           + Nuevo Paciente
