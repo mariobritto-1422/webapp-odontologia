@@ -2,10 +2,6 @@
   package = "@netlify/plugin-nextjs"
 
 [build]
+  base = "cc_paraguas/01_SonrisApp"
   command = "npm run build"
-
-[[redirects]]
-  from = "/"
-  to = "/auth/login"
-  status = 302
-  force = true
+  publish = ".next"
