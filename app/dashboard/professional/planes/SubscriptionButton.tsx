@@ -10,7 +10,7 @@ interface Props {
   plan: PlanId
   label: string
   disabled?: boolean
-  variant?: 'primary' | 'outline'
+  variant?: 'primary' | 'outline' | 'dark'
 }
 
 export default function SubscriptionButton({
@@ -48,10 +48,11 @@ export default function SubscriptionButton({
     }
   }
 
-  const base = 'w-full py-2.5 px-4 rounded-lg text-sm font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed'
+  const base = 'w-full py-2.5 px-4 rounded-lg text-sm font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed'
   const styles = {
     primary: 'bg-blue-600 text-white hover:bg-blue-700',
-    outline: 'border border-gray-300 text-gray-700 hover:bg-gray-50',
+    outline: 'border border-slate-200 text-slate-700 hover:bg-slate-50',
+    dark:    'bg-slate-900 text-white hover:bg-slate-800',
   }
 
   return (

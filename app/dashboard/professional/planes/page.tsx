@@ -52,11 +52,17 @@ function getPlanFeatureRows(planId: PlanId) {
 }
 
 const STATUS_LABELS: Record<string, { label: string; color: string }> = {
-  trialing:  { label: 'Trial activo',       color: 'bg-amber-100 text-amber-800' },
-  active:    { label: 'Activo',             color: 'bg-emerald-100 text-emerald-800' },
-  past_due:  { label: 'Pago pendiente',     color: 'bg-orange-100 text-orange-800' },
-  cancelled: { label: 'Cancelado',          color: 'bg-gray-100 text-gray-600' },
-  expired:   { label: 'Expirado',           color: 'bg-red-100 text-red-700' },
+  trialing:  { label: 'Trial activo',   color: 'bg-amber-50 text-amber-700 border-amber-200' },
+  active:    { label: 'Activo',         color: 'bg-emerald-50 text-emerald-700 border-emerald-200' },
+  past_due:  { label: 'Pago pendiente', color: 'bg-orange-50 text-orange-700 border-orange-200' },
+  cancelled: { label: 'Cancelado',      color: 'bg-slate-100 text-slate-600 border-slate-200' },
+  expired:   { label: 'Expirado',       color: 'bg-red-50 text-red-700 border-red-200' },
+}
+
+const PLAN_BUTTON_VARIANT: Record<PlanId, 'outline' | 'primary' | 'dark'> = {
+  starter: 'outline',
+  pro:     'primary',
+  clinica: 'dark',
 }
 
 export default async function PlanesPage() {
@@ -67,27 +73,24 @@ export default async function PlanesPage() {
   if (!sub) redirect('/auth/login')
 
   const access = evaluateAccess(sub)
-  const statusDisplay = STATUS_LABELS[sub.status] ?? { label: sub.status, color: 'bg-gray-100 text-gray-600' }
+  const statusDisplay = STATUS_LABELS[sub.status] ?? { label: sub.status, color: 'bg-slate-100 text-slate-600 border-slate-200' }
   const planOrder: PlanId[] = ['starter', 'pro', 'clinica']
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-8 space-y-8">
 
       {/* ── Banner de estado actual ── */}
-      <div className="bg-white border border-gray-200 rounded-xl p-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div className="space-y-1">
-          <p className="text-sm text-gray-500">Suscripción actual</p>
-          <div className="flex items-center gap-3">
-            <h2 className="text-xl font-semibold text-gray-900">
-              Plan {PLANS[sub.plan].name}
-            </h2>
-            <span className={`text-xs font-medium px-2.5 py-0.5 rounded-full ${statusDisplay.color}`}>
+      <div className="bg-white border border-slate-200 rounded-xl p-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+        <div>
+          <p className="text-xs text-slate-400 uppercase font-semibold tracking-wide mb-1">Suscripción actual</p>
+          <div className="flex items-center gap-2.5">
+            <h2 className="text-lg font-bold text-slate-900">Plan {PLANS[sub.plan].name}</h2>
+            <span className={`text-xs font-semibold px-2.5 py-1 rounded-full border ${statusDisplay.color}`}>
               {statusDisplay.label}
             </span>
           </div>
-
           {access.daysRemaining !== null && (
-            <p className="text-sm text-gray-600">
+            <p className="text-xs text-slate-500 mt-1">
               {sub.status === 'trialing' && `${access.daysRemaining} días restantes de prueba`}
               {sub.status === 'past_due' && `Período de gracia: ${access.daysRemaining} días`}
               {sub.status === 'cancelled' && `Acceso hasta: ${access.daysRemaining} días`}
@@ -98,21 +101,21 @@ export default async function PlanesPage() {
 
       {/* ── Avisos ── */}
       {sub.status === 'trialing' && access.daysRemaining !== null && access.daysRemaining <= 3 && (
-        <div className="bg-amber-50 border border-amber-200 rounded-lg px-4 py-3 text-sm text-amber-800">
+        <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 text-sm text-amber-800">
           Tu prueba vence en {access.daysRemaining} día{access.daysRemaining !== 1 ? 's' : ''}.
           Elegí un plan para continuar sin interrupciones.
         </div>
       )}
       {sub.status === 'past_due' && (
-        <div className="bg-red-50 border border-red-200 rounded-lg px-4 py-3 text-sm text-red-800">
+        <div className="bg-red-50 border border-red-200 rounded-xl px-4 py-3 text-sm text-red-700">
           Tu último pago falló. Ingresá a MercadoPago para actualizar tu método de pago.
         </div>
       )}
 
       {/* ── Título ── */}
       <div>
-        <h3 className="text-lg font-semibold text-gray-900">Planes disponibles</h3>
-        <p className="text-sm text-gray-500 mt-1">
+        <h3 className="text-xl font-bold text-slate-900 tracking-tight">Planes disponibles</h3>
+        <p className="text-sm text-slate-500 mt-1">
           Todos los planes incluyen 14 días de prueba gratuita con acceso Pro completo.
         </p>
       </div>
@@ -124,52 +127,57 @@ export default async function PlanesPage() {
           const { baseRows, flagRows } = getPlanFeatureRows(planId)
           const isCurrent = sub.plan === planId && sub.status !== 'expired'
           const isRecommended = plan.highlight
+          const nameColor = isRecommended ? 'text-blue-600' : 'text-slate-500'
 
           return (
             <div
               key={planId}
-              className={`relative bg-white rounded-xl border-2 p-6 flex flex-col gap-5 transition-shadow ${
+              className={`relative bg-white rounded-xl flex flex-col gap-5 p-6 ${
                 isRecommended
-                  ? 'border-blue-600 shadow-lg'
-                  : 'border-gray-200 hover:border-gray-300'
+                  ? 'border-2 border-blue-600 shadow-md'
+                  : 'border border-slate-200'
               }`}
             >
+              {/* Badge "Más popular" — solo en Pro */}
               {isRecommended && (
-                <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-blue-600 text-white text-xs font-semibold px-3 py-0.5 rounded-full">
-                  Recomendado
+                <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full whitespace-nowrap">
+                  Más popular
+                </span>
+              )}
+
+              {/* Badge "Tu plan actual" */}
+              {isCurrent && (
+                <span className="absolute -top-3 right-4 bg-emerald-50 text-emerald-700 text-xs font-semibold px-2.5 py-1 rounded-full border border-emerald-200">
+                  Tu plan actual
                 </span>
               )}
 
               {/* Nombre y precio */}
               <div>
-                <h4 className="text-base font-semibold text-gray-900">{plan.name}</h4>
-                <div className="mt-1 flex items-baseline gap-1">
-                  <span className="text-3xl font-bold text-gray-900">{formatPriceARS(plan.price)}</span>
-                  <span className="text-sm text-gray-500">/mes</span>
+                <p className={`text-sm font-bold uppercase tracking-wide ${nameColor}`}>{plan.name}</p>
+                <div className="mt-2 flex items-baseline gap-1">
+                  <span className="text-4xl font-bold text-slate-900">{formatPriceARS(plan.price)}</span>
+                  <span className="text-sm text-slate-400">/mes</span>
                 </div>
-                <p className="mt-2 text-sm text-gray-600">{plan.description}</p>
+                <p className="mt-2 text-sm text-slate-500">{plan.description}</p>
               </div>
 
-              {/* Features base */}
-              <ul className="space-y-1.5">
+              {/* Features */}
+              <ul className="space-y-2 flex-1">
                 {baseRows.map((row) => (
-                  <li key={row} className="flex items-center gap-2 text-sm text-gray-700">
+                  <li key={row} className="flex items-center gap-2 text-sm text-slate-700">
                     <CheckIcon className="w-4 h-4 text-emerald-500 shrink-0" />
                     {row}
                   </li>
                 ))}
-
-                {/* Feature flags */}
                 {flagRows.map(({ label, included }) => (
                   <li
                     key={label}
-                    className={`flex items-center gap-2 text-sm ${
-                      included ? 'text-gray-700' : 'text-gray-400'
-                    }`}
+                    className={`flex items-center gap-2 text-sm ${included ? 'text-slate-700' : 'text-slate-400'}`}
                   >
                     {included
                       ? <CheckIcon className="w-4 h-4 text-emerald-500 shrink-0" />
-                      : <MinusIcon className="w-4 h-4 text-gray-300 shrink-0" />
+                      : <MinusIcon className="w-4 h-4 text-slate-300 shrink-0" />
                     }
                     {label}
                   </li>
@@ -179,7 +187,7 @@ export default async function PlanesPage() {
               {/* CTA */}
               <div className="mt-auto">
                 {isCurrent ? (
-                  <div className="w-full py-2.5 px-4 rounded-lg text-sm font-medium text-center bg-gray-100 text-gray-500 cursor-default">
+                  <div className="w-full py-2.5 px-4 rounded-lg text-sm font-semibold text-center bg-slate-100 text-slate-400 cursor-default">
                     Plan actual
                   </div>
                 ) : (
@@ -187,7 +195,7 @@ export default async function PlanesPage() {
                     mode="checkout"
                     plan={planId}
                     label={sub.status === 'trialing' ? `Comenzar con ${plan.name}` : `Cambiar a ${plan.name}`}
-                    variant={isRecommended ? 'primary' : 'outline'}
+                    variant={PLAN_BUTTON_VARIANT[planId]}
                   />
                 )}
               </div>
@@ -196,7 +204,7 @@ export default async function PlanesPage() {
         })}
       </div>
 
-      <p className="text-xs text-center text-gray-400">
+      <p className="text-xs text-center text-slate-400">
         Podés cambiar o cancelar tu plan en cualquier momento desde MercadoPago.
         Los pagos son procesados de forma segura por MercadoPago.
       </p>

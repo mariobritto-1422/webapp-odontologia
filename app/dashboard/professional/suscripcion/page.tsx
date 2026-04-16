@@ -30,13 +30,17 @@ export default async function SuscripcionPage({
   const statusDisplay = statusLabels[sub.status] ?? statusLabels['expired']
 
   return (
-    <div className="max-w-lg mx-auto py-12 space-y-6">
+    <div className="max-w-lg mx-auto py-10 space-y-5">
 
       {/* Banner éxito post-pago */}
       {pagoExitoso && (
         <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-5 text-center">
-          <div className="text-3xl mb-2">🎉</div>
-          <h2 className="text-lg font-semibold text-emerald-800">¡Pago confirmado!</h2>
+          <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-3">
+            <svg className="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4.5 12.75l6 6 9-13.5" />
+            </svg>
+          </div>
+          <h2 className="text-base font-bold text-emerald-800">¡Pago confirmado!</h2>
           <p className="text-sm text-emerald-700 mt-1">
             Tu suscripción está siendo activada. Puede tardar unos segundos en reflejarse.
           </p>
@@ -44,55 +48,60 @@ export default async function SuscripcionPage({
       )}
 
       {/* Estado actual */}
-      <div className="bg-white border border-gray-200 rounded-xl p-6 space-y-4">
-        <h1 className="text-xl font-semibold text-gray-900">Tu suscripción</h1>
+      <div className="bg-white border border-slate-200 rounded-xl p-5 shadow-sm space-y-4">
+        <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide">Tu suscripción</p>
 
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-sm text-gray-500">Plan actual</p>
-            <p className="text-lg font-bold text-gray-900">{plan.name}</p>
-            <p className="text-sm text-gray-500">{formatPriceARS(plan.price)}/mes</p>
+            <p className="text-2xl font-bold text-slate-900">{plan.name}</p>
+            <p className="text-sm text-slate-500 mt-0.5">{formatPriceARS(plan.price)}/mes</p>
           </div>
-          <span className={`text-xs font-medium px-3 py-1 rounded-full border ${statusDisplay.color}`}>
+          <span className={`text-xs font-semibold px-3 py-1 rounded-full border ${statusDisplay.color}`}>
             {statusDisplay.label}
           </span>
         </div>
 
         {sub.trialEndsAt && sub.status === 'trialing' && (
-          <p className="text-sm text-amber-700 bg-amber-50 rounded-lg px-3 py-2">
-            Trial vence el {new Date(sub.trialEndsAt).toLocaleDateString('es-AR', {
-              day: 'numeric', month: 'long', year: 'numeric',
-            })}
-          </p>
+          <div className="bg-amber-50 border border-amber-200 rounded-lg px-3.5 py-2.5">
+            <p className="text-sm text-amber-800">
+              Trial vence el {new Date(sub.trialEndsAt).toLocaleDateString('es-AR', {
+                day: 'numeric', month: 'long', year: 'numeric',
+              })}
+            </p>
+          </div>
         )}
 
         {sub.subscriptionEndsAt && sub.status === 'active' && (
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-slate-500">
             Próxima renovación:{' '}
-            {new Date(sub.subscriptionEndsAt).toLocaleDateString('es-AR', {
-              day: 'numeric', month: 'long', year: 'numeric',
-            })}
+            <span className="text-slate-700 font-medium">
+              {new Date(sub.subscriptionEndsAt).toLocaleDateString('es-AR', {
+                day: 'numeric', month: 'long', year: 'numeric',
+              })}
+            </span>
           </p>
         )}
 
         {sub.status === 'past_due' && (
-          <p className="text-sm text-orange-700 bg-orange-50 rounded-lg px-3 py-2">
-            Tu último pago falló. Ingresá a MercadoPago para actualizar tu método de pago.
-          </p>
+          <div className="bg-orange-50 border border-orange-200 rounded-lg px-3.5 py-2.5">
+            <p className="text-sm text-orange-700">
+              Tu último pago falló. Ingresá a MercadoPago para actualizar tu método de pago.
+            </p>
+          </div>
         )}
       </div>
 
       {/* Acciones */}
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-2.5">
         <Link
           href="/dashboard/professional/planes"
-          className="w-full text-center px-4 py-2.5 rounded-lg bg-blue-600 text-white text-sm font-medium hover:bg-blue-700 transition-colors"
+          className="w-full text-center px-4 py-2.5 rounded-xl bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 transition-colors"
         >
           Ver todos los planes
         </Link>
         <Link
           href="/dashboard/professional"
-          className="w-full text-center px-4 py-2.5 rounded-lg text-sm font-medium text-gray-500 hover:text-gray-700 transition-colors"
+          className="w-full text-center px-4 py-2.5 rounded-xl text-sm font-medium text-slate-400 hover:text-slate-700 transition-colors"
         >
           Volver al dashboard
         </Link>
