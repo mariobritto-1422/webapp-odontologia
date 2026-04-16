@@ -181,54 +181,54 @@ export default function NewAppointmentFlow({
   const availableTimeSlots = selectedDate ? getAvailableTimeSlots(selectedDate) : []
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       {/* Progress Indicator */}
-      <div className="flex items-center justify-center gap-4">
+      <div className="flex items-center justify-center gap-3">
         <StepIndicator number={1} active={step === 1} completed={step > 1} label="Fecha" />
-        <div className="w-8 h-0.5 bg-gray-300"></div>
+        <div className="w-8 h-px bg-slate-200"></div>
         <StepIndicator number={2} active={step === 2} completed={step > 2} label="Horario" />
-        <div className="w-8 h-0.5 bg-gray-300"></div>
+        <div className="w-8 h-px bg-slate-200"></div>
         <StepIndicator number={3} active={step === 3} completed={false} label="Confirmar" />
       </div>
 
       {/* Error Message */}
       {error && (
-        <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-          <p className="text-sm text-red-800">{error}</p>
+        <div className="bg-red-50 border border-red-200 rounded-xl p-4">
+          <p className="text-sm text-red-700">{error}</p>
         </div>
       )}
 
       {/* Step 1: Select Date */}
       {step === 1 && (
-        <div className="bg-white rounded-lg shadow p-4">
-          <h3 className="font-semibold text-gray-900 mb-4">
-            Paso 1: Selecciona una fecha
-          </h3>
+        <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-4">
+          <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-4">
+            Paso 1 — Seleccioná una fecha
+          </p>
 
           {availableDates.length === 0 ? (
-            <div className="text-center py-12">
-              <p className="text-gray-600">
+            <div className="text-center py-10">
+              <p className="text-sm text-slate-500">
                 No hay fechas disponibles en los próximos 30 días
               </p>
-              <p className="text-sm text-gray-500 mt-2">
-                Por favor contacta con el profesional
+              <p className="text-xs text-slate-400 mt-1">
+                Contactá al profesional para coordinar
               </p>
             </div>
           ) : (
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-2 gap-2.5">
               {availableDates.slice(0, 12).map((date) => (
                 <button
                   key={date.toISOString()}
                   onClick={() => handleDateSelect(date)}
-                  className="p-4 border-2 border-gray-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-colors text-left"
+                  className="p-4 border border-slate-200 rounded-xl hover:border-blue-400 hover:bg-blue-50 transition-colors text-left"
                 >
-                  <p className="font-medium text-gray-900">
+                  <p className="font-medium text-slate-600 text-xs capitalize">
                     {format(date, 'EEEE', { locale: es })}
                   </p>
-                  <p className="text-2xl font-bold text-blue-600 mt-1">
+                  <p className="text-2xl font-bold text-blue-600 mt-1 leading-none">
                     {format(date, 'd')}
                   </p>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-xs text-slate-500 mt-1 capitalize">
                     {format(date, 'MMMM yyyy', { locale: es })}
                   </p>
                 </button>
@@ -240,13 +240,13 @@ export default function NewAppointmentFlow({
 
       {/* Step 2: Select Time */}
       {step === 2 && selectedDate && (
-        <div className="bg-white rounded-lg shadow p-4">
+        <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-4">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h3 className="font-semibold text-gray-900">
-                Paso 2: Selecciona un horario
-              </h3>
-              <p className="text-sm text-gray-600 mt-1">
+              <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide">
+                Paso 2 — Elegí un horario
+              </p>
+              <p className="text-sm font-semibold text-slate-900 mt-1 capitalize">
                 {format(selectedDate, "EEEE d 'de' MMMM", { locale: es })}
               </p>
             </div>
@@ -255,35 +255,35 @@ export default function NewAppointmentFlow({
                 setStep(1)
                 setSelectedDate(null)
               }}
-              className="text-sm text-blue-600 hover:text-blue-700"
+              className="text-xs text-blue-600 hover:text-blue-700 font-semibold"
             >
               Cambiar fecha
             </button>
           </div>
 
           {availableTimeSlots.length === 0 ? (
-            <div className="text-center py-12">
-              <p className="text-gray-600">No hay horarios disponibles para esta fecha</p>
+            <div className="text-center py-10">
+              <p className="text-sm text-slate-500">No hay horarios disponibles para esta fecha</p>
               <button
                 onClick={() => {
                   setStep(1)
                   setSelectedDate(null)
                 }}
-                className="mt-4 text-blue-600 hover:text-blue-700 font-medium"
+                className="mt-3 text-sm text-blue-600 hover:text-blue-700 font-semibold"
               >
                 Seleccionar otra fecha
               </button>
             </div>
           ) : (
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-3 gap-2.5">
               {availableTimeSlots.map((time) => (
                 <button
                   key={time}
                   onClick={() => handleTimeSelect(time)}
-                  className="p-3 border-2 border-gray-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-colors"
+                  className="p-3 border border-slate-200 rounded-xl hover:border-blue-400 hover:bg-blue-50 transition-colors text-center"
                 >
-                  <p className="font-medium text-gray-900">{time}</p>
-                  <p className="text-xs text-gray-600">hs</p>
+                  <p className="font-bold text-slate-900 text-sm">{time}</p>
+                  <p className="text-xs text-slate-400">hs</p>
                 </button>
               ))}
             </div>
@@ -293,25 +293,27 @@ export default function NewAppointmentFlow({
 
       {/* Step 3: Confirm */}
       {step === 3 && selectedDate && selectedTime && (
-        <div className="bg-white rounded-lg shadow p-4">
-          <h3 className="font-semibold text-gray-900 mb-4">
-            Paso 3: Confirmar turno
-          </h3>
+        <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-4">
+          <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-4">
+            Paso 3 — Confirmá el turno
+          </p>
 
           {/* Resumen */}
-          <div className="bg-blue-50 rounded-lg p-4 mb-4">
+          <div className="bg-blue-50 rounded-xl p-4 mb-4">
             <div className="flex items-start gap-3">
-              <svg className="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              </svg>
+              <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+              </div>
               <div className="flex-1">
-                <p className="font-medium text-gray-900">
+                <p className="font-semibold text-slate-900 text-sm capitalize">
                   {format(selectedDate, "EEEE d 'de' MMMM 'de' yyyy", { locale: es })}
                 </p>
-                <p className="text-lg font-bold text-blue-600 mt-1">
+                <p className="text-xl font-bold text-blue-600 mt-0.5">
                   {selectedTime} hs
                 </p>
-                <p className="text-sm text-gray-600 mt-2">
+                <p className="text-xs text-slate-500 mt-1">
                   Con: {professional.name}
                 </p>
               </div>
@@ -320,7 +322,7 @@ export default function NewAppointmentFlow({
 
           {/* Notas opcionales */}
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-slate-700 mb-1.5">
               Notas (opcional)
             </label>
             <textarea
@@ -328,14 +330,14 @@ export default function NewAppointmentFlow({
               onChange={(e) => setNotes(e.target.value)}
               rows={3}
               placeholder="Ej: Primera consulta, dolor de muela, etc."
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full px-4 py-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm resize-none"
             />
           </div>
 
           {/* Info */}
-          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mb-4">
-            <p className="text-xs text-yellow-800">
-              Tu solicitud quedará pendiente de confirmación por parte del profesional. Te notificaremos cuando sea confirmada.
+          <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 mb-4">
+            <p className="text-xs text-amber-800">
+              Tu solicitud quedará pendiente de confirmación por parte del profesional.
             </p>
           </div>
 
@@ -346,16 +348,16 @@ export default function NewAppointmentFlow({
                 setStep(2)
                 setSelectedTime(null)
               }}
-              className="flex-1 px-6 py-3 bg-gray-100 text-gray-700 font-medium rounded-lg hover:bg-gray-200 transition-colors"
+              className="flex-1 px-6 py-2.5 bg-slate-100 text-slate-700 font-semibold rounded-xl hover:bg-slate-200 transition-colors text-sm"
             >
               Volver
             </button>
             <button
               onClick={handleSubmit}
               disabled={isSubmitting}
-              className="flex-1 px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="flex-1 px-6 py-2.5 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-sm"
             >
-              {isSubmitting ? 'Solicitando...' : 'Confirmar Turno'}
+              {isSubmitting ? 'Solicitando...' : 'Confirmar turno'}
             </button>
           </div>
         </div>
@@ -378,17 +380,17 @@ function StepIndicator({
   return (
     <div className="flex flex-col items-center">
       <div
-        className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold text-sm ${
+        className={`w-9 h-9 rounded-full flex items-center justify-center font-bold text-sm transition-colors ${
           completed
-            ? 'bg-green-600 text-white'
+            ? 'bg-emerald-600 text-white'
             : active
             ? 'bg-blue-600 text-white'
-            : 'bg-gray-200 text-gray-600'
+            : 'bg-slate-100 text-slate-400'
         }`}
       >
         {completed ? '✓' : number}
       </div>
-      <p className="text-xs text-gray-600 mt-1 font-medium">{label}</p>
+      <p className={`text-xs mt-1 font-semibold ${active ? 'text-blue-600' : 'text-slate-400'}`}>{label}</p>
     </div>
   )
 }

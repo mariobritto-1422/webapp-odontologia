@@ -37,10 +37,10 @@ export default async function NewAppointmentPage() {
 
   return (
     <div className="pb-6">
-      <div className="mb-6">
-        <h2 className="text-2xl font-bold text-gray-900">Solicitar Turno</h2>
-        <p className="text-gray-600 mt-1">
-          Selecciona día y horario en solo 3 pasos
+      <div className="mb-5">
+        <h2 className="text-2xl font-bold text-slate-900 tracking-tight">Solicitar turno</h2>
+        <p className="text-sm text-slate-500 mt-0.5">
+          Elegí día y horario en 3 pasos
         </p>
       </div>
 

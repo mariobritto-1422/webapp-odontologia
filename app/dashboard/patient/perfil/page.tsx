@@ -28,11 +28,11 @@ export default async function PatientProfilePage() {
   }
 
   return (
-    <div className="pb-6 space-y-6">
-      <div className="mb-6">
-        <h2 className="text-2xl font-bold text-gray-900">Mi Perfil</h2>
-        <p className="text-gray-600 mt-1">
-          Gestiona tu información personal
+    <div className="pb-6 space-y-5">
+      <div className="mb-1">
+        <h2 className="text-2xl font-bold text-slate-900 tracking-tight">Mi perfil</h2>
+        <p className="text-sm text-slate-500 mt-0.5">
+          Gestioná tu información personal
         </p>
       </div>
 

@@ -22,10 +22,10 @@ export default async function PatientAppointmentsPage() {
 
   return (
     <div className="pb-6">
-      <div className="mb-6">
-        <h2 className="text-2xl font-bold text-gray-900">Mis Turnos</h2>
-        <p className="text-gray-600 mt-1">
-          Gestiona tus citas médicas
+      <div className="mb-5">
+        <h2 className="text-2xl font-bold text-slate-900 tracking-tight">Mis turnos</h2>
+        <p className="text-sm text-slate-500 mt-0.5">
+          Historial y próximas citas
         </p>
       </div>
 

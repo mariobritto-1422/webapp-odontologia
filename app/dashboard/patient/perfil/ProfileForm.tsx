@@ -138,29 +138,33 @@ export default function ProfileForm({ patient }: ProfileFormProps) {
     })
   }
 
+  const inputClass = "w-full px-4 py-2.5 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+  const labelClass = "block text-sm font-medium text-slate-700 mb-1.5"
+  const fieldLabelClass = "text-xs text-slate-400 uppercase font-semibold tracking-wide mb-0.5"
+
   return (
     <div className="space-y-4">
       {/* Mensajes de éxito/error */}
       {success && (
-        <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-          <p className="text-sm text-green-800">{success}</p>
+        <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4">
+          <p className="text-sm text-emerald-700 font-medium">✓ {success}</p>
         </div>
       )}
 
       {error && (
-        <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-          <p className="text-sm text-red-800">{error}</p>
+        <div className="bg-red-50 border border-red-200 rounded-xl p-4">
+          <p className="text-sm text-red-600">{error}</p>
         </div>
       )}
 
       {/* Información Personal */}
-      <div className="bg-white rounded-lg shadow">
-        <div className="px-4 py-3 border-b border-gray-200 flex items-center justify-between">
-          <h3 className="font-semibold text-gray-900">Información Personal</h3>
+      <div className="bg-white rounded-xl border border-slate-200 shadow-sm">
+        <div className="px-4 py-3 border-b border-slate-100 flex items-center justify-between">
+          <p className="font-semibold text-slate-900 text-sm">Información personal</p>
           {!isEditingInfo && (
             <button
               onClick={() => setIsEditingInfo(true)}
-              className="text-sm text-blue-600 hover:text-blue-700 font-medium"
+              className="text-xs text-blue-600 hover:text-blue-700 font-semibold"
             >
               Editar
             </button>
@@ -168,62 +172,29 @@ export default function ProfileForm({ patient }: ProfileFormProps) {
         </div>
 
         {isEditingInfo ? (
-          <form onSubmit={handleUpdateInfo} className="p-4 space-y-4">
+          <form onSubmit={handleUpdateInfo} className="p-4 space-y-3.5">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Nombre completo *
-              </label>
-              <input
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              />
+              <label className={labelClass}>Nombre completo *</label>
+              <input type="text" value={name} onChange={(e) => setName(e.target.value)} required className={inputClass} />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Teléfono
-              </label>
-              <input
-                type="tel"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                placeholder="Ej: +54 9 11 1234-5678"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              />
+              <label className={labelClass}>Teléfono</label>
+              <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="Ej: +542945415186" className={inputClass} />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                DNI
-              </label>
-              <input
-                type="text"
-                value={dni}
-                onChange={(e) => setDni(e.target.value)}
-                placeholder="Ej: 30.123.456"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              />
+              <label className={labelClass}>DNI</label>
+              <input type="text" value={dni} onChange={(e) => setDni(e.target.value)} placeholder="Ej: 30.123.456" className={inputClass} />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Email
-              </label>
-              <input
-                type="email"
-                value={patient.email}
-                disabled
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-500 cursor-not-allowed"
-              />
-              <p className="text-xs text-gray-500 mt-1">
-                El email no se puede modificar
-              </p>
+              <label className={labelClass}>Email</label>
+              <input type="email" value={patient.email} disabled className={`${inputClass} bg-slate-50 text-slate-400 cursor-not-allowed`} />
+              <p className="text-xs text-slate-400 mt-1">El email no se puede modificar</p>
             </div>
 
-            <div className="flex gap-3 pt-2">
+            <div className="flex gap-3 pt-1">
               <button
                 type="button"
                 onClick={() => {
@@ -234,14 +205,14 @@ export default function ProfileForm({ patient }: ProfileFormProps) {
                   setError('')
                 }}
                 disabled={isSaving}
-                className="flex-1 px-4 py-2 bg-gray-100 text-gray-700 font-medium rounded-lg hover:bg-gray-200 disabled:opacity-50 transition-colors"
+                className="flex-1 px-4 py-2 bg-slate-100 text-slate-700 font-semibold rounded-xl hover:bg-slate-200 disabled:opacity-50 transition-colors text-sm"
               >
                 Cancelar
               </button>
               <button
                 type="submit"
                 disabled={isSaving}
-                className="flex-1 px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors"
+                className="flex-1 px-4 py-2 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 disabled:opacity-50 transition-colors text-sm"
               >
                 {isSaving ? 'Guardando...' : 'Guardar'}
               </button>
@@ -250,96 +221,58 @@ export default function ProfileForm({ patient }: ProfileFormProps) {
         ) : (
           <div className="p-4 space-y-3">
             <div>
-              <p className="text-xs text-gray-500 uppercase font-semibold mb-1">
-                Nombre
-              </p>
-              <p className="text-gray-900">{patient.name}</p>
+              <p className={fieldLabelClass}>Nombre</p>
+              <p className="text-sm text-slate-900 font-medium">{patient.name}</p>
             </div>
-
             <div>
-              <p className="text-xs text-gray-500 uppercase font-semibold mb-1">
-                Email
-              </p>
-              <p className="text-gray-900">{patient.email}</p>
+              <p className={fieldLabelClass}>Email</p>
+              <p className="text-sm text-slate-900">{patient.email}</p>
             </div>
-
             <div>
-              <p className="text-xs text-gray-500 uppercase font-semibold mb-1">
-                Teléfono
-              </p>
-              <p className="text-gray-900">{patient.phone || 'No especificado'}</p>
+              <p className={fieldLabelClass}>Teléfono</p>
+              <p className="text-sm text-slate-900">{patient.phone || <span className="text-slate-400">No especificado</span>}</p>
             </div>
-
             <div>
-              <p className="text-xs text-gray-500 uppercase font-semibold mb-1">
-                DNI
-              </p>
-              <p className="text-gray-900">{patient.dni || 'No especificado'}</p>
+              <p className={fieldLabelClass}>DNI</p>
+              <p className="text-sm text-slate-900">{patient.dni || <span className="text-slate-400">No especificado</span>}</p>
             </div>
           </div>
         )}
       </div>
 
       {/* Cambiar Contraseña */}
-      <div className="bg-white rounded-lg shadow">
-        <div className="px-4 py-3 border-b border-gray-200 flex items-center justify-between">
-          <h3 className="font-semibold text-gray-900">Seguridad</h3>
+      <div className="bg-white rounded-xl border border-slate-200 shadow-sm">
+        <div className="px-4 py-3 border-b border-slate-100 flex items-center justify-between">
+          <p className="font-semibold text-slate-900 text-sm">Seguridad</p>
           {!isEditingPassword && (
             <button
               onClick={() => setIsEditingPassword(true)}
-              className="text-sm text-blue-600 hover:text-blue-700 font-medium"
+              className="text-xs text-blue-600 hover:text-blue-700 font-semibold"
             >
-              Cambiar
+              Cambiar contraseña
             </button>
           )}
         </div>
 
         {isEditingPassword ? (
-          <form onSubmit={handleUpdatePassword} className="p-4 space-y-4">
+          <form onSubmit={handleUpdatePassword} className="p-4 space-y-3.5">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Contraseña actual *
-              </label>
-              <input
-                type="password"
-                value={currentPassword}
-                onChange={(e) => setCurrentPassword(e.target.value)}
-                required
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              />
+              <label className={labelClass}>Contraseña actual *</label>
+              <input type="password" value={currentPassword} onChange={(e) => setCurrentPassword(e.target.value)} required className={inputClass} />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Nueva contraseña *
-              </label>
-              <input
-                type="password"
-                value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
-                required
-                minLength={6}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              />
-              <p className="text-xs text-gray-500 mt-1">
-                Mínimo 6 caracteres
-              </p>
+              <label className={labelClass}>Nueva contraseña *</label>
+              <input type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} required minLength={6} className={inputClass} />
+              <p className="text-xs text-slate-400 mt-1">Mínimo 6 caracteres</p>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Confirmar nueva contraseña *
-              </label>
-              <input
-                type="password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                required
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              />
+              <label className={labelClass}>Confirmar nueva contraseña *</label>
+              <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required className={inputClass} />
             </div>
 
-            <div className="flex gap-3 pt-2">
+            <div className="flex gap-3 pt-1">
               <button
                 type="button"
                 onClick={() => {
@@ -350,14 +283,14 @@ export default function ProfileForm({ patient }: ProfileFormProps) {
                   setError('')
                 }}
                 disabled={isSaving}
-                className="flex-1 px-4 py-2 bg-gray-100 text-gray-700 font-medium rounded-lg hover:bg-gray-200 disabled:opacity-50 transition-colors"
+                className="flex-1 px-4 py-2 bg-slate-100 text-slate-700 font-semibold rounded-xl hover:bg-slate-200 disabled:opacity-50 transition-colors text-sm"
               >
                 Cancelar
               </button>
               <button
                 type="submit"
                 disabled={isSaving}
-                className="flex-1 px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 disabled:opacity-50 transition-colors"
+                className="flex-1 px-4 py-2 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 disabled:opacity-50 transition-colors text-sm"
               >
                 {isSaving ? 'Guardando...' : 'Cambiar'}
               </button>
@@ -365,45 +298,32 @@ export default function ProfileForm({ patient }: ProfileFormProps) {
           </form>
         ) : (
           <div className="p-4">
-            <div>
-              <p className="text-xs text-gray-500 uppercase font-semibold mb-1">
-                Contraseña
-              </p>
-              <p className="text-gray-900">••••••••</p>
-            </div>
+            <p className={fieldLabelClass}>Contraseña</p>
+            <p className="text-sm text-slate-900 tracking-widest">••••••••</p>
           </div>
         )}
       </div>
 
       {/* Información del Profesional */}
-      <div className="bg-white rounded-lg shadow">
-        <div className="px-4 py-3 border-b border-gray-200">
-          <h3 className="font-semibold text-gray-900">Tu Profesional</h3>
+      <div className="bg-white rounded-xl border border-slate-200 shadow-sm">
+        <div className="px-4 py-3 border-b border-slate-100">
+          <p className="font-semibold text-slate-900 text-sm">Tu profesional</p>
         </div>
         <div className="p-4 space-y-3">
-          <div>
-            <p className="text-xs text-gray-500 uppercase font-semibold mb-1">
-              Nombre
-            </p>
-            <p className="text-gray-900 font-medium">{patient.professional.name}</p>
-          </div>
-
-          <div>
-            <p className="text-xs text-gray-500 uppercase font-semibold mb-1">
-              Especialidad
-            </p>
-            <p className="text-gray-900">{patient.professional.specialty}</p>
+          <div className="flex items-start gap-3">
+            <div className="w-10 h-10 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center font-semibold text-sm flex-shrink-0">
+              {patient.professional.name.charAt(0).toUpperCase()}
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="font-semibold text-slate-900 text-sm">{patient.professional.name}</p>
+              <p className="text-xs text-slate-500">{patient.professional.specialty}</p>
+            </div>
           </div>
 
           {patient.professional.phone && (
             <div>
-              <p className="text-xs text-gray-500 uppercase font-semibold mb-1">
-                Teléfono
-              </p>
-              <a
-                href={`tel:${patient.professional.phone}`}
-                className="text-blue-600 hover:text-blue-700"
-              >
+              <p className={fieldLabelClass}>Teléfono</p>
+              <a href={`tel:${patient.professional.phone}`} className="text-sm text-blue-600 hover:text-blue-700">
                 {patient.professional.phone}
               </a>
             </div>
@@ -411,13 +331,8 @@ export default function ProfileForm({ patient }: ProfileFormProps) {
 
           {patient.professional.email && (
             <div>
-              <p className="text-xs text-gray-500 uppercase font-semibold mb-1">
-                Email
-              </p>
-              <a
-                href={`mailto:${patient.professional.email}`}
-                className="text-blue-600 hover:text-blue-700"
-              >
+              <p className={fieldLabelClass}>Email</p>
+              <a href={`mailto:${patient.professional.email}`} className="text-sm text-blue-600 hover:text-blue-700">
                 {patient.professional.email}
               </a>
             </div>
@@ -425,35 +340,23 @@ export default function ProfileForm({ patient }: ProfileFormProps) {
 
           {patient.professional.address && (
             <div>
-              <p className="text-xs text-gray-500 uppercase font-semibold mb-1">
-                Dirección
-              </p>
-              <p className="text-gray-900">{patient.professional.address}</p>
+              <p className={fieldLabelClass}>Dirección</p>
+              <p className="text-sm text-slate-900">{patient.professional.address}</p>
             </div>
           )}
         </div>
       </div>
 
       {/* Cerrar Sesión */}
-      <div className="pt-4">
+      <div>
         <button
           onClick={handleSignOut}
-          className="w-full px-6 py-3 bg-red-600 text-white font-medium rounded-lg hover:bg-red-700 transition-colors flex items-center justify-center gap-2"
+          className="w-full px-6 py-2.5 bg-slate-100 text-slate-700 font-semibold rounded-xl hover:bg-slate-200 transition-colors text-sm flex items-center justify-center gap-2"
         >
-          <svg
-            className="w-5 h-5"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-            />
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
           </svg>
-          Cerrar Sesión
+          Cerrar sesión
         </button>
       </div>
     </div>

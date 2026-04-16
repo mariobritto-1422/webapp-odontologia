@@ -108,8 +108,8 @@ export default function AppointmentsList({ appointments, patientId }: Appointmen
   return (
     <>
       {/* Filtros */}
-      <div className="mb-6 bg-white rounded-lg shadow p-2 overflow-x-auto">
-        <div className="flex gap-2 min-w-max">
+      <div className="mb-4 bg-white rounded-xl border border-slate-200 shadow-sm p-1.5 overflow-x-auto">
+        <div className="flex gap-1 min-w-max">
           <FilterButton
             active={filter === 'upcoming'}
             onClick={() => setFilter('upcoming')}
@@ -143,9 +143,9 @@ export default function AppointmentsList({ appointments, patientId }: Appointmen
 
       {/* Lista de turnos */}
       {filteredAppointments.length === 0 ? (
-        <div className="bg-white rounded-lg shadow p-12 text-center">
+        <div className="bg-white rounded-xl border border-slate-200 shadow-sm py-12 text-center">
           <svg
-            className="w-16 h-16 text-gray-300 mx-auto mb-4"
+            className="w-12 h-12 text-slate-200 mx-auto mb-3"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -153,17 +153,14 @@ export default function AppointmentsList({ appointments, patientId }: Appointmen
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
-              strokeWidth={2}
+              strokeWidth={1.5}
               d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
             />
           </svg>
-          <p className="text-gray-600 mb-2">No hay turnos en esta categoría</p>
-          <p className="text-sm text-gray-500">
-            Los turnos que solicites aparecerán aquí
-          </p>
+          <p className="text-sm text-slate-500">No hay turnos en esta categoría</p>
         </div>
       ) : (
-        <div className="space-y-4">
+        <div className="space-y-3">
           {filteredAppointments.map((appointment) => (
             <AppointmentCard
               key={appointment.id}
@@ -177,12 +174,12 @@ export default function AppointmentsList({ appointments, patientId }: Appointmen
 
       {/* Modal de confirmación de cancelación */}
       {showCancelModal && selectedAppointment && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-xl border border-slate-200 shadow-xl max-w-sm w-full p-6">
+            <h3 className="text-base font-semibold text-slate-900 mb-1">
               ¿Cancelar turno?
             </h3>
-            <p className="text-gray-600 mb-4">
+            <p className="text-sm text-slate-600 mb-4">
               ¿Estás seguro que deseas cancelar el turno del{' '}
               {format(parseISO(selectedAppointment.date), "d 'de' MMMM", {
                 locale: es,
@@ -190,10 +187,9 @@ export default function AppointmentsList({ appointments, patientId }: Appointmen
               a las {selectedAppointment.time} hs?
             </p>
 
-            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mb-4">
-              <p className="text-xs text-yellow-800">
-                Si cancelas, deberás solicitar un nuevo turno. Te recomendamos
-                contactar al profesional si necesitas reagendar.
+            <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-4">
+              <p className="text-xs text-amber-800">
+                Si cancelás, deberás solicitar un nuevo turno.
               </p>
             </div>
 
@@ -204,14 +200,14 @@ export default function AppointmentsList({ appointments, patientId }: Appointmen
                   setSelectedAppointment(null)
                 }}
                 disabled={!!cancellingId}
-                className="flex-1 px-4 py-2 bg-gray-100 text-gray-700 font-medium rounded-lg hover:bg-gray-200 disabled:opacity-50 transition-colors"
+                className="flex-1 px-4 py-2 bg-slate-100 text-slate-700 font-medium rounded-lg hover:bg-slate-200 disabled:opacity-50 transition-colors text-sm"
               >
                 No, mantener
               </button>
               <button
                 onClick={handleCancelConfirm}
                 disabled={!!cancellingId}
-                className="flex-1 px-4 py-2 bg-red-600 text-white font-medium rounded-lg hover:bg-red-700 disabled:opacity-50 transition-colors"
+                className="flex-1 px-4 py-2 bg-red-600 text-white font-medium rounded-lg hover:bg-red-700 disabled:opacity-50 transition-colors text-sm"
               >
                 {cancellingId ? 'Cancelando...' : 'Sí, cancelar'}
               </button>
@@ -237,13 +233,13 @@ function FilterButton({
   return (
     <button
       onClick={onClick}
-      className={`px-4 py-2 rounded-lg font-medium text-sm whitespace-nowrap transition-colors ${
+      className={`px-3.5 py-1.5 rounded-lg font-semibold text-xs whitespace-nowrap transition-colors ${
         active
           ? 'bg-blue-600 text-white'
-          : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+          : 'text-slate-600 hover:bg-slate-50'
       }`}
     >
-      {children} ({count})
+      {children} <span className={active ? 'opacity-75' : 'text-slate-400'}>({count})</span>
     </button>
   )
 }
@@ -263,15 +259,15 @@ function AppointmentCard({
     isUpcoming && appointment.status !== 'cancelled' && appointment.status !== 'completed'
 
   return (
-    <div className="bg-white rounded-lg shadow overflow-hidden">
+    <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
       {/* Header con fecha y estado */}
-      <div className="bg-gray-50 px-4 py-3 border-b border-gray-200">
-        <div className="flex items-center justify-between">
+      <div className="bg-slate-50 px-4 py-3 border-b border-slate-100">
+        <div className="flex items-center justify-between gap-3">
           <div>
-            <p className="font-semibold text-gray-900">
+            <p className="font-semibold text-slate-900 text-sm capitalize">
               {format(aptDate, "EEEE d 'de' MMMM 'de' yyyy", { locale: es })}
             </p>
-            <p className="text-lg font-bold text-blue-600 mt-1">
+            <p className="text-base font-bold text-blue-600 mt-0.5">
               {appointment.time} hs
             </p>
           </div>
@@ -280,16 +276,16 @@ function AppointmentCard({
       </div>
 
       {/* Contenido */}
-      <div className="p-4 space-y-3">
+      <div className="p-4 space-y-2.5">
         {/* Profesional */}
         <div>
-          <p className="text-xs text-gray-500 uppercase font-semibold mb-1">
+          <p className="text-xs text-slate-400 uppercase font-semibold tracking-wide mb-0.5">
             Profesional
           </p>
-          <p className="font-medium text-gray-900">
+          <p className="font-semibold text-slate-900 text-sm">
             {appointment.professional.name}
           </p>
-          <p className="text-sm text-gray-600">
+          <p className="text-xs text-slate-500">
             {appointment.professional.specialty}
           </p>
         </div>
@@ -297,35 +293,25 @@ function AppointmentCard({
         {/* Notas */}
         {appointment.notes && (
           <div>
-            <p className="text-xs text-gray-500 uppercase font-semibold mb-1">
+            <p className="text-xs text-slate-400 uppercase font-semibold tracking-wide mb-0.5">
               Notas
             </p>
-            <p className="text-sm text-gray-700">{appointment.notes}</p>
+            <p className="text-sm text-slate-600">{appointment.notes}</p>
           </div>
         )}
 
         {/* Contacto */}
         {appointment.professional.phone && (
           <div>
-            <p className="text-xs text-gray-500 uppercase font-semibold mb-1">
+            <p className="text-xs text-slate-400 uppercase font-semibold tracking-wide mb-0.5">
               Contacto
             </p>
             <a
               href={`tel:${appointment.professional.phone}`}
-              className="text-sm text-blue-600 hover:text-blue-700 flex items-center gap-1"
+              className="text-sm text-blue-600 hover:text-blue-700 flex items-center gap-1.5"
             >
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                />
+              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
               </svg>
               {appointment.professional.phone}
             </a>
@@ -334,11 +320,11 @@ function AppointmentCard({
 
         {/* Acciones */}
         {canCancel && (
-          <div className="pt-2 border-t border-gray-200">
+          <div className="pt-2 border-t border-slate-100">
             <button
               onClick={() => onCancelClick(appointment)}
               disabled={isCancelling}
-              className="w-full px-4 py-2 text-sm font-medium text-red-600 bg-red-50 rounded-lg hover:bg-red-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="w-full px-4 py-2 text-xs font-semibold text-red-600 bg-red-50 rounded-lg hover:bg-red-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               {isCancelling ? 'Cancelando...' : 'Cancelar turno'}
             </button>
@@ -350,37 +336,17 @@ function AppointmentCard({
 }
 
 function StatusBadge({ status }: { status: string }) {
-  const config: Record<
-    string,
-    {
-      label: string
-      color: string
-    }
-  > = {
-    pending: {
-      label: 'Pendiente',
-      color: 'bg-yellow-100 text-yellow-800 border-yellow-200',
-    },
-    confirmed: {
-      label: 'Confirmado',
-      color: 'bg-green-100 text-green-800 border-green-200',
-    },
-    cancelled: {
-      label: 'Cancelado',
-      color: 'bg-red-100 text-red-800 border-red-200',
-    },
-    completed: {
-      label: 'Completado',
-      color: 'bg-gray-100 text-gray-800 border-gray-200',
-    },
+  const config: Record<string, { label: string; color: string }> = {
+    pending: { label: 'Pendiente', color: 'bg-amber-50 text-amber-700 border-amber-200' },
+    confirmed: { label: 'Confirmado', color: 'bg-emerald-50 text-emerald-700 border-emerald-200' },
+    cancelled: { label: 'Cancelado', color: 'bg-red-50 text-red-600 border-red-200' },
+    completed: { label: 'Completado', color: 'bg-slate-100 text-slate-600 border-slate-200' },
   }
 
   const statusConfig = config[status] || config.pending
 
   return (
-    <span
-      className={`px-3 py-1 text-xs font-medium rounded-full border ${statusConfig.color}`}
-    >
+    <span className={`px-2.5 py-1 text-xs font-semibold rounded-full border flex-shrink-0 ${statusConfig.color}`}>
       {statusConfig.label}
     </span>
   )
