@@ -62,9 +62,12 @@ export async function POST(request: NextRequest) {
     }
 
     // Crear el turno
+    const datetime = `${date}T${time}:00`
+
     const { data, error } = await supabase
       .from('appointments')
       .insert({
+        datetime,
         professional_id: professionalId,
         patient_id: patientId,
         date,
