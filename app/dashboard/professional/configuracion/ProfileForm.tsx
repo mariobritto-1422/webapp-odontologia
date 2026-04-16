@@ -134,7 +134,7 @@ export default function ProfileForm({ professional }: ProfileFormProps) {
             name="phone"
             value={formData.phone}
             onChange={handleChange}
-            placeholder="+54 9 11 1234-5678"
+            placeholder="+542945415186"
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
         </div>

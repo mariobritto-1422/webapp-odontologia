@@ -1007,7 +1007,7 @@ export default function HomePage() {
 
         {/* FOOTER */}
         <footer>
-          <p>© 2026 Sonrisapp · Desarrollado por <a href="https://www.cosasanta.com" target="_blank" rel="noopener noreferrer">Cosasanta</a> · <a href="https://www.sonrisapp.com" target="_blank" rel="noopener noreferrer">www.sonrisapp.com</a> · <a href="mailto:colaboradormariobritto@gmail.com">colaboradormariobritto@gmail.com</a></p>
+          <p>© 2026 SonrisApp · Desarrollado por <a href="https://www.cosasanta.com" target="_blank" rel="noopener noreferrer">Cosa Santa</a> · <a href="https://www.cosasanta.com" target="_blank" rel="noopener noreferrer">cosasanta.com</a></p>
         </footer>
 
       </div>

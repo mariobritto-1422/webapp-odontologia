@@ -3,6 +3,7 @@
 import { useState, useEffect, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
+import AuthSidePanel from '../../_components/AuthSidePanel'
 
 interface Professional {
   id: string
@@ -130,9 +131,10 @@ function RegisterPatientForm() {
 
   if (loadingProfessional) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 flex items-center justify-center p-4">
-        <div className="card max-w-md w-full text-center">
-          <p className="text-gray-600">Cargando...</p>
+      <div className="min-h-screen flex">
+        <AuthSidePanel />
+        <div className="w-full md:w-1/2 bg-white flex items-center justify-center">
+          <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-600"></div>
         </div>
       </div>
     )
@@ -140,170 +142,188 @@ function RegisterPatientForm() {
 
   if (!professionalSlug || !professional) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 flex items-center justify-center p-4">
-        <div className="card max-w-md w-full text-center">
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">
-            🦷 Registro de Paciente
-          </h1>
-          <p className="text-gray-600 mb-8">
-            {error || 'Necesitas un enlace de invitación de tu profesional para registrarte.'}
-          </p>
-          <Link href="/auth/login">
-            <button className="btn-primary">
+      <div className="min-h-screen flex">
+        <AuthSidePanel />
+        <div className="w-full md:w-1/2 bg-white flex items-center justify-center p-8">
+          <div className="w-full max-w-sm text-center space-y-4">
+            <h1 className="text-2xl font-bold text-slate-900">Registro de Paciente</h1>
+            <p className="text-sm text-slate-500">
+              {error || 'Necesitás un enlace de invitación de tu profesional para registrarte.'}
+            </p>
+            <Link
+              href="/auth/login"
+              className="inline-block bg-blue-600 hover:bg-blue-700 text-white rounded-lg px-6 py-2.5 font-semibold transition-colors text-sm"
+            >
               Volver al Login
-            </button>
-          </Link>
+            </Link>
+          </div>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 flex items-center justify-center p-4">
-      <div className="card max-w-md w-full">
-        <div className="text-center mb-6">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            🦷 Registro de Paciente
-          </h1>
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mt-4">
-            <p className="text-sm text-gray-600 mb-1">Te estás registrando con:</p>
-            <p className="font-semibold text-gray-900">{professional.name}</p>
-            <p className="text-sm text-gray-600">{professional.specialty}</p>
-          </div>
-        </div>
+    <div className="min-h-screen flex">
+      <AuthSidePanel />
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
-              {error}
-            </div>
-          )}
+      {/* Panel derecho */}
+      <div className="w-full md:w-1/2 bg-white flex items-center justify-center p-8 overflow-y-auto">
+        <div className="w-full max-w-sm py-8">
 
-          <div>
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
-              Nombre completo *
-            </label>
-            <input
-              id="name"
-              name="name"
-              type="text"
-              value={formData.name}
-              onChange={handleChange}
-              className="input-field"
-              placeholder="Juan Pérez"
-              required
-            />
-          </div>
-
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-              Email *
-            </label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              value={formData.email}
-              onChange={handleChange}
-              className="input-field"
-              placeholder="tu@email.com"
-              required
-            />
-          </div>
-
-          <div>
-            <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
-              Teléfono
-            </label>
-            <input
-              id="phone"
-              name="phone"
-              type="tel"
-              value={formData.phone}
-              onChange={handleChange}
-              className="input-field"
-              placeholder="+54 9 11 1234-5678"
-            />
-          </div>
-
-          <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
-              Contraseña *
-            </label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              value={formData.password}
-              onChange={handleChange}
-              className="input-field"
-              placeholder="Mínimo 6 caracteres"
-              required
-            />
-          </div>
-
-          <div>
-            <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-2">
-              Confirmar contraseña *
-            </label>
-            <input
-              id="confirmPassword"
-              name="confirmPassword"
-              type="password"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              className="input-field"
-              placeholder="Repetí tu contraseña"
-              required
-            />
-          </div>
-
-          <div className="space-y-3 pt-2">
-            <label className="flex items-start">
-              <input
-                type="checkbox"
-                name="acceptedTerms"
-                checked={formData.acceptedTerms}
-                onChange={handleChange}
-                className="mt-1 mr-2"
-                required
-              />
-              <span className="text-sm text-gray-700">
-                Acepto los términos y condiciones *
-              </span>
-            </label>
-
-            <label className="flex items-start">
-              <input
-                type="checkbox"
-                name="acceptedPrivacy"
-                checked={formData.acceptedPrivacy}
-                onChange={handleChange}
-                className="mt-1 mr-2"
-                required
-              />
-              <span className="text-sm text-gray-700">
-                Acepto la política de privacidad *
-              </span>
-            </label>
-          </div>
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="btn-primary w-full disabled:opacity-50"
-          >
-            {loading ? 'Creando cuenta...' : 'Crear Cuenta'}
-          </button>
-        </form>
-
-        <div className="mt-6 text-center">
-          <p className="text-sm text-gray-600">
-            ¿Ya tenés cuenta?{' '}
-            <Link href="/auth/login" className="text-blue-600 hover:text-blue-700 font-medium">
-              Iniciar sesión
+          {/* Logo */}
+          <div className="mb-8">
+            <Link href="/" className="inline-flex items-center gap-2 mb-6">
+              <svg width="28" height="28" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="64" height="64" rx="13" fill="#1A56DB"/>
+                <text x="32" y="38" textAnchor="middle" fontFamily="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" fontSize="30" fontWeight="800" fill="white" letterSpacing="-1">S</text>
+                <path d="M18 47 Q32 56 46 47" stroke="white" strokeWidth="3" strokeLinecap="round" fill="none"/>
+              </svg>
+              <span className="text-xl font-bold text-blue-600">SonrisApp</span>
             </Link>
-          </p>
+            <h1 className="text-2xl font-bold text-slate-900">Crear cuenta de paciente</h1>
+          </div>
+
+          {/* Info del profesional */}
+          <div className="bg-blue-50 border border-blue-100 rounded-lg p-4 mb-6">
+            <p className="text-xs text-slate-500 mb-1">Te estás registrando con:</p>
+            <p className="font-semibold text-slate-900 text-sm">{professional.name}</p>
+            <p className="text-xs text-slate-500">{professional.specialty}</p>
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-4">
+            {error && (
+              <div className="bg-red-50 border border-red-200 text-red-600 rounded-lg p-3 text-sm">
+                {error}
+              </div>
+            )}
+
+            <div>
+              <label htmlFor="name" className="block text-sm font-medium text-slate-700 mb-1">
+                Nombre completo *
+              </label>
+              <input
+                id="name"
+                name="name"
+                type="text"
+                value={formData.name}
+                onChange={handleChange}
+                className="w-full border border-slate-200 rounded-lg px-4 py-2.5 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                placeholder="Juan Pérez"
+                required
+              />
+            </div>
+
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-1">
+                Email *
+              </label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                value={formData.email}
+                onChange={handleChange}
+                className="w-full border border-slate-200 rounded-lg px-4 py-2.5 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                placeholder="tu@email.com"
+                required
+              />
+            </div>
+
+            <div>
+              <label htmlFor="phone" className="block text-sm font-medium text-slate-700 mb-1">
+                Teléfono
+              </label>
+              <input
+                id="phone"
+                name="phone"
+                type="tel"
+                value={formData.phone}
+                onChange={handleChange}
+                className="w-full border border-slate-200 rounded-lg px-4 py-2.5 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                placeholder="+542945415186"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="password" className="block text-sm font-medium text-slate-700 mb-1">
+                Contraseña *
+              </label>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                value={formData.password}
+                onChange={handleChange}
+                className="w-full border border-slate-200 rounded-lg px-4 py-2.5 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                placeholder="Mínimo 6 caracteres"
+                required
+              />
+            </div>
+
+            <div>
+              <label htmlFor="confirmPassword" className="block text-sm font-medium text-slate-700 mb-1">
+                Confirmar contraseña *
+              </label>
+              <input
+                id="confirmPassword"
+                name="confirmPassword"
+                type="password"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                className="w-full border border-slate-200 rounded-lg px-4 py-2.5 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                placeholder="Repetí tu contraseña"
+                required
+              />
+            </div>
+
+            <div className="space-y-3 pt-1">
+              <label className="flex items-start gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  name="acceptedTerms"
+                  checked={formData.acceptedTerms}
+                  onChange={handleChange}
+                  className="mt-0.5 accent-blue-600"
+                  required
+                />
+                <span className="text-sm text-slate-600">
+                  Acepto los términos y condiciones *
+                </span>
+              </label>
+
+              <label className="flex items-start gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  name="acceptedPrivacy"
+                  checked={formData.acceptedPrivacy}
+                  onChange={handleChange}
+                  className="mt-0.5 accent-blue-600"
+                  required
+                />
+                <span className="text-sm text-slate-600">
+                  Acepto la política de privacidad *
+                </span>
+              </label>
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="bg-blue-600 hover:bg-blue-700 text-white w-full rounded-lg py-2.5 font-semibold transition-colors text-sm disabled:opacity-50"
+            >
+              {loading ? 'Creando cuenta...' : 'Crear Cuenta'}
+            </button>
+          </form>
+
+          <div className="mt-6 text-center">
+            <p className="text-sm text-slate-500">
+              ¿Ya tenés cuenta?{' '}
+              <Link href="/auth/login" className="text-blue-600 hover:underline font-medium">
+                Iniciar sesión
+              </Link>
+            </p>
+          </div>
+
         </div>
       </div>
     </div>
@@ -313,10 +333,10 @@ function RegisterPatientForm() {
 export default function RegisterPatientPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Cargando...</p>
+          <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-600 mx-auto"></div>
+          <p className="mt-4 text-sm text-slate-500">Cargando...</p>
         </div>
       </div>
     }>

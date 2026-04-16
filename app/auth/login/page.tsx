@@ -4,6 +4,7 @@ import { signIn } from 'next-auth/react'
 import { useState, useEffect, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
+import AuthSidePanel from '../_components/AuthSidePanel'
 
 function LoginForm() {
   const router = useRouter()
@@ -60,101 +61,103 @@ function LoginForm() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 flex items-center justify-center p-4">
-      <div className="card max-w-md w-full">
-        <div className="text-center mb-8">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/sonrisapp-logo.svg"
-            alt="Sonrisapp"
-            style={{ height: '60px', marginBottom: '24px', display: 'inline-block' }}
-          />
-          <p className="text-gray-600">Inicia sesión en tu cuenta</p>
-        </div>
+    <div className="min-h-screen flex">
+      <AuthSidePanel />
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          {successMessage && (
-            <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg">
-              {successMessage}
-            </div>
-          )}
+      {/* Panel derecho */}
+      <div className="w-full md:w-1/2 bg-white flex items-center justify-center p-8">
+        <div className="w-full max-w-sm">
 
-          {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
-              {error}
-            </div>
-          )}
-
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-              Email
-            </label>
-            <input
-              id="email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="input-field"
-              placeholder="tu@email.com"
-              required
-            />
+          {/* Logo */}
+          <div className="mb-8">
+            <Link href="/" className="inline-flex items-center gap-2 mb-6">
+              <svg width="28" height="28" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="64" height="64" rx="13" fill="#1A56DB"/>
+                <text x="32" y="38" textAnchor="middle" fontFamily="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" fontSize="30" fontWeight="800" fill="white" letterSpacing="-1">S</text>
+                <path d="M18 47 Q32 56 46 47" stroke="white" strokeWidth="3" strokeLinecap="round" fill="none"/>
+              </svg>
+              <span className="text-xl font-bold text-blue-600">SonrisApp</span>
+            </Link>
+            <h1 className="text-2xl font-bold text-slate-900">Iniciar sesión</h1>
+            <p className="text-sm text-slate-500 mt-1">Ingresá a tu cuenta</p>
           </div>
 
-          <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
-              Contraseña
-            </label>
-            <input
-              id="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="input-field"
-              placeholder="••••••••"
-              required
-            />
-          </div>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            {successMessage && (
+              <div className="bg-emerald-50 border border-emerald-200 text-emerald-700 rounded-lg p-3 text-sm">
+                {successMessage}
+              </div>
+            )}
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="btn-primary w-full disabled:opacity-50"
-          >
-            {loading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
-          </button>
-        </form>
+            {error && (
+              <div className="bg-red-50 border border-red-200 text-red-600 rounded-lg p-3 text-sm">
+                {error}
+              </div>
+            )}
 
-        <div className="mt-6 space-y-3">
-          <div className="text-center">
-            <Link
-              href="/auth/forgot-password"
-              className="text-sm text-blue-600 hover:text-blue-700"
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-1">
+                Email
+              </label>
+              <input
+                id="email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full border border-slate-200 rounded-lg px-4 py-2.5 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                placeholder="tu@email.com"
+                required
+              />
+            </div>
+
+            <div>
+              <label htmlFor="password" className="block text-sm font-medium text-slate-700 mb-1">
+                Contraseña
+              </label>
+              <input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full border border-slate-200 rounded-lg px-4 py-2.5 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                placeholder="••••••••"
+                required
+              />
+            </div>
+
+            <div className="flex justify-end">
+              <Link href="/auth/forgot-password" className="text-sm text-blue-600 hover:underline">
+                ¿Olvidaste tu contraseña?
+              </Link>
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="bg-blue-600 hover:bg-blue-700 text-white w-full rounded-lg py-2.5 font-semibold transition-colors text-sm disabled:opacity-50"
             >
-              ¿Olvidaste tu contraseña?
-            </Link>
-          </div>
+              {loading ? 'Ingresando...' : 'Iniciar Sesión'}
+            </button>
+          </form>
 
-          <div className="relative">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-300"></div>
-            </div>
-            <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white text-gray-500">¿No tenés cuenta?</span>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-3">
-            <Link href="/auth/register/professional" className="text-center">
-              <button className="btn-secondary w-full">
+          <div className="mt-6 pt-6 border-t border-slate-100">
+            <p className="text-sm text-slate-500 text-center mb-3">¿No tenés cuenta?</p>
+            <div className="grid grid-cols-2 gap-3">
+              <Link
+                href="/auth/register/professional"
+                className="text-center border border-slate-200 rounded-lg py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors"
+              >
                 Soy Profesional
-              </button>
-            </Link>
-            <Link href="/auth/register/patient" className="text-center">
-              <button className="btn-secondary w-full">
+              </Link>
+              <Link
+                href="/auth/register/patient"
+                className="text-center border border-slate-200 rounded-lg py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors"
+              >
                 Soy Paciente
-              </button>
-            </Link>
+              </Link>
+            </div>
           </div>
+
         </div>
       </div>
     </div>
@@ -164,10 +167,10 @@ function LoginForm() {
 export default function LoginPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Cargando...</p>
+          <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-600 mx-auto"></div>
+          <p className="mt-4 text-sm text-slate-500">Cargando...</p>
         </div>
       </div>
     }>

@@ -10,7 +10,7 @@
 
 ### Llamada en Frío (1 minuto)
 
-**Tu:** Hola [Nombre], soy [Tu Nombre]. ¿Te interrumpo?
+**Tu:** Hola [Nombre], soy Daniel Mario Britto. ¿Te interrumpo?
 
 **Cliente:** [Responde]
 
@@ -79,9 +79,9 @@ Te recomiendo probar especialmente:
 Si tenés alguna duda o querés que te muestre algo específico, avisame.
 
 Saludos,
-[Tu Nombre]
-[Tu Teléfono]
-[Tu Email]
+Daniel Mario Britto
++542945415186
+colaboradormariobritto@gmail.com
 
 ---
 
