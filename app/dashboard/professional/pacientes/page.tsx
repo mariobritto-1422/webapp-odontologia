@@ -2,6 +2,7 @@ import { auth } from '@/lib/auth'
 import { redirect } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import PatientsList from './PatientsList'
+import Link from 'next/link'
 
 export default async function PatientsPage() {
   const session = await auth()
@@ -50,14 +51,13 @@ export default async function PatientsPage() {
     <div className="space-y-6">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">
-            Base de Datos de Pacientes
-          </h1>
-          <p className="text-gray-600 mt-1">
-            Gestiona la información de tus pacientes
-          </p>
-        </div>
+        <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Pacientes</h1>
+        <Link
+          href="/dashboard/professional/qr"
+          className="bg-blue-600 hover:bg-blue-700 text-white rounded-lg px-4 py-2 text-sm font-semibold transition-colors"
+        >
+          + Nuevo Paciente
+        </Link>
       </div>
 
       {/* Lista de pacientes */}

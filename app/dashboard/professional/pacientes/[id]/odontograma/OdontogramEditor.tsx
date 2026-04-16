@@ -238,75 +238,71 @@ export default function OdontogramEditor({
   }
 
   return (
-    <div className="space-y-6">
-      {/* Header con acciones */}
-      <div className="bg-white rounded-lg shadow-md p-6">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+    <div className="space-y-4">
+
+      {/* Barra de acciones */}
+      <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-4">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
           <div>
-            <h2 className="text-2xl font-bold text-gray-900">
-              Odontograma de {patientName}
-            </h2>
-            <p className="text-sm text-gray-600 mt-1">
-              Última actualización:{' '}
-              {new Date(odontogram.lastUpdated).toLocaleString('es-AR')}
+            <p className="font-semibold text-slate-900 text-sm">
+              Paciente: {patientName}
+            </p>
+            <p className="text-xs text-slate-400 mt-0.5">
+              Última actualización: {new Date(odontogram.lastUpdated).toLocaleString('es-AR')}
             </p>
           </div>
 
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-wrap items-center gap-2">
             {/* Toggle dentición */}
-            <div className="flex bg-gray-100 rounded-lg p-1">
+            <div className="flex bg-slate-100 rounded-lg p-0.5">
               <button
                 onClick={() => handleDentitionTypeChange('permanent')}
-                className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                className={`px-3 py-1.5 rounded-md text-xs font-semibold transition-colors ${
                   odontogram.dentitionType === 'permanent'
                     ? 'bg-white text-blue-600 shadow-sm'
-                    : 'text-gray-600 hover:text-gray-900'
+                    : 'text-slate-500 hover:text-slate-700'
                 }`}
               >
                 Permanente
               </button>
               <button
                 onClick={() => handleDentitionTypeChange('temporary')}
-                className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                className={`px-3 py-1.5 rounded-md text-xs font-semibold transition-colors ${
                   odontogram.dentitionType === 'temporary'
                     ? 'bg-white text-blue-600 shadow-sm'
-                    : 'text-gray-600 hover:text-gray-900'
+                    : 'text-slate-500 hover:text-slate-700'
                 }`}
               >
                 Temporaria
               </button>
             </div>
 
-            {/* Botón Exportar PDF */}
+            {/* Exportar PDF */}
             <button
               onClick={handleExportPDF}
               disabled={isExporting}
-              className={`px-6 py-2 rounded-lg font-semibold transition-all ${
-                isExporting
-                  ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                  : 'bg-purple-600 text-white hover:bg-purple-700 shadow-md'
-              }`}
+              className="bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg px-4 py-2 text-sm font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isExporting ? 'Exportando...' : 'Exportar PDF'}
             </button>
 
-            {/* Botón Guardar */}
+            {/* Guardar */}
             <button
               onClick={handleSave}
               disabled={!isDirty || isSaving}
-              className={`px-6 py-2 rounded-lg font-semibold transition-all ${
+              className={`rounded-lg px-4 py-2 text-sm font-semibold transition-colors ${
                 !isDirty || isSaving
-                  ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                  : 'bg-gradient-to-r from-green-600 to-emerald-600 text-white hover:from-green-700 hover:to-emerald-700 shadow-md'
+                  ? 'bg-slate-100 text-slate-400 cursor-not-allowed'
+                  : 'bg-blue-600 hover:bg-blue-700 text-white'
               }`}
             >
               {isSaving ? 'Guardando...' : 'Guardar'}
             </button>
 
-            {/* Botón Volver */}
+            {/* Volver */}
             <button
               onClick={handleBack}
-              className="px-6 py-2 bg-gray-200 text-gray-700 rounded-lg font-semibold hover:bg-gray-300 transition-colors"
+              className="text-sm text-slate-400 hover:text-slate-700 transition-colors px-2"
             >
               Volver
             </button>
@@ -315,30 +311,23 @@ export default function OdontogramEditor({
 
         {/* Mensajes de estado */}
         {saveSuccess && (
-          <div className="mt-4 bg-green-50 border border-green-200 rounded-lg p-4">
-            <p className="text-sm text-green-800 font-medium">
-              ✓ Odontograma guardado correctamente
-            </p>
+          <div className="mt-3 bg-emerald-50 border border-emerald-200 rounded-lg px-4 py-2.5">
+            <p className="text-sm text-emerald-700 font-medium">✓ Odontograma guardado correctamente</p>
           </div>
         )}
-
         {saveError && (
-          <div className="mt-4 bg-red-50 border border-red-200 rounded-lg p-4">
-            <p className="text-sm text-red-800 font-medium">{saveError}</p>
+          <div className="mt-3 bg-red-50 border border-red-200 rounded-lg px-4 py-2.5">
+            <p className="text-sm text-red-600 font-medium">{saveError}</p>
           </div>
         )}
-
         {exportError && (
-          <div className="mt-4 bg-red-50 border border-red-200 rounded-lg p-4">
-            <p className="text-sm text-red-800 font-medium">{exportError}</p>
+          <div className="mt-3 bg-red-50 border border-red-200 rounded-lg px-4 py-2.5">
+            <p className="text-sm text-red-600 font-medium">{exportError}</p>
           </div>
         )}
-
         {isDirty && !saveSuccess && (
-          <div className="mt-4 bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-            <p className="text-sm text-yellow-800 font-medium">
-              ⚠ Hay cambios sin guardar
-            </p>
+          <div className="mt-3 bg-amber-50 border border-amber-200 rounded-lg px-4 py-2.5">
+            <p className="text-sm text-amber-700 font-medium">⚠ Hay cambios sin guardar</p>
           </div>
         )}
       </div>
@@ -346,18 +335,15 @@ export default function OdontogramEditor({
       {/* Toolbar */}
       <Toolbar selectedTool={selectedTool} onToolSelect={setSelectedTool} />
 
-      {/* Layout principal: Canvas + Legend */}
-      <div className="grid grid-cols-1 xl:grid-cols-4 gap-6">
-        {/* Canvas del odontograma */}
-        <div className="xl:col-span-3">
+      {/* Canvas + Leyenda */}
+      <div className="grid grid-cols-1 xl:grid-cols-4 gap-4">
+        <div className="xl:col-span-3 bg-white rounded-xl border border-slate-200 shadow-sm p-4">
           <OdontogramCanvas
             dentitionType={odontogram.dentitionType}
             teeth={odontogram.teeth}
             onSurfaceClick={handleSurfaceClick}
           />
         </div>
-
-        {/* Panel de leyenda */}
         <div className="xl:col-span-1">
           <LegendPanel />
         </div>
@@ -366,9 +352,9 @@ export default function OdontogramEditor({
       {/* Loading overlay */}
       {(isSaving || isExporting) && (
         <div className="fixed inset-0 bg-black/20 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 shadow-xl">
+          <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-xl">
             <div className="animate-spin w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full mx-auto mb-3" />
-            <p className="text-gray-700 font-medium">
+            <p className="text-sm text-slate-700 font-medium text-center">
               {isSaving ? 'Guardando odontograma...' : 'Exportando PDF...'}
             </p>
           </div>

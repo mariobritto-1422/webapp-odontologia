@@ -28,12 +28,11 @@ const iconMap = {
 
 export default function Toolbar({ selectedTool, onToolSelect }: ToolbarProps) {
   return (
-    <div className="bg-white rounded-lg shadow-md p-4">
-      <h3 className="text-lg font-semibold text-gray-800 mb-4">
+    <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-4">
+      <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-3">
         Herramientas
-      </h3>
-
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-7 gap-3">
+      </p>
+      <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-2">
         {TOOTH_TOOLS.map((tool) => {
           const Icon = iconMap[tool.icon as keyof typeof iconMap]
           const isSelected = selectedTool.id === tool.id
@@ -42,46 +41,29 @@ export default function Toolbar({ selectedTool, onToolSelect }: ToolbarProps) {
             <button
               key={tool.id}
               onClick={() => onToolSelect(tool)}
-              className={`
-                relative flex flex-col items-center justify-center p-4 rounded-lg border-2 transition-all
-                ${
-                  isSelected
-                    ? 'border-blue-600 bg-blue-50 shadow-md scale-105'
-                    : 'border-gray-300 hover:border-gray-400 hover:shadow-sm'
-                }
-              `}
               title={tool.label}
+              className={`relative flex flex-col items-center justify-center gap-1.5 p-3 rounded-lg border transition-all ${
+                isSelected
+                  ? 'bg-blue-50 border-blue-200 text-blue-700'
+                  : 'border-slate-200 hover:bg-slate-50 text-slate-600 hover:border-slate-300'
+              }`}
             >
-              {/* Icono */}
               <Icon
-                className="w-8 h-8 mb-2"
-                style={{ color: tool.color === '#FFFFFF' ? '#000000' : tool.color }}
+                className="w-5 h-5"
+                style={{ color: isSelected ? '#1d4ed8' : (tool.color === '#FFFFFF' ? '#64748b' : tool.color) }}
               />
-
-              {/* Label */}
-              <span className="text-xs font-medium text-gray-700 text-center">
+              <span className={`text-[11px] font-medium text-center leading-tight ${
+                isSelected ? 'text-blue-700' : 'text-slate-600'
+              }`}>
                 {tool.label}
               </span>
-
-              {/* Indicador de diente completo */}
               {tool.wholeTooth && (
-                <span className="text-[10px] text-purple-600 font-semibold mt-1">
-                  1 clic
-                </span>
+                <span className="text-[9px] text-violet-500 font-semibold">1 clic</span>
               )}
-
-              {/* Color indicator */}
               <div
-                className="absolute top-2 right-2 w-4 h-4 rounded-full border border-gray-400"
+                className="absolute top-1.5 right-1.5 w-2.5 h-2.5 rounded-full border border-slate-300"
                 style={{ backgroundColor: tool.color }}
               />
-
-              {/* Selected indicator */}
-              {isSelected && (
-                <div className="absolute -top-1 -right-1 w-5 h-5 bg-blue-600 rounded-full flex items-center justify-center">
-                  <CheckCircleIcon className="w-4 h-4 text-white" />
-                </div>
-              )}
             </button>
           )
         })}

@@ -39,17 +39,10 @@ export default async function AppointmentsPage() {
     <div className="space-y-6">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">
-            Gestión de Turnos
-          </h1>
-          <p className="text-gray-600 mt-1">
-            Administrá todos los turnos de tu consultorio
-          </p>
-        </div>
+        <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Turnos</h1>
         <Link
           href="/dashboard/professional/turnos/nuevo"
-          className="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"
+          className="bg-blue-600 hover:bg-blue-700 text-white rounded-lg px-4 py-2 text-sm font-semibold transition-colors"
         >
           + Nuevo Turno
         </Link>
