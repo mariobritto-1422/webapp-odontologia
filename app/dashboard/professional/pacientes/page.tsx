@@ -1,6 +1,6 @@
 import { auth } from '@/lib/auth'
 import { redirect } from 'next/navigation'
-import { supabase } from '@/lib/supabase'
+import { supabaseAdmin } from '@/lib/supabase'
 import PatientsList from './PatientsList'
 import Link from 'next/link'
 
@@ -14,7 +14,7 @@ export default async function PatientsPage() {
   const professionalId = session.user.id
 
   // Obtener todos los pacientes del profesional
-  const { data: patients, error } = await supabase
+  const { data: patients, error } = await supabaseAdmin
     .from('patients')
     .select('*')
     .eq('professional_id', professionalId)
@@ -27,12 +27,12 @@ export default async function PatientsPage() {
   // Obtener el conteo de turnos por paciente
   const patientsWithStats = await Promise.all(
     (patients || []).map(async (patient) => {
-      const { count: totalAppointments } = await supabase
+      const { count: totalAppointments } = await supabaseAdmin
         .from('appointments')
         .select('*', { count: 'exact', head: true })
         .eq('patient_id', patient.id)
 
-      const { count: upcomingAppointments } = await supabase
+      const { count: upcomingAppointments } = await supabaseAdmin
         .from('appointments')
         .select('*', { count: 'exact', head: true })
         .eq('patient_id', patient.id)

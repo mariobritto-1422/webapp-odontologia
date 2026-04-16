@@ -1,6 +1,6 @@
 import { auth } from '@/lib/auth'
 import { redirect } from 'next/navigation'
-import { supabase } from '@/lib/supabase'
+import { supabaseAdmin } from '@/lib/supabase'
 import NewAppointmentForm from './NewAppointmentForm'
 import Link from 'next/link'
 
@@ -14,7 +14,7 @@ export default async function NewAppointmentPage() {
   const professionalId = session.user.id
 
   // Obtener todos los pacientes del profesional
-  const { data: patients, error } = await supabase
+  const { data: patients, error } = await supabaseAdmin
     .from('patients')
     .select('id, name, email, phone')
     .eq('professional_id', professionalId)
