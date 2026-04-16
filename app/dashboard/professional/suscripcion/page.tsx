@@ -23,7 +23,7 @@ export default async function SuscripcionPage({
     trialing:  { label: 'Trial activo',   color: 'text-amber-700 bg-amber-50 border-amber-200' },
     active:    { label: 'Activo',         color: 'text-emerald-700 bg-emerald-50 border-emerald-200' },
     past_due:  { label: 'Pago pendiente', color: 'text-orange-700 bg-orange-50 border-orange-200' },
-    cancelled: { label: 'Cancelado',      color: 'text-gray-600 bg-gray-50 border-gray-200' },
+    cancelled: { label: 'Cancelado',      color: 'text-slate-600 bg-slate-100 border-slate-200' },
     expired:   { label: 'Expirado',       color: 'text-red-700 bg-red-50 border-red-200' },
   }
 

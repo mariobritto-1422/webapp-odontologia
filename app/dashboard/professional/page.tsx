@@ -473,10 +473,10 @@ export default async function ProfessionalDashboardPage() {
 
 function AppointmentCard({ appointment }: { appointment: any }) {
   const statusColors = {
-    pending: 'bg-yellow-100 text-yellow-800 border-yellow-200',
-    confirmed: 'bg-green-100 text-green-800 border-green-200',
-    cancelled: 'bg-red-100 text-red-800 border-red-200',
-    completed: 'bg-gray-100 text-gray-800 border-gray-200',
+    pending: 'bg-amber-50 text-amber-700 border-amber-200',
+    confirmed: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+    cancelled: 'bg-red-50 text-red-600 border-red-200',
+    completed: 'bg-slate-100 text-slate-600 border-slate-200',
   }
 
   const statusLabels = {
@@ -489,7 +489,7 @@ function AppointmentCard({ appointment }: { appointment: any }) {
   return (
     <Link
       href={`/dashboard/professional/pacientes/${appointment.patient_id}`}
-      className="p-6 hover:bg-gray-50 transition-colors block"
+      className="p-6 hover:bg-slate-50 transition-colors block"
     >
       <div className="flex items-start justify-between">
         <div className="flex-1">
