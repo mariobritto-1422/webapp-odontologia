@@ -367,8 +367,8 @@ export default function HomePage() {
             <div>
               <p className="text-sm font-semibold text-slate-300 mb-3">Legal</p>
               <div className="flex flex-col gap-2">
-                <a href="#" className="text-sm text-slate-400 hover:text-white transition-colors">Términos de uso</a>
-                <a href="#" className="text-sm text-slate-400 hover:text-white transition-colors">Privacidad</a>
+                <a href="/terminos" className="text-sm text-slate-400 hover:text-white transition-colors">Términos de uso</a>
+                <a href="/privacidad" className="text-sm text-slate-400 hover:text-white transition-colors">Privacidad</a>
                 <a href={`mailto:colaboradormariobritto@gmail.com`} className="text-sm text-slate-400 hover:text-white transition-colors">
                   Contacto
                 </a>
