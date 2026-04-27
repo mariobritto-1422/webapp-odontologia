@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { Shield } from 'lucide-react'
 import { PLANS, formatPriceARS } from '@/lib/mercadopago'
 import type { PlanId } from '@/lib/mercadopago'
 
@@ -405,6 +406,10 @@ export default function HomePage() {
               <a href="https://cosasanta.com" target="_blank" rel="noopener noreferrer" className="hover:text-slate-300 transition-colors">
                 cosasanta.com
               </a>
+            </p>
+            <p className="flex items-center justify-center gap-1 mt-2 text-xs text-slate-500">
+              <Shield size={12} />
+              Base de datos registrada ante la DNPDP · Legajo Nº RL-2026-41889092-APN-DNPDP#AAIP
             </p>
           </div>
         </div>
