@@ -2,6 +2,7 @@ import { auth } from '@/lib/auth'
 import { redirect } from 'next/navigation'
 import { signOut } from '@/lib/auth'
 import SidebarNav from './_components/SidebarNav'
+import { Shield } from 'lucide-react'
 
 function getInitials(name: string): string {
   return name
@@ -83,6 +84,13 @@ export default async function ProfessionalLayout({
               Cerrar sesión →
             </button>
           </form>
+          <div className="border-t border-slate-100 pt-3 mt-3 flex items-center gap-1.5">
+            <Shield size={10} className="text-slate-400 shrink-0" />
+            <div className="text-xs text-slate-400 leading-tight">
+              <p>Datos protegidos · Ley 25.326</p>
+              <p>Legajo DNPDP#AAIP</p>
+            </div>
+          </div>
         </div>
 
       </aside>
