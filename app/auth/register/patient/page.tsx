@@ -287,7 +287,11 @@ function RegisterPatientForm() {
                   required
                 />
                 <span className="text-sm text-slate-600">
-                  Acepto los términos y condiciones *
+                  Acepto los{' '}
+                  <Link href="/terminos" target="_blank" className="text-blue-600 hover:underline">
+                    términos y condiciones
+                  </Link>{' '}
+                  *
                 </span>
               </label>
 
@@ -301,7 +305,11 @@ function RegisterPatientForm() {
                   required
                 />
                 <span className="text-sm text-slate-600">
-                  Acepto la política de privacidad *
+                  Acepto la{' '}
+                  <Link href="/privacidad" target="_blank" className="text-blue-600 hover:underline">
+                    política de privacidad
+                  </Link>{' '}
+                  *
                 </span>
               </label>
             </div>
